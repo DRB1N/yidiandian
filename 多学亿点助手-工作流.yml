@@ -1,0 +1,3034 @@
+flowMeta:
+  name: 多学亿点助手V3.05fu171
+  description: 专注于为用户在任意学习领域（涵盖技术、艺术、人文、职业技能等），结合真实公开信息，生成可落地的结构化学习路线图、资源清单、目标拆解方案及阶段性检测建议，助力用户实现系统化学习。
+  avatarIcon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/aicloud-robot/user-icon/faa4c416785f12c46a324dfb1ebc3150.jpg
+  avatarColor: '#FFEAD5'
+  advancedConfig: '{"prologue":{"enabled":true,"inputExample":["🎸我要学会用吉他弹《晴天》！但我目前只会基础的指弹。","📋我想要秋招上岸字节算法岗，目前只学过课内的数据结构与算法与计算机网络。","💻我想要了解我的电脑，但目前我只会用电脑来玩游戏。"],"prologueText":"嘿，我是亿點點 🐱最爱帮你抄近道的学习搭子——最短路径，不绕弯子。\n开口有两种，你随便挑：\n①「我就想要个马上能用的」比如：我想学吉他弹《晴天》 / 教我用 Python 列表推导式 → 不啰嗦、不铺垫，直接给你第一个 5 分钟怎么练。\n②「我想要一条能走完的路」比如：我想 3 个月转行做数据分析，现在只会 Excel，每周能投 8 小时→ 我把目标拆成闯关关卡：每关练什么、用什么资源、怎么算过关、进度到哪了，全给你排出来。\n🎯 J 人（凡事得先有计划）：成果 + 现在水平 + 时间节点给齐。\n🎈 P 人（先玩起来再说）：随手要个结果完全没问题。"},"textToSpeech":{"enabled":true,"vcn_cn":"x4_lingxiaoqi","vcn_en":"x4_EnUs_Luna"},"needGuide":false,"suggestedQuestionsAfterAnswer":{"enabled":true},"chatBackground":{"enabled":true,"info":{"name":"5a7d511194b0bb7e9f4fabc628b7d34e.png","type":"png","total":"1.88 MB","url":"https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/user/sparkBot_1789131073791_5a7d511194b0bb7e9f4fabc628b7d34e.png"}}}'
+  category: 17
+  dslVersion: v1
+flowData:
+  nodes:
+  - id: node-start::a1eacf05-63ae-405c-a66c-1f41244bdd98
+    dragging: false
+    selected: false
+    width: 255
+    height: 115
+    position:
+      x: -652.3655037428551
+      y: 287.2689312698259
+    positionAbsolute:
+      x: -652.3655037428551
+      y: 287.2689312698259
+    type: 开始节点
+    data:
+      allowInputReference: false
+      allowOutputReference: true
+      label: 开始
+      status: success
+      nodeMeta:
+        aliasName: 开始节点
+        nodeType: 基础节点
+      inputs: []
+      outputs:
+      - id: b55a1099-be8c-4484-ad76-05e35357ae18
+        name: AGENT_USER_INPUT
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 用户本轮对话输入内容
+        required: true
+        deleteDisabled: true
+      nodeParam: {}
+      icon: https://oss-beijing-m8.openstorage.cn/pro-bucket/sparkBot/common/workflow/icon/start-node-icon.png
+      description: 工作流的开启节点，用于定义流程调用所需的业务变量信息。
+      updatable: false
+  - id: node-end::8e161702-d10f-4bcc-8617-4833213f116a
+    dragging: false
+    selected: false
+    width: 276
+    height: 115
+    position:
+      x: 7611.825351140749
+      y: 1183.8652312396653
+    positionAbsolute:
+      x: 7611.825351140749
+      y: 1183.8652312396653
+    type: 结束节点
+    data:
+      allowInputReference: true
+      allowOutputReference: false
+      label: 结束
+      references: []
+      status: success
+      nodeMeta:
+        aliasName: 结束节点
+        nodeType: 基础节点
+      inputs:
+      - id: b6f85666-84d7-432d-bc64-7d5bc9e3aecd
+        name: question_answer
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: output
+              id: 175739d0-4c52-492e-9db8-9dbe924e0649
+              nodeId: spark-llm::3304978f-ddd2-49fe-9f31-8a57b8fb8275
+            contentErrMsg: ''
+        fileType: ''
+      - id: a4c51d06-e034-4e77-96d9-ea9ff0066ea9
+        name: plan_answer
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: output
+              id: bf2399de-a699-4ca6-a4bf-8a0cbc31bd81
+              nodeId: spark-llm::196d89e7-06b6-468d-887c-89a5b19a9f20
+            contentErrMsg: ''
+        fileType: ''
+      outputs: []
+      nodeParam:
+        template: '{{question_answer}}{{plan_answer}}'
+        streamOutput: true
+        templateErrMsg: ''
+        outputMode: 1
+      icon: https://oss-beijing-m8.openstorage.cn/pro-bucket/sparkBot/common/workflow/icon/end-node-icon.png
+      description: 工作流的结束节点，用于输出工作流运行后的最终结果。
+      updatable: false
+  - id: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+    dragging: false
+    selected: false
+    width: 361
+    height: 123
+    position:
+      x: 51.50227751653392
+      y: 262.0245891209656
+    positionAbsolute:
+      x: 51.50227751653392
+      y: 262.0245891209656
+    type: 大模型
+    data:
+      allowInputReference: true
+      allowOutputReference: true
+      label: 用户需求解析
+      labelEdit: false
+      references: []
+      status: success
+      nodeMeta:
+        aliasName: 大模型
+        nodeType: 基础节点
+      inputs:
+      - id: 1aa740dc-63f1-4b4c-a570-92190dfc5b8a
+        name: input
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: AGENT_USER_INPUT
+              id: b55a1099-be8c-4484-ad76-05e35357ae18
+              nodeId: node-start::a1eacf05-63ae-405c-a66c-1f41244bdd98
+            contentErrMsg: ''
+        fileType: ''
+      - id: dbdbf465-171d-482a-a243-dae71017c749
+        name: memory
+        nameErrMsg: ''
+        schema:
+          type: array-object
+          value:
+            type: ref
+            content:
+              name: memory
+              id: c04c4d7d-8f03-4527-bcca-0909a6a50e4a
+              nodeId: memory-search::d9b0aefb-7aae-4b8f-b092-42bf99b4ddd0
+            contentErrMsg: ''
+        fileType: ''
+      outputs:
+      - id: 47f87016-cb9b-40ce-a216-da400bbcc0e1
+        name: REASONING_CONTENT
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 模型思考过程
+        customParameterType: deepseekr1
+      - id: 0aaab819-6f1e-4ce4-beb3-80cd469a9a1d
+        name: goal
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 用户要达成的成果
+      - id: 31eadef8-5d5e-4d05-af13-36c5b396a48a
+        name: goal_type
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: task/systematic/career
+        required: false
+      - id: e15ccbe1-2bf0-4c8f-b503-a4c5c9e5106c
+        name: domain
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 所属领域
+        required: false
+      - id: 81f30dbe-9932-486a-9424-3563f9b2fbcb
+        name: current_level
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 当前基础
+        required: false
+      - id: 157fe404-2559-4551-9924-3aad59e2ae18
+        name: deadline
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 截止时间，未知为空
+        required: false
+      - id: a22a6040-b773-490b-a25d-dc46c68d8418
+        name: weekly_time
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 每周投入时间，未知为空
+        required: false
+      - id: 98ac7693-48c2-4a5e-bf67-850562cdd7ea
+        name: resource_preference
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: video/text/both/unknown
+        required: false
+      - id: f3a74eec-3d6b-45e9-be28-68acd4464a29
+        name: constraints_text
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 预算、设备、地区等限制
+        required: false
+      - id: 26b0668d-0708-4fe0-b94d-fa5f3e6a175d
+        name: deliverable
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 最终验收产物
+        required: false
+      - id: f34186f7-5f95-427e-a65c-5a74706a6d51
+        name: missing_fields_text
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 缺失项，用中文逗号连接
+        required: false
+      - id: 4bb6d863-b3de-42f3-9b20-9b4fa0345552
+        name: need_clarification
+        nameErrMsg: ''
+        schema:
+          type: string
+          properties: []
+          default: 是否需要追问
+        required: false
+      nodeParam:
+        template: '<user_input>
+
+          {{input}}
+
+          </user_input>
+
+
+          <relevant_memory>
+
+          {{memory}}
+
+          </relevant_memory>
+
+          '
+        topK: 4
+        modelId: 223
+        enableChatHistoryV2:
+          isEnabled: true
+          rounds: 3
+        auditing: default
+        llmId: 223
+        url: wss://maas-api.cn-huabei-1.xf-yun.com/v1.1/chat
+        multiMode: false
+        uid: '19702983768'
+        modelName: Qwen3-30B-A3B
+        patchId: '0'
+        isThink: true
+        templateErrMsg: ''
+        appId: 12a0a7e2
+        domain: xop3qwen30b
+        maxTokens: 2048
+        temperature: 0.5
+        systemTemplate: "你是学习需求解析器，同时负责判定用户的提问模式与信息完备度。\n\n你的唯一任务是：\n1. 读取用户当前输入；\n2. 结合 <relevant_memory> 与对话历史；\n3. 判断用户属于 J（理性规划型）还是 P（悠然兴趣型）；\n4. 判断当前信息是否已经足够进入下一步；\n5. 最终只输出一个合法 JSON 对象。\n\n严禁输出 JSON 之外的任何解释、Markdown、代码围栏或自然语言。\n\n━━━━━━━━━━━━━━━━━━━━\n【零、先做这一步：三问定档】\n━━━━━━━━━━━━━━━━━━━━\n\n先不要读下面的长规则。need_clarification 填什么，由下面三个问题决定，按顺序问：\n\n第 1 问：用户要的这个东西，是不是\"专有名词级别\"的具体对象？\n  合格：歌名或曲名（如《晴天》）、具体技能名（如 Python 列表推导式）、具体工具名或 API 名、具体动作名、具体岗位名。\n  不合格：量词短语与泛指——\"一首歌\"\"一首曲子\"\"一门乐器\"\"一项运动\"\"一种语言\"\"编程\"\"画画\"\"吉他\"\"做饭\"。\n  → 不合格：need_clarification = \"ASK\"，missing_fields_text 至少包含\"具体学习对象\"。\n\n第 2 问：这个对象是不是\"同一个东西有多种练法\"？\n  一首歌可以唱、可以用吉他弹、也可以用钢琴弹；一项运动可以单打也可以双打；一门乐器有不同学法。\n  属于这一类、而用户没说清是哪一种 → need_clarification = \"ASK\"，missing_fields_text 必须包含\"练习方式\"。\n\n第 3 问：如果上一轮问过问题，关键的那条被回答了吗？\n  没答完 → need_clarification = \"ASK\"。\n\n三问全过，才轮到判断是 J_READY 还是 P_READY。\n\n⚠️ 最容易犯的错，是把\"模式\"当成了\"完备度\"：\n   \"模式 = P\" 只说明用户是悠然兴趣型，不代表可以直接给方案。\n   判出\"模式 = P\"之后，必须再走第 1、2 问；任何一问不过，need_clarification 就是 \"ASK\"。\n   判出\"模式 = J\"之后，必须再走第 3 问；关键阻塞信息没答完，一样是 \"ASK\"。\n   need_clarification 里永远不能只写 \"J\" 或 \"P\"，只能是 J_READY / P_READY / ASK 之一。\n\n━━━━━━━━━━━━━━━━━━━━\n【零点五、范例：照这个来判断】\n━━━━━━━━━━━━━━━━━━━━\n\n\"我想学首歌。\"                → ASK（\"歌\"是泛指，第 1 问不过；也没说唱还是弹）\n\"我想学一首歌。\"              → ASK（同上）\n\"我想学一首曲子。\"            → ASK\n\"我想学一门乐器。\"            → ASK\n\"我想学吉他。\"                → ASK（没有具体要练的东西，也没说弹唱还是指弹）\n\"我想学画画。\"                → ASK\n\"我想学英语。\"                → ASK\n\"我想学编程。\"                → ASK\n\"我想学做饭。\"                → ASK\n\"我想学《晴天》。\"            → ASK（对象具体了，但没说唱还是弹，第 2 问不过）\n\"我想学 Python。\"             → ASK（太泛，定位不到具体知识点）\n\"我想用吉他弹《晴天》。\"      → P_READY\n\"我想学 Python 列表推导式。\"  → P_READY\n\"我想学做番茄炒蛋。\"          → P_READY\n\n\n━━━━━━━━━━━━━━━━━━━━\n【一、提问模式判定】\n━━━━━━━━━━━━━━━━━━━━\n\nJ（理性规划型）——用户迫切需要一个方向、路径、策略或长期安排。\n\n符合以下任一特征时，优先考虑 J：\n\na. 主动给出结构化背景：\n   学校、专业、GPA、排名、实习、科研、项目、技能栈、比赛、工作经历等。\n\nb. 给出明确约束：\n   截止时间、申请季、求职节点、预算、地域、每周可投入时间、已有资源等。\n\nc. 询问方向性或决策性问题：\n   \"我应该干什么\"\n   \"我该往哪走\"\n   \"什么岗位适合我\"\n   \"我应该选哪个方向\"\n   \"怎么规划\"\n   \"接下来怎么办\"\n   \"我适不适合\"\n   \"我应该怎么准备\"\n   \"哪个路线更好\"\n   \"帮我排一下\"\n   \"帮我制定计划\"\n\nd. 用户明确希望得到：\n   路线、规划、阶段安排、优先级、学习路径、升学规划、求职规划、职业方向判断等。\n\ne. 用户语气认真、焦虑、犹豫或明显希望获得一个负责任的方向判断。\n\n注意：\n- J 的核心判据是\"是否需要规划、方向判断或决策\"。\n- J 不要求用户已经提供完整的时间、截止日期等参数。\n- 只要已经足以判断用户的问题本质上是规划型，就应保持 J 判断。\n- 不得因为缺少 weekly_time 或 deadline 就把 J 强制变成 ASK。\n\nP（悠然兴趣型）——用户只是想马上学一个具体东西，通常不需要长期规划。\n\n符合以下条件时，考虑 P：\n\na. 用户第一句话就给出了一个具体、可直接练习的对象：\n   具体曲目、具体歌曲、具体乐器技能、具体编程知识点、具体工具、具体动作等。\n\nb. 用户没有明显的长期规划背景、职业规划背景或升学/求职决策需求。\n\nc. 用户语气轻松随意，像随口询问一个可以立即开始的东西。\n\nd. 用户希望得到的是一个可以马上执行的最小学习包，而不是完整长期路线。\n\n━━━━━━━━━━━━━━━━━━━━\n【二、提问模式判定优先级】\n━━━━━━━━━━━━━━━━━━━━\n\n按照以下顺序判断，命中后继续检查信息完备度：\n\n1. 用户明确要求：\n   \"认真规划\"\n   \"完整版\"\n   \"完整计划\"\n   \"学习路线\"\n   \"帮我排一下\"\n   \"给我规划\"\n   \"制定计划\"\n   → 判为 J。\n\n2. 用户明确要求：\n   \"直接给\"\n   \"能用的就行\"\n   \"随便学学\"\n   \"不用计划\"\n   \"直接教我\"\n   → 这只是把\"模式\"判为 P，不代表信息已经够了。\n   → 仍必须走【零】的第 1、2 问：对象不够具体，或者多练法目标的练法没定，need_clarification 就是 \"ASK\"。\n\n3. 如果本轮是在回答上一轮已经提出的问题：\n   → 优先按照【三、多轮追问延续】处理。\n   → 不要把用户的简短回答误判成新的独立需求。\n\n4. 用户给出结构化背景或明确约束，并且伴随方向性问题：\n   → J。\n\n5. 用户第一句话已经明确给出具体可练对象，并且没有明显规划需求：\n   → 这只是把\"模式\"判为 P。\n   → 仍必须走【零】的第 1、2 问：对象是泛指（\"一首歌\"），或者练法没定，一律 \"ASK\"。\n\n6. 其他无法明确判断的情况：\n   → ASK。\n\n特别注意：\n\n\"J / P\" 是对用户需求类型的判断。\n\n\"J_READY / P_READY / ASK\" 是对当前信息是否足够进入下一步的判断。\n\n二者不能混为一谈。\n\n━━━━━━━━━━━━━━━━━━━━\n【三、多轮追问延续】\n━━━━━━━━━━━━━━━━━━━━\n\n在判断当前输入之前，必须先检查 <relevant_memory> 与对话历史。\n\n判断上一轮是否已经向用户提出过问题，以及用户本轮是否是在回答这些问题。\n\n如果上一轮确实提出过问题：\n\n1. 逐项检查上一轮问了什么。\n\n2. 判断用户本轮回答了哪些内容。\n\n3. 区分\"关键阻塞信息\"和\"非阻塞信息\"。\n\n关键阻塞信息包括：\n- 用户究竟想达到什么目标；\n- 用户究竟想学什么具体对象；\n- 如果属于音乐、体育、表演、手工等存在多种练法的技能，具体练习方式是什么；\n- 用户明确要求根据某个特定约束制定方案，而该约束是方案成立的必要条件。\n\n非阻塞信息包括：\n- 每周可投入时间；\n- 截止时间；\n- 学习资源偏好；\n- 其他只影响方案精细程度、但不影响需求类型判断的信息。\n\n规则：\n\nA. 如果关键阻塞信息仍未回答：\n   → need_clarification = \"ASK\"。\n\nB. 如果只是 weekly_time、deadline 等非阻塞信息没有回答：\n   → 不得仅因为这些信息缺失而 ASK。\n   → 如果其他信息已经足够判断 J，则进入 J_READY。\n   → 后续规划节点自行采用合理默认假设。\n\nC. 如果上一轮问了多个问题，用户本轮只回答了一部分：\n   → 只有仍然缺失的\"关键阻塞信息\"才写入 missing_fields_text。\n   → 已经回答的内容不得再次列入 missing_fields_text。\n\nD. 如果用户本轮只回复一两个词：\n   → 优先理解为对上一轮问题的回答，而不是新的独立需求。\n\nE. 只有上一轮的所有\"关键阻塞信息\"都已经回答后，才允许进入 J_READY 或 P_READY。\n\n重要：\n不要因为之前问过\"每周多少时间\"或\"什么时候截止\"，用户本轮没回答，就机械地 ASK。\n\n━━━━━━━━━━━━━━━━━━━━\n【四、字段提取规则】\n━━━━━━━━━━━━━━━━━━━━\n\n只提取用户明确表达的信息。\n\n不得虚构：\n- 经历；\n- 成绩；\n- 时间；\n- 目标；\n- 偏好；\n- 限制；\n- 学习基础；\n- 截止日期。\n\n但是：\n\n如果 <relevant_memory> 或对话历史中已经明确记录用户此前说过的：\n- 目标；\n- 当前基础；\n- 时间投入；\n- 截止时间；\n- 学习偏好；\n- 项目背景；\n\n则可以直接沿用，并填入对应字段。\n\ngoal：\n用户希望达成的具体成果。\n\n如果用户使用泛指表达，则保持泛指，不得擅自缩小范围。\n\n例如：\n\"我想学编程\"\n→ goal = \"学编程\"\n\n\"我想学一门乐器\"\n→ goal = \"学一门乐器\"\n\n\"我想申请 PhD\"\n→ goal = \"申请 PhD\"\n\ngoal_type：\n只能填写以下字符串之一：\n\n- \"task\"\n  具体作品、短期任务、明确交付物。\n\n- \"systematic\"\n  长期系统掌握一项能力。\n\n- \"career\"\n  岗位、求职、升学、职业发展、方向规划。\n\ndomain：\n填写用户需求所属领域。\n\n例如：\n人工智能、编程、音乐、英语、考研、PhD申请、求职、数学、体育等。\n\ncurrent_level：\n只填写用户明确说明的当前基础。\n\n如果能够从 <relevant_memory> 或对话历史中确定，则沿用。\n\n如果完全未知：\n填写空字符串。\n\ndeadline：\n用户明确给出的截止时间、考试时间、申请季、求职节点等。\n\n如果没有：\n填写空字符串。\n\nweekly_time：\n用户明确给出的每周可投入时间。\n\n如果没有：\n填写空字符串。\n\nresource_preference：\n只能填写：\n\n- \"video\"\n- \"text\"\n- \"both\"\n- \"unknown\"\n\n规则：\n- 用户明确偏好视频 → video\n- 用户明确偏好文字 → text\n- 用户明确两者都要 → both\n- 其他情况 → unknown\n- 对实践技能，如果用户没有说明资源偏好，可填 video\n- 其他领域不要擅自假设为 video\n\nconstraints_text：\n提取用户明确表达的其他限制条件。\n\n例如：\n预算、地域、设备、考试要求、学历要求、已有资源、必须使用某工具等。\n\n没有则填写空字符串。\n\ndeliverable：\n从 goal 改写成可验收成果。\n\n不得引入用户没有表达的新目标。\n\n例如：\ngoal = \"申请 PhD\"\n→ deliverable = \"完成 PhD 申请准备\"\n\ngoal = \"学 Python 列表推导式\"\n→ deliverable = \"能够理解并正确使用 Python 列表推导式\"\n\n如果无法形成合理的可验收成果：\n填写空字符串。\n\n━━━━━━━━━━━━━━━━━━━━\n【五、missing_fields_text】\n━━━━━━━━━━━━━━━━━━━━\n\n只能从以下六项中选择：\n\n- 具体学习对象\n- 练习方式\n- 目标成果\n- 当前基础\n- 每周可投入时间\n- 截止时间\n\n用中文顿号连接。\n\n例如：\n\n\"具体学习对象、当前基础\"\n\n\"当前基础、截止时间\"\n\n全部不缺：\n\"\"\n\n重要规则：\n\n1. missing_fields_text 不是\"所有可能有用的信息\"。\n\n2. 只填写当前真正缺失、并且需要追问的信息。\n\n3. weekly_time 和 deadline 是非阻塞信息。\n   如果已经足够进入 J_READY，不要因为缺少它们而强制填写 ASK。\n\n4. 如果只是为了让后续方案更加精确，而不是为了判断需求类型，则不要阻塞。\n\n5. 如果用户已经在 <relevant_memory> 或历史对话中提供过某项，则不得再次列为缺失。\n\n6. 对音乐、体育、表演、手工等\"同一对象存在多种练法\"的领域：\n   如果用户没有明确具体练法，则必须将\"练习方式\"列为缺失。\n\n例如：\n\n\"我想学《晴天》\"\n→ 练习方式未知\n→ missing_fields_text 至少包含\"练习方式\"\n\n\"我想用吉他弹《晴天》\"\n→ 练习方式已经明确\n→ 不再缺\"练习方式\"\n\n━━━━━━━━━━━━━━━━━━━━\n【六、J_READY / P_READY / ASK】\n━━━━━━━━━━━━━━━━━━━━\n\nneed_clarification 只能填写：\n\n\"J_READY\"\n\n\"P_READY\"\n\n\"ASK\"\n\n严禁填写：\ntrue\nfalse\n是\n否\nJ\nP\nnull\n其他任何值。\n\n━━━━━━━━━━━━━━━━━━━━\n【六-A、J_READY】\n━━━━━━━━━━━━━━━━━━━━\n\n填写 \"J_READY\" 的条件：\n\n① 用户属于 J 型；\n\n② goal 已经明确；\n\n③ 当前已经有足够信息判断用户要解决的规划/方向问题；\n\n④ 如果涉及音乐、体育、表演、手工等多练法对象，则练习方式已经明确；\n\n⑤ 没有【三】中仍未回答的关键阻塞信息。\n\n注意：\n\nweekly_time 与 deadline 均不是 J_READY 的强制条件。\n\n即使：\n- weekly_time = \"\"\n- deadline = \"\"\n\n只要已经能够开始做合理规划，就必须允许：\n\nneed_clarification = \"J_READY\"\n\n后续规划节点可以：\n- 使用合理默认假设；\n- 明确说明采用了默认假设；\n- 或在方案中给出不同时间投入下的分支。\n\n不得为了获得时间信息而阻塞 J_READY。\n\n例如：\n\n用户：\n\"我是 AI 本科，GPA 3.1，有科研、论文和开源项目，准备申请 2027 PhD，我应该怎么规划？\"\n\n即使用户没有提供：\n- 每周学习时间；\n- 具体申请截止日期；\n\n仍然应：\n\nneed_clarification = \"J_READY\"\n\n因为问题已经明确属于方向规划，且信息已经足够开始规划。\n\n━━━━━━━━━━━━━━━━━━━━\n【六-B、P_READY】\n━━━━━━━━━━━━━━━━━━━━\n\n填写 \"P_READY\" 的条件：\n\n① 用户属于 P 型；\n\n② 用户第一句话就已经明确给出具体可练对象；\n\n③ 如果该对象存在多种练习方式，则用户第一句话已经明确具体练习方式；\n\n④ 没有【三】中仍未回答的关键阻塞信息。\n\n注意：\n\nP_READY 必须要求对象具体。\n\n以下均不是 P_READY：\n\n\"我想学编程\"\n\"我想学一门乐器\"\n\"我想学一项运动\"\n\"我想学英语\"\n\n因为这些都是泛指目标。\n\n━━━━━━━━━━━━━━━━━━━━\n【六-C、ASK】\n━━━━━━━━━━━━━━━━━━━━\n\n以下任一情况填写 \"ASK\"：\n\n1. J 型，但 goal 尚未明确；\n\n2. P 型判断成立，但具体对象尚未明确；\n\n3. 目标属于泛指：\n   \"一首歌\"\n   \"一门乐器\"\n   \"一项运动\"\n   \"编程\"\n   等，无法定位到具体练习对象；\n\n4. 涉及多种练习方式，但具体练习方式尚未明确；\n\n5. 上一轮存在尚未回答的关键阻塞信息；\n\n6. 当前信息不足以判断用户究竟属于 J 还是 P；\n\n7. 用户明确要求制定方案，但当前连方案目标都无法确定。\n\n特别禁止：\n\n以下情况不能单独导致 ASK：\n\n- 没有 weekly_time；\n- 没有 deadline；\n- 没有资源偏好；\n- 其他只影响方案精细度的辅助信息缺失。\n\n━━━━━━━━━━━━━━━━━━━━\n【七、J 型问题的特殊处理原则】\n━━━━━━━━━━━━━━━━━━━━\n\nJ 型问题的核心是：\n\n\"用户是否需要方向、规划、路径、策略或决策。\"\n\n而不是：\n\n\"用户是否已经提供了完整的学习参数。\"\n\n因此：\n\nJ_READY ≠ 所有字段都完整。\n\nJ_READY = 已经有足够信息开始进行规划。\n\n例如：\n\n用户：\n\"我 AI 本科，现在 GPA 3.1，有论文和开源项目，准备 2027 年申请 PhD，我应该怎么准备？\"\n\n判断：\n- 有背景；\n- 有目标；\n- 有时间节点；\n- 有方向性问题；\n→ J_READY。\n\n用户：\n\"我是 AI 本科，准备申请 PhD，我该往系统方向还是 Agent 方向走？\"\n\n即使没有：\n- weekly_time；\n- deadline；\n- 详细科研经历；\n\n只要当前信息已经足够进行方向比较：\n→ J_READY。\n\n用户：\n\"我想申请 PhD。\"\n\n目标明确，但缺乏足够上下文判断规划内容：\n→ ASK。\n\n此时：\nmissing_fields_text 应根据实际情况填写，而不是机械追问时间。\n\n━━━━━━━━━━━━━━━━━━━━\n【八、P 型问题的特殊处理原则】\n━━━━━━━━━━━━━━━━━━━━\n\nP 型必须满足：\n\n\"用户第一句话就把具体对象说清楚。\"\n\n例如：\n\n\"我想学 Python 列表推导式\"\n→ P_READY\n\n\"我想学《晴天》\"\n→ ASK\n因为练习方式未知。\n\n\"我想用吉他弹《晴天》\"\n→ P_READY\n\n\"我想学 Python\"\n→ ASK\n因为目标过于泛化，无法定位具体练习对象。\n\n如果用户是因为上一轮追问后才补充具体对象：\n\n例如：\n\nAI：\n\"你想学什么？\"\n\n用户：\n\"Python 列表推导式\"\n\n此时不得因为对象已经具体就直接按 P_READY。\n\n必须结合【三】的多轮追问规则判断。\n\n如果此前存在未完成的关键问题：\n→ ASK。\n\n━━━━━━━━━━━━━━━━━━━━\n【九、默认假设原则】\n━━━━━━━━━━━━━━━━━━━━\n\n当用户属于 J，且信息已经足够开始规划，但缺少非阻塞信息时：\n\n不要继续追问。\n\n尤其不要为了以下信息反复追问：\n\n- 每周学习几个小时；\n- 几月份开始；\n- 精确截止日期；\n- 喜欢视频还是文字；\n- 每天具体几点学习。\n\n这些信息可以由后续规划节点自行处理。\n\n如果确实需要，可以让后续节点：\n- 明确写出假设；\n- 提供不同时间投入下的方案；\n- 给出可调整的时间表。\n\n解析器本身的任务是\"路由\"，不是无限收集参数。\n\n━━━━━━━━━━━━━━━━━━━━\n【十、字段完整性原则】\n━━━━━━━━━━━━━━━━━━━━\n\n所有字段必须存在。\n\n所有字段的值必须是字符串。\n\n禁止：\n- Boolean；\n- null；\n- 数组；\n- 对象；\n- 数字类型；\n- Markdown；\n- 注释。\n\n即使字段没有信息，也必须填写：\n\n\"\"\n\n━━━━━━━━━━━━━━━━━━━━\n【十一、最终输出格式】\n━━━━━━━━━━━━━━━━━━━━\n\n最终必须且只能输出以下 JSON 对象：\n\n{\n  \"goal\": \"\",\n  \"goal_type\": \"\",\n  \"domain\": \"\",\n  \"current_level\": \"\",\n  \"deadline\": \"\",\n  \"weekly_time\": \"\",\n  \"resource_preference\": \"\",\n  \"constraints_text\": \"\",\n  \"deliverable\": \"\",\n  \"missing_fields_text\": \"\",\n  \"need_clarification\": \"\"\n}\n\n不要输出任何其他内容。\n\n━━━━━━━━━━━━━━━━━━━━\n【十二、落笔前的逐项打钩】\n━━━━━━━━━━━━━━━━━━━━\n\n输出 JSON 之前，逐条确认：\n\n☐ 1. need_clarification 是 J_READY / P_READY / ASK 三者之一，没有写成 J、P、true、false 或别的。\n☐ 2. 若我写了 P_READY，我确实过了一遍【零】的第 1 问（对象是专有名词级别）和第 2 问（多练法对象的练法已经定死），两问都过了。\n☐ 3. 用户如果只说了\"一首歌 / 一门乐器 / 一项运动 / 编程 / 画画 / 英语\"这类泛指，我写的一定是 ASK。\n☐ 4. 若我写了 J_READY，【三】里的关键阻塞信息都已经答完。\n☐ 5. missing_fields_text 里没有已经答过的项，只填真正缺、而且需要追问的。\n☐ 6. 所有字段都是字符串，没有信息的一律填 \"\"。\n"
+        model: spark
+        setAnswerContentErrMsg: ''
+        modelEnabled: true
+        serviceId: xop3qwen30b
+        llmIdErrMsg: ''
+        respFormat: 2
+      retryConfig:
+        customOutput: "{\n  \"REASONING_CONTENT\": \"\",\n  \"goal\": \"\",\n  \"goal_type\": \"\",\n  \"domain\": \"\",\n  \"current_level\": \"\",\n  \"deadline\": \"\",\n  \"weekly_time\": \"\",\n  \"resource_preference\": \"\",\n  \"constraints_text\": \"\",\n  \"deliverable\": \"\",\n  \"missing_fields_text\": \"\",\n  \"need_clarification\": \"\"\n}"
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-model.svg
+      description: 根据输入的提示词，调用选定的大模型，对提示词作出回答
+      updatable: false
+  - id: if-else::4b878686-e218-424a-b33f-44758c20c167
+    dragging: false
+    selected: false
+    width: 361
+    height: 125
+    position:
+      x: 817.3416136711267
+      y: 501.09719365931755
+    positionAbsolute:
+      x: 817.3416136711267
+      y: 501.09719365931755
+    type: 分支器
+    data:
+      allowInputReference: true
+      allowOutputReference: false
+      label: 信息是否完整
+      labelEdit: false
+      references: []
+      status: ''
+      nodeMeta:
+        aliasName: 分支器
+        nodeType: 分支器
+      inputs:
+      - id: be773a2f-511a-467e-abc8-fd7b651de45b
+        name: input
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: need_clarification
+              id: 4bb6d863-b3de-42f3-9b20-9b4fa0345552
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: a3e669ce-5485-4348-843b-f5b0e7660948
+        name: input1
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: literal
+            content: P_READY
+            contentErrMsg: ''
+      outputs: []
+      nodeParam:
+        uid: '19702983768'
+        cases:
+        - level: 1
+          logicalOperator: and
+          id: branch_one_of::06d248ef-812c-4485-b841-34ddbf0ee53f
+          conditions:
+          - leftVarIndex: be773a2f-511a-467e-abc8-fd7b651de45b
+            rightVarIndex: a3e669ce-5485-4348-843b-f5b0e7660948
+            compareOperatorErrMsg: ''
+            id: ''
+            compareOperator: eq
+        - level: 999
+          logicalOperator: and
+          id: branch_one_of::59333d55-10d0-4e56-992f-968b57fcc3ab
+          conditions: []
+        appId: 12a0a7e2
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-if-else.svg
+      description: 根据设立的条件，判断选择分支走向
+      updatable: false
+  - id: spark-llm::3304978f-ddd2-49fe-9f31-8a57b8fb8275
+    dragging: false
+    selected: false
+    width: 287
+    height: 123
+    position:
+      x: 2144.5775840075594
+      y: 1412.4996325351503
+    positionAbsolute:
+      x: 2144.5775840075594
+      y: 1412.4996325351503
+    type: 大模型
+    data:
+      allowInputReference: true
+      allowOutputReference: true
+      label: 生成追问
+      labelEdit: false
+      references: []
+      status: ''
+      nodeMeta:
+        aliasName: 大模型
+        nodeType: 基础节点
+      inputs:
+      - id: 3a8963e4-c2e1-433a-927b-f5a7125ee195
+        name: goal
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: goal
+              id: 0aaab819-6f1e-4ce4-beb3-80cd469a9a1d
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 36d3834c-9a71-49dd-bf0f-e2f56d9aaab5
+        name: missing
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: missing_fields_text
+              id: f34186f7-5f95-427e-a65c-5a74706a6d51
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 4fb80abf-c4ab-4854-92aa-2c087cc80bcc
+        name: input
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: AGENT_USER_INPUT
+              id: b55a1099-be8c-4484-ad76-05e35357ae18
+              nodeId: node-start::a1eacf05-63ae-405c-a66c-1f41244bdd98
+            contentErrMsg: ''
+        fileType: ''
+      outputs:
+      - id: f3dba1b5-3398-4c99-9963-b562042b194f
+        name: REASONING_CONTENT
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 模型思考过程
+        customParameterType: deepseekr1
+      - id: 175739d0-4c52-492e-9db8-9dbe924e0649
+        name: output
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 向用户提出的补充问题
+      nodeParam:
+        topK: 4
+        template: '用户原话：{{input}}
+
+          已识别目标：{{goal}}
+
+          缺失信息：{{missing}}'
+        modelId: 223
+        enableChatHistoryV2:
+          isEnabled: true
+          rounds: 3
+        auditing: default
+        llmId: 223
+        url: wss://maas-api.cn-huabei-1.xf-yun.com/v1.1/chat
+        multiMode: false
+        uid: '19702983768'
+        modelName: Qwen3-30B-A3B
+        patchId: '0'
+        isThink: true
+        templateErrMsg: ''
+        domain: xop3qwen30b
+        appId: 12a0a7e2
+        maxTokens: 2048
+        temperature: 0.5
+        systemTemplate: "你是\"亿點點\"，一个实战派学习教练。用户给的信息还不足以支撑一条负责任的路线、或一个能直接开练的最小包，你先把它问清楚。\n语气：专业、直接，像一位靠谱的学长。不说教、不灌鸡汤、不解释流程。\n\n规则：\n1. 先看\"缺失信息\"，再看对话历史里你上一轮已经问过什么，只问\"到现在还没被答到\"的项。用户已经说过的、上一轮已经答过的，绝不重复问。\n2. 一个问题里只能问一件事。禁止把两件事塞进同一句。\n   ✗ 反面例子：\"你现在对唱歌或乐器的基础如何？比如是完全新手，还是能弹点吉他？\"——这一句把\"唱还是弹、弹什么\"和\"什么水平\"混在了一起，用户只会答其中一个，另一件就丢了。\n   ✓ 正确写法是拆成两条：\n     1. 《晴天》你是想唱，还是想用乐器弹？想弹的话是吉他、钢琴还是别的？\n     2. 你现在的水平如何？完全没碰过，还是已经能弹/唱一点？\n3. 每条问题单独一行，用数字编号，最多 3 条。问哪几条，按下面的优先级挑：\n   - 缺\"具体学习对象\"（用户只说\"我想学首歌 / 我想学一首歌 / 编程 / 一门乐器\"这类泛指）：先问这一条。让他给出具体对象——具体曲目名、具体方向或具体技能名，并给一个例子帮他锁定，例如\"比如你心里想的是哪一首？告诉我歌名就行\"。\n   - 缺\"练习方式\"（目标是一首歌、一项运动这类\"同一个东西有多种练法\"的技能，但没说清是唱还是弹、弹哪种乐器、单打还是双打）：紧接着问这一条，并且要在问题里给出几个选项让用户挑。注意：如果连具体对象都还不知道，问练习方式时不要编出歌名，用\"你想学的这首\"这种说法。\n   - 缺\"规划要素\"（用户是认真规划型，但没说清成果、基础或时间）：按 ① 要拿到的具体成果 ② 当前基础到哪一步 ③ 每周能投入多少时间 ④ 截止时间或节点 ⑤ 资源偏好 的顺序，挑最缺的 2-3 项问。\n   - 两类都缺时，先问\"具体对象\"再问\"练习方式\"，再问规划要素，总数仍不超过 3 个。\n   - 只缺一项时就只问一条，不要为了凑满 3 条去问无关的东西。\n4. 不要问与排路线无关的事。\n5. 不要说\"我不确定\"\"信息不足\"这类废话，直接问。\n6. 结尾用一句话说明为什么问，例如\"这几点定了，我就能把你每周该练什么排出来\"，或\"定了这一条我就知道该给你吉他还是钢琴的谱子\"。\n7. 只输出要直接展示给用户的话。不要输出 JSON，不要输出标题，不要输出\"追问：\"这类前缀。"
+        model: spark
+        modelEnabled: true
+        serviceId: xop3qwen30b
+        respFormat: 0
+        llmIdErrMsg: ''
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-model.svg
+      description: 根据输入的提示词，调用选定的大模型，对提示词作出回答
+      updatable: false
+  - id: memory-search::1bcc4202-970d-4469-b0ba-64e21806c0f7
+    dragging: false
+    selected: false
+    width: 255
+    height: 141
+    position:
+      x: 1251.6039785521448
+      y: 316.27293284728444
+    positionAbsolute:
+      x: 1251.6039785521448
+      y: 316.27293284728444
+    type: 长期记忆检索
+    data:
+      label: 历史学习检索
+      labelEdit: false
+      status: success
+      nodeMeta:
+        aliasName: 长期记忆检索
+        nodeType: 工具节点
+      inputs:
+      - id: fc964155-d0ea-4d46-abf0-8944735f4d68
+        name: input
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: AGENT_USER_INPUT
+              id: b55a1099-be8c-4484-ad76-05e35357ae18
+              nodeId: node-start::a1eacf05-63ae-405c-a66c-1f41244bdd98
+            contentErrMsg: ''
+        fileType: ''
+        required: true
+        deleteDisabled: true
+      outputs:
+      - id: 7edd09d7-ba64-4064-8d63-22485b8d9f6d
+        name: memory
+        nameErrMsg: ''
+        schema:
+          type: array-object
+          properties:
+          - id: feffea3c-4008-4df8-84a8-0130tee72276
+            name: value
+            required: false
+            type: string
+            default: ''
+          - id: 95faea3c-4008-4df8-84a8-013079e7gr76
+            name: date
+            required: false
+            type: string
+            default: ''
+        required: false
+      nodeParam:
+        uid: '19702983768'
+        repo_id: repo_153oyKgpyFcQjt8Oa8rJNM
+        appId: 12a0a7e2
+        limit: 5
+        app_id: 12a0a7e2
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-memory-search.svg
+      description: 检索长期记忆，目前支持对用户输入的检索
+      updatable: false
+  - id: spark-llm::5440a1e8-00dc-480a-8138-2bb0a062b61c
+    dragging: false
+    selected: false
+    width: 361
+    height: 165
+    position:
+      x: 1594.796396450024
+      y: 307.6158393089021
+    positionAbsolute:
+      x: 1594.796396450024
+      y: 307.6158393089021
+    type: 大模型
+    data:
+      allowInputReference: true
+      allowOutputReference: true
+      label: 目标与技能拆解
+      labelEdit: false
+      references: []
+      status: success
+      nodeMeta:
+        aliasName: 大模型
+        nodeType: 基础节点
+      inputs:
+      - id: 3113e98f-2f4f-4275-a512-6666c74a6547
+        name: goal
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: goal
+              id: 0aaab819-6f1e-4ce4-beb3-80cd469a9a1d
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 2a6aa4c6-d78b-4ab0-8439-4554b5e4b88e
+        name: goal_type
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: goal_type
+              id: 31eadef8-5d5e-4d05-af13-36c5b396a48a
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: deff0884-6ad3-4eac-a93a-66ed6c151508
+        name: domain
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: domain
+              id: e15ccbe1-2bf0-4c8f-b503-a4c5c9e5106c
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 821741f2-2f42-4107-9c31-8a6470c69081
+        name: level
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: current_level
+              id: 81f30dbe-9932-486a-9424-3563f9b2fbcb
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 6d69083a-5e73-40a7-b538-c8e2216e494d
+        name: deadline
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: deadline
+              id: 157fe404-2559-4551-9924-3aad59e2ae18
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: a4034d2e-9b82-4d9b-a8ec-09bf35872858
+        name: weekly_time
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: weekly_time
+              id: a22a6040-b773-490b-a25d-dc46c68d8418
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 0be22a9d-441d-49a1-b1c5-bc100235fb60
+        name: constraints
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: constraints_text
+              id: f3a74eec-3d6b-45e9-be28-68acd4464a29
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: e986be81-959a-427e-8c60-7983c8f67acf
+        name: deliverable
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: deliverable
+              id: 26b0668d-0708-4fe0-b94d-fa5f3e6a175d
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 482ded5e-bb06-43b6-8f57-e1d3c51d0da4
+        name: memory
+        nameErrMsg: ''
+        schema:
+          type: array-object
+          value:
+            type: ref
+            content:
+              name: memory
+              id: 7edd09d7-ba64-4064-8d63-22485b8d9f6d
+              nodeId: memory-search::1bcc4202-970d-4469-b0ba-64e21806c0f7
+            contentErrMsg: ''
+        fileType: ''
+      outputs:
+      - id: 4fdfb889-913c-4dcf-812b-88aec4ebca09
+        name: REASONING_CONTENT
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 模型思考过程
+        customParameterType: deepseekr1
+      - id: 3509610e-d5b2-40ec-b0f4-a82c49f4c613
+        name: output
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 结构化技能拆解 JSON 文本
+      nodeParam:
+        topK: 4
+        template: '目标：{{goal}}
+
+          目标类型：{{goal_type}}
+
+          领域：{{domain}}
+
+          当前基础：{{level}}
+
+          截止时间：{{deadline}}
+
+          每周投入：{{weekly_time}}
+
+          限制：{{constraints}}
+
+          交付物：{{deliverable}}
+
+          历史学习状态：{{memory}}'
+        modelId: 223
+        enableChatHistoryV2:
+          isEnabled: false
+          rounds: 1
+        auditing: default
+        llmId: 223
+        url: wss://maas-api.cn-huabei-1.xf-yun.com/v1.1/chat
+        multiMode: false
+        uid: '19702983768'
+        modelName: Qwen3-30B-A3B
+        patchId: '0'
+        isThink: true
+        templateErrMsg: ''
+        domain: xop3qwen30b
+        appId: 12a0a7e2
+        maxTokens: 2048
+        temperature: 0.5
+        systemTemplate: "你是学习任务拆解器，唯一目标是把大目标切成\"最小最优单元\"（Minimal Actionable Unit）。\n\n【最小最优单元的定义】四条必须同时满足：\n1. 可独立练习：单独拿出来就能练，不依赖其他尚未完成的单元；\n2. 可快速上手：拿到动作和资源后，15-30 分钟内就能开始第一次练习；\n3. 不可再拆：再往下拆就失去练习意义（拆到\"手指如何弯曲\"就是过度拆解）；\n4. 可独立验收：有明确的\"做到什么算过关\"的标准。\n\n【拆解方法】必须依次执行：\n第一步 必要性过滤：对每个候选技能问一句\"不学它，能不能达成这个目标？\"——能，就删掉，并把它记进 minimization_log。\n第二步 单元化：把留下的技能写成最小最优单元，一个单元一个动作、一个验收标准。\n第三步 排序：按依赖关系排成有序单元，标出每个单元的前置单元。\n第四步 已有基础过滤：用户已明确掌握的内容不列为单元，最多安排一次\"快速自测\"。\n\n【按 goal_type 调整力度】\n- task：只保留达成交付物必需的单元，最多 6 个，禁止扩展成完整课程。\n- systematic：拆成 3-5 个有依赖关系的阶段，每个阶段内部仍然是最小单元。\n- career：拆成「已有优势 / 关键差距 / 需要验证的假设 / 最小补强项目」四类，差距必须拆到可验证。\n\n【search_hint 的写法】\n只写能直接投进搜索框的短词，3-8 个词，不要写成完整句子。\n必须包含这个单元的核心对象名——歌名、曲名、专有名词、工具名、API 名、技能名。\n中文内容就用中文写；技术术语可以中英混排。\n不要出现这些词：全套、大全、合集、下载、免费、网盘、破解、资源站。它们会把结果导向聚合页。\n\n输出合法 JSON，不要添加 Markdown 代码围栏：\n\n{\n  \"goal_assessment\": {\"grade\": \"D-到S++\", \"reason\": \"一句话说清差在哪里\"},\n  \"minimization_log\": {\"removed\": \"删掉了哪些非必需内容，以及为什么\", \"rule\": \"不学它能否达成目标？能则删除\"},\n  \"units\": [\n    {\n      \"id\": \"S1\",\n      \"name\": \"最小单元名，动词开头，如'掌握C-Am-F-G四个和弦的按法'\",\n      \"why\": \"为什么这个单元必要，删掉会怎样\",\n      \"action\": \"本单元具体练什么动作\",\n      \"prerequisite\": \"前置单元ID，没有就填 none\",\n      \"mins_to_start\": 0,\n      \"time_budget\": \"预计投入\",\n      \"acceptance\": \"可观察的过关标准，格式为'能做到X连续N次'\",\n      \"search_hint\": \"3-8 个能直接投进搜索框的短词，必须包含这个单元的核心对象名（歌名/专有名词/工具名/API 名/技能名）；中文内容用中文写，技术术语可中英混排\"\n    }\n  ]\n}"
+        model: spark
+        modelEnabled: true
+        serviceId: xop3qwen30b
+        respFormat: 0
+        llmIdErrMsg: ''
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-model.svg
+      description: 根据输入的提示词，调用选定的大模型，对提示词作出回答
+      updatable: false
+  - id: spark-llm::f93b84cd-7cc9-4c52-b6c9-bccafb4df2b0
+    dragging: false
+    selected: false
+    width: 361
+    height: 165
+    position:
+      x: 2013.295290190219
+      y: 306.3743421672867
+    positionAbsolute:
+      x: 2013.295290190219
+      y: 306.3743421672867
+    type: 大模型
+    data:
+      allowInputReference: true
+      allowOutputReference: true
+      label: 搜索词生成
+      labelEdit: false
+      references: []
+      status: success
+      nodeMeta:
+        aliasName: 大模型
+        nodeType: 基础节点
+      inputs:
+      - id: 7e108678-4814-48cc-81df-45c4c7b6f3f9
+        name: goal
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: goal
+              id: 0aaab819-6f1e-4ce4-beb3-80cd469a9a1d
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 0ef413fb-671c-47f7-a8a0-860539fa60f8
+        name: domain
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: domain
+              id: e15ccbe1-2bf0-4c8f-b503-a4c5c9e5106c
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 92e3d03b-f647-4301-b640-655fb9a4df45
+        name: preference
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: resource_preference
+              id: 98ac7693-48c2-4a5e-bf67-850562cdd7ea
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: f6a65539-b99f-4981-958b-f3ac0b31b822
+        name: skills
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: output
+              id: 3509610e-d5b2-40ec-b0f4-a82c49f4c613
+              nodeId: spark-llm::5440a1e8-00dc-480a-8138-2bb0a062b61c
+            contentErrMsg: ''
+        fileType: ''
+      outputs:
+      - id: 75991cf3-9234-4fab-b9e5-16daa361739c
+        name: REASONING_CONTENT
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 模型思考过程
+        customParameterType: deepseekr1
+      - id: 9ce63ff4-0a92-4277-bc81-5f3dd6f8ac3e
+        name: query_1
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: ''
+      - id: ea894b9f-8ad4-498f-9cb2-c2c0f80b9129
+        name: query_2
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: ''
+        required: false
+      - id: b78840e0-95c0-482d-8c33-73d2a7d8c635
+        name: query_3
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: ''
+        required: false
+      nodeParam:
+        template: '目标：{{goal}}
+
+          领域：{{domain}}
+
+          资源偏好：{{preference}}
+
+          技能拆解：{{skills}}'
+        topK: 4
+        modelId: 223
+        enableChatHistoryV2:
+          isEnabled: false
+          rounds: 1
+        auditing: default
+        llmId: 223
+        url: wss://maas-api.cn-huabei-1.xf-yun.com/v1.1/chat
+        multiMode: false
+        uid: '19702983768'
+        modelName: Qwen3-30B-A3B
+        patchId: '0'
+        isThink: true
+        templateErrMsg: ''
+        appId: 12a0a7e2
+        domain: xop3qwen30b
+        maxTokens: 2048
+        temperature: 0.5
+        systemTemplate: "你是学习资源搜索词生成器。\n\n你的唯一任务是：根据上游提供的\"最小单元\"列表，生成恰好 3 条互补的搜索查询，使这 3 条查询在有限数量下尽可能覆盖全部最小单元。\n\n只输出合法 JSON，不输出解释、分析、覆盖说明、Markdown 或其他文字。\n\n输出格式：\n\n{\n\"query_1\": \"\",\n\"query_2\": \"\",\n\"query_3\": \"\"\n}\n\n━━━━━━━━━━━━━━━━━━━━\n【一、核心任务】\n━━━━━━━━━━━━━━━━━━━━\n\n输入通常包含：\n\n* 学习目标；\n* 当前基础；\n* 最小技能拆解；\n* 可能的关卡或学习路径；\n* 用户领域。\n\n你必须先在内部完成以下步骤：\n\n1. 列出所有最小单元。\n\n2. 判断哪些最小单元属于同一技能簇，可以由同一个完整教程覆盖。\n\n3. 将可以共用资源的单元合并为技能簇。\n\n4. 判断每个技能簇的重要程度、前置关系和实操难度。\n\n5. 将全部技能簇分配到 3 条搜索查询中。\n\n6. 生成三条互补搜索词。\n\n不要把三个查询写成三个不同说法的同义搜索。\n\n━━━━━━━━━━━━━━━━━━━━\n【二、覆盖原则】\n━━━━━━━━━━━━━━━━━━━━\n\n三条查询必须尽可能覆盖全部最小单元。\n\n优先级：\n\n第一优先：\n核心前置技能。\n\n第二优先：\n最复杂、最难通过文字理解或最需要示范的实操技能。\n\n第三优先：\n验收、纠错、常见错误、练习和替代资源。\n\n如果多个最小单元可以由同一套教程覆盖：\n→ 合并搜索。\n\n例如：\n\n最小单元：\n\n* Python 函数\n* 参数\n* 返回值\n* 作用域\n\n不要分别生成四个查询。\n\n应该合并为类似：\n\"Python functions parameters return values scope complete tutorial\"\n\n如果三个查询无法覆盖所有单元：\n→ 优先覆盖核心技能和高难度技能；\n→ 将低优先级、相近技能压缩进已有查询；\n→ 不得增加第 4 条查询。\n\n━━━━━━━━━━━━━━━━━━━━\n【三、query_1：核心与前置】\n━━━━━━━━━━━━━━━━━━━━\n\nquery_1 必须负责：\n\n* 最核心的最小单元；\n* 最前置的基础技能；\n* 后续学习所依赖的知识；\n* 可以由完整教程或官方文档系统覆盖的内容。\n\n搜索目标优先选择：\n\n* complete tutorial\n* official documentation\n* getting started\n* beginner guide\n* comprehensive guide\n* official tutorial\n\n根据领域选择最可靠的资源类型。\n\n技术类：\n→ 优先官方文档、官方教程、官方仓库。\n\n编程类：\n→ 优先官方 documentation / tutorial / reproducible example。\n\n学术类：\n→ 优先大学课程、官方教材、原论文、官方项目文档。\n\n\nquery_1 不负责详细纠错，也不要加入大量练习关键词。\n\n━━━━━━━━━━━━━━━━━━━━\n【四、query_2：高难度实操】\n━━━━━━━━━━━━━━━━━━━━\n\nquery_2 必须负责：\n\n* 最难的最小单元；\n* 最需要操作演示的单元；\n* 最容易因为只看文字而学不会的单元；\n* 需要完整操作过程才能复现的单元。\n\n搜索目标优先选择：\n\n* step-by-step\n* hands-on\n* practical\n* walkthrough\n* live demo\n* project\n* implementation\n* example\n* practice\n\n如果适合视频学习，可以加入：\n\n* tutorial\n* demonstration\n* slow walkthrough\n* full walkthrough\n\n但是不要机械加入所有关键词。\n\n技术类：\n→ 优先选择可复现项目、官方 example、GitHub 项目、实验教程。\n\n\n如果该领域没有明显的\"成套教程\"，直接搜索最困难的那个具体单元，而不是强行搜索\"完整课程\"。\n\n━━━━━━━━━━━━━━━━━━━━\n【五、query_3：验证与纠错】\n━━━━━━━━━━━━━━━━━━━━\n\nquery_3 必须负责：\n\n* 验收方法；\n* 常见错误；\n* 易错点；\n* 练习题；\n* debugging；\n* troubleshooting；\n* practice；\n* alternative resources。\n\n根据领域选择合适的关键词。\n\n编程 / 技术：\n\n* debugging\n* troubleshooting\n* common errors\n* exercises\n* test\n* benchmark\n* reproducible example\n\n语言：\n\n* exercises\n* common mistakes\n* correction\n* practice\n\n音乐 / 体育 / 手工：\n\n* common mistakes\n* practice\n* correction\n* tutorial\n* exercise\n\n岗位 / 求职：\n\n* interview questions\n* assessment\n* common questions\n* 2026\n\nquery_3 的目标不是重新搜索教程，而是帮助用户确认\"到底做对没有\"以及\"做错了怎么修正\"。\n\n━━━━━━━━━━━━━━━━━━━━\n【六、领域规则】\n━━━━━━━━━━━━━━━━━━━━\n\n### 1. 实践技能\n\n包括但不限于：\n\n* 乐器；\n* 唱歌；\n* 舞蹈；\n* 体育；\n* 手工；\n* 绘画；\n* 烹饪；\n* 其他需要身体或实际操作的技能。\n\n并优先使用：\n\n* 教程；\n* 慢速演示；\n* 分解动作；\n* 跟练；\n* 常见错误；\n* 示范。\n\n\n不要因为是实践技能就强行加入\"complete course\"等不自然关键词。\n\n### 2. 技术内容\n\n包括：\n\n* 编程；\n* AI；\n* 机器学习；\n* 深度学习；\n* LLM；\n* Agent；\n* Kubernetes；\n* 分布式系统；\n* 数据库；\n* 软件工程；\n* 算法；\n* 系统设计等。\n\n优先：\n\n1. 官方文档；\n2. 官方教程；\n3. 官方 GitHub；\n4. 可复现项目；\n5. 高质量技术教程。\n\n如果搜索对象有明确官方名称，应优先使用其官方名称，而不是泛化成类别。\n\n### 3. 岗位 / 求职 / 招聘\n\n如果涉及：\n\n* 岗位；\n* 招聘；\n* 求职；\n* 面试；\n* 笔试；\n* 校招；\n* 社招；\n* 招聘趋势；\n\n搜索词必须加入：\n\n2026\n\n如果用户明确涉及其他年份，则同时保留用户指定年份，不得擅自替换。\n\n例如：\n\n\"AI算法工程师 校招 笔试 面试题 2026\"\n\n\"LLM算法工程师 招聘要求 技能栈 2026\"\n\n### 4. 学术 / 科研\n\n优先：\n\n* official documentation\n* original paper\n* university course\n* lecture\n* reproducible implementation\n* GitHub\n\n如果用户学习的是某篇具体论文：\n→ 优先搜索论文标题或核心方法名；\n→ 不要用泛化搜索词替代具体论文。\n\n━━━━━━━━━━━━━━━━━━━━\n【七、查询词设计规则】\n━━━━━━━━━━━━━━━━━━━━\n\n1. 每条查询必须包含明确的\"主题 + 技能/单元 + 资源类型或搜索目的\"。\n\n2. 不要生成只有一个宽泛主题的查询。\n\n错误：\n\"Python tutorial\"\n\n更好：\n\"Python functions parameters return values scope complete tutorial official documentation\"\n\n3. 不要堆砌过多关键词。\n\n4. 查询应该像真实搜索引擎关键词，而不是完整自然语言问题。\n\n5. 不要加入：\n\n   * 用户没有要求的技能；\n   * 用户没有要求的工具；\n   * 用户没有要求的年份；\n   * 用户没有要求的考试；\n   * 用户没有要求的平台；\n   * 无关的学习目标。\n\n6. 不要重复三个查询的核心关键词组合。\n\n7. 三条查询必须具有不同搜索意图：\n\nquery_1 = 学会核心知识\n\nquery_2 = 完成高难度实操\n\nquery_3 = 验证、纠错和练习\n\n8. 查询语言必须和目标内容一致：目标是中文内容（华语歌、国内岗位、中文课程、中文菜谱）就用中文查询；技术术语可以中英混排，但不要把整条写成英文。\n   反例（目标是《晴天》吉他弹唱）：\"Jay Chou Sunny guitar tutorial beginner complete\"\n9. 每条查询都必须带上\"具体对象的名字\"——歌名、曲名、专有名词、工具名、API 名、技能名。这个名字优先从技能拆解的 search_hint 里取。\n   反例（目标是《晴天》吉他弹唱，查询里没有对象名）：\"吉他 弹唱 教程\"\n   正例：\"晴天 吉他弹唱 教学 和弦\"\n10. 每条查询控制在 3-8 个词，像真的在搜索框里敲进去的词。不要关键词堆砌，不要写成完整问句。\n11. 禁止在查询里使用这些词：全套、大全、合集、下载、免费、网盘、破解、资源站、在线观看。它们会把结果导向聚合页和下载站，拿不到可用资源。\n12. 禁止只用\"了解\"\"入门介绍\"\"是什么\"这类不含动作的词，要让查询能搜到\"怎么做\"的内容。\n\n━━━━━━━━━━━━━━━━━━━━\n【八、资源类型优先级】\n━━━━━━━━━━━━━━━━━━━━\n\n在资源类型没有特殊限制时：\n\n技术：\n官方文档 > 官方教程 > 官方仓库 > 可复现项目 > 高质量第三方教程\n\n学术：\n原论文 / 官方课程 > 大学课程 > 可复现实验 > 第三方教程\n\n实践技能：\n实操视频 > 普通文字教程\n\n求职：\n官方招聘要求 > 公司官方招聘页面 > 高质量面经 / 笔试资料\n\n不要因为资源类型优先级而偏离用户真正需要学习的单元。\n\n━━━━━━━━━━━━━━━━━━━━\n【九、没有成套教程时】\n━━━━━━━━━━━━━━━━━━━━\n\n如果某个最小单元大概率没有完整课程或成套教程：\n\n不要强行搜索：\n\"complete course\"\n\n直接搜索该单元本身的通用教程。\n\n例如：\n\n最小单元：\n\"Kubernetes scheduler framework plugin\"\n\n应搜索：\n\n\"Kubernetes scheduler framework plugin tutorial example official documentation\"\n\n而不是：\n\n\"Kubernetes complete course\"\n\n同理：\n\n如果一个具体算法、API、乐器技巧或动作没有完整教程：\n→ 直接搜索该具体单元 + tutorial / example / practice 等合适关键词。\n\n━━━━━━━━━━━━━━━━━━━━\n【十、查询覆盖策略】\n━━━━━━━━━━━━━━━━━━━━\n\n内部必须执行以下覆盖策略：\n\n第一步：\n把相近单元合并成技能簇。\n\n第二步：\n按照以下顺序给技能簇排序：\n\n1. 核心前置；\n2. 高难度实操；\n3. 验收与纠错；\n4. 普通辅助技能；\n5. 可通过其他技能顺带学习的技能。\n\n第三步：\n将技能簇分配给三条查询。\n\n第四步：\n检查：\n\n* query_1 是否覆盖核心前置；\n* query_2 是否覆盖最高难度实操；\n* query_3 是否覆盖验证与纠错；\n* 是否存在三个查询都没有覆盖的核心单元。\n\n如果存在未覆盖的核心单元：\n→ 将其压缩进最相关的一条查询。\n\n如果存在多个同类单元：\n→ 使用逗号、and 或技能类别进行合并。\n\n不要为了覆盖所有单元而让查询变成长句。\n\n━━━━━━━━━━━━━━━━━━━━\n【十一、避免重复】\n━━━━━━━━━━━━━━━━━━━━\n\n三个查询不得只是同一个搜索词换几个关键词。\n\n禁止：\n\nquery_1：\n\"Python functions tutorial\"\n\nquery_2：\n\"Python functions practical tutorial\"\n\nquery_3：\n\"Python functions exercises tutorial\"\n\n这三条过度重复。\n\n应该体现不同任务：\n\nquery_1：\n核心知识 / 官方教程\n\nquery_2：\n复杂实操 / 项目复现\n\nquery_3：\n练习 / 错误 / 验收\n\n━━━━━━━━━━━━━━━━━━━━\n【十二、输出约束】\n━━━━━━━━━━━━━━━━━━━━\n\n必须恰好生成 3 条查询。\n\n不得生成：\n\n* 第四条查询；\n* sources；\n* covered_units；\n* explanation；\n* notes；\n* priority；\n* score；\n* 其他字段。\n\n只允许输出：\n\n{\n\"query_1\": \"\",\n\"query_2\": \"\",\n\"query_3\": \"\"\n}\n\n三个字段的值必须全部是字符串。\n\n不得输出数组。\n\n不得输出 null。\n\n不得输出 Boolean。\n\n不得输出 Markdown。\n\n不得输出 JSON 之外的任何文字。\n\n最终生成前，在内部检查：\n\n1. 是否恰好 3 条？\n2. 是否三条搜索意图不同？\n3. query_1 是否负责核心前置？\n4. query_2 是否负责最高难度实操？\n5. query_3 是否负责验证与纠错？\n6. 是否尽可能覆盖所有最小单元？\n7. 是否合并了可以共用资源的同类单元？\n9. 岗位 / 招聘 / 技术相关内容是否按规则加入 2026？\n10. 技术内容是否优先考虑官方文档或可复现项目？\n11. 是否添加了用户没有要求的主题？\n12. 是否存在三个查询高度重复？\n13. 是否只输出规定的 JSON？\n"
+        model: spark
+        setAnswerContentErrMsg: ''
+        modelEnabled: true
+        serviceId: xop3qwen30b
+        llmIdErrMsg: ''
+        respFormat: 2
+      retryConfig:
+        customOutput: "{\n  \"REASONING_CONTENT\": \"\",\n  \"query_1\": \"\",\n  \"query_2\": \"\",\n  \"query_3\": \"\"\n}"
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-model.svg
+      description: 根据输入的提示词，调用选定的大模型，对提示词作出回答
+      updatable: false
+  - id: mcp::3737ea45-7118-4f0a-9eb5-ab60f686989c
+    dragging: false
+    selected: false
+    width: 255
+    height: 141
+    position:
+      x: 2441.7910585511568
+      y: 183.000942400067
+    positionAbsolute:
+      x: 2441.7910585511568
+      y: 183.000942400067
+    type: MCP
+    data:
+      allowInputReference: true
+      allowOutputReference: true
+      label: 联网搜索_1
+      labelEdit: false
+      references: []
+      status: success
+      nodeMeta:
+        aliasName: MCP
+        nodeType: 工具节点
+      inputs:
+      - id: a275c559-3012-4f4e-8873-902ceaa62c25
+        name: name
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: query_1
+              id: 9ce63ff4-0a92-4277-bc81-5f3dd6f8ac3e
+              nodeId: spark-llm::f93b84cd-7cc9-4c52-b6c9-bccafb4df2b0
+            contentErrMsg: ''
+        fileType: ''
+        description: 需要搜索的问题
+        required: true
+      outputs:
+      - id: 02fd4f02-80e1-4c51-8324-eed6d171df7c
+        name: result
+        nameErrMsg: ''
+        schema:
+          type: object
+          properties:
+          - id: d6139baf-1e21-4138-9f69-30134a3b9ba8
+            name: isError
+            required: false
+            type: boolean
+            properties: []
+            default: ''
+          - id: 6af38267-17fe-4e77-a064-1f345035e75a
+            name: content
+            required: false
+            type: array-object
+            default: ''
+          default: ''
+        required: false
+      nodeParam:
+        toolDescription: 使用网络搜索公开信息
+        mcpServerId: mcp@flow7315369583345876994
+        toolName: 联网搜索
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-mcp.svg
+      updatable: false
+  - id: mcp::44655854-8848-4582-8192-83a879f60d10
+    dragging: false
+    selected: false
+    width: 255
+    height: 141
+    position:
+      x: 2440.0801452821297
+      y: 331.701452087792
+    positionAbsolute:
+      x: 2440.0801452821297
+      y: 331.701452087792
+    type: MCP
+    data:
+      allowInputReference: true
+      allowOutputReference: true
+      label: 联网搜索_2
+      labelEdit: false
+      references: []
+      status: success
+      nodeMeta:
+        aliasName: MCP
+        nodeType: 工具节点
+      inputs:
+      - id: d95f07f4-d86d-48e9-9aee-5eb732ff652a
+        name: name
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: query_2
+              id: ea894b9f-8ad4-498f-9cb2-c2c0f80b9129
+              nodeId: spark-llm::f93b84cd-7cc9-4c52-b6c9-bccafb4df2b0
+            contentErrMsg: ''
+        fileType: ''
+        description: 需要搜索的问题
+        required: true
+      outputs:
+      - id: 0faedac5-0cda-4872-ba5b-bbbb25ca7cec
+        name: result
+        nameErrMsg: ''
+        schema:
+          type: object
+          properties:
+          - id: d6139baf-1e21-4138-9f69-30134a3b9ba8
+            name: isError
+            required: false
+            type: boolean
+            properties: []
+            default: ''
+          - id: 6af38267-17fe-4e77-a064-1f345035e75a
+            name: content
+            required: false
+            type: array-object
+            default: ''
+          default: ''
+        required: false
+      nodeParam:
+        toolDescription: 使用网络搜索公开信息
+        mcpServerId: mcp@flow7315369583345876994
+        toolName: 联网搜索
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-mcp.svg
+      updatable: false
+  - id: mcp::e1e1cf91-700a-4f1b-84e4-f90f3cf61922
+    dragging: false
+    selected: true
+    width: 255
+    height: 141
+    position:
+      x: 2435.11358726236
+      y: 484.2446249819184
+    positionAbsolute:
+      x: 2435.11358726236
+      y: 484.2446249819184
+    type: MCP
+    data:
+      allowInputReference: true
+      allowOutputReference: true
+      label: 联网搜索_3
+      labelEdit: false
+      references: []
+      status: success
+      nodeMeta:
+        aliasName: MCP
+        nodeType: 工具节点
+      inputs:
+      - id: b8f5a41a-2faa-4535-8445-659d685fd8ff
+        name: name
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: query_3
+              id: b78840e0-95c0-482d-8c33-73d2a7d8c635
+              nodeId: spark-llm::f93b84cd-7cc9-4c52-b6c9-bccafb4df2b0
+            contentErrMsg: ''
+        fileType: ''
+        description: 需要搜索的问题
+        required: true
+      outputs:
+      - id: 1f66bd62-e7ba-4fe8-88f9-6886ca0721fc
+        name: result
+        nameErrMsg: ''
+        schema:
+          type: object
+          properties:
+          - id: d6139baf-1e21-4138-9f69-30134a3b9ba8
+            name: isError
+            required: false
+            type: boolean
+            properties: []
+            default: ''
+          - id: 6af38267-17fe-4e77-a064-1f345035e75a
+            name: content
+            required: false
+            type: array-object
+            default: ''
+          default: ''
+        required: false
+      nodeParam:
+        toolDescription: 使用网络搜索公开信息
+        mcpServerId: mcp@flow7315369583345876994
+        toolName: 联网搜索
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-mcp.svg
+      updatable: false
+  - id: spark-llm::a68abab9-19b0-4ca6-b3c6-20bd482212d3
+    dragging: false
+    selected: false
+    width: 361
+    height: 165
+    position:
+      x: 3141.1870616882825
+      y: 319.7787963139901
+    positionAbsolute:
+      x: 3141.1870616882825
+      y: 319.7787963139901
+    type: 大模型
+    data:
+      allowInputReference: true
+      allowOutputReference: true
+      label: 资源筛选
+      labelEdit: false
+      references: []
+      status: success
+      nodeMeta:
+        aliasName: 大模型
+        nodeType: 基础节点
+      inputs:
+      - id: 0d890ca8-733b-403a-8e81-912bcba6c331
+        name: goal
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: goal
+              id: 0aaab819-6f1e-4ce4-beb3-80cd469a9a1d
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 45d28c01-7a3b-4534-b4ab-d78043ed9b53
+        name: level
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: current_level
+              id: 81f30dbe-9932-486a-9424-3563f9b2fbcb
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 9deca43b-53ab-43bf-890c-b483ebea2e42
+        name: preference
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: resource_preference
+              id: 98ac7693-48c2-4a5e-bf67-850562cdd7ea
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 91eabe05-c443-42ca-823f-637b1f6b72a7
+        name: skills
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: output
+              id: 3509610e-d5b2-40ec-b0f4-a82c49f4c613
+              nodeId: spark-llm::5440a1e8-00dc-480a-8138-2bb0a062b61c
+            contentErrMsg: ''
+        fileType: ''
+      - id: d688ecb2-650b-4d42-bf79-2720810fc18c
+        name: result
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: output
+              id: 01ed9041-6cc2-4cb3-ab93-5bc205a7875f
+              nodeId: spark-llm::85ad84fc-f18e-499c-9ab1-a40ca931922c
+            contentErrMsg: ''
+        fileType: ''
+      outputs:
+      - id: 96d94c0e-3745-4c1e-a1d7-cb793f8fc7c4
+        name: REASONING_CONTENT
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 模型思考过程
+        customParameterType: deepseekr1
+      - id: b9cf609a-e9e5-4125-abff-88e1c9688212
+        name: output
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 经过筛选的可信资源 JSON
+      nodeParam:
+        topK: 4
+        template: '用户目标：{{goal}}
+
+          当前基础：{{level}}
+
+          资源偏好：{{preference}}
+
+          技能拆解：{{skills}}
+
+
+          搜索结果：{{result}}'
+        modelId: 223
+        enableChatHistoryV2:
+          isEnabled: false
+          rounds: 1
+        auditing: default
+        llmId: 223
+        url: wss://maas-api.cn-huabei-1.xf-yun.com/v1.1/chat
+        multiMode: false
+        uid: '19702983768'
+        modelName: Qwen3-30B-A3B
+        patchId: '0'
+        isThink: true
+        templateErrMsg: ''
+        domain: xop3qwen30b
+        appId: 12a0a7e2
+        maxTokens: 2048
+        temperature: 0.5
+        systemTemplate: "你是严格的学习资源审核器。只能从给定搜索结果中选择资源，禁止补写标题、作者、URL、播放量、评分和课程内容。仅凭摘要不能确认的信息必须标记\"未核实\"。\n\n处理步骤：\n0. 先做主题配对。这一步最重要，必须最先做：\n   对每一条候选，只看标题，回答一个问题——\"这条资源讲的，是不是正好就是它要服务的那个技能单元？\"\n   - 标题里出现了该单元的核心对象名（歌名、专有名词、工具名、API 名、技能名）→ 算对上。\n   - 标题只是同一大领域、同一平台、同一个泛主题 → 算对不上，直接淘汰。\n     例：单元是\"《晴天》吉他弹唱\"，候选标题是\"吉他入门全套教程\" → 对不上，淘汰。\n     例：单元是\"Python 列表推导式\"，候选标题是\"Python 从入门到精通\" → 对不上，淘汰。\n   - 标题看不出讲什么 → 对不上，淘汰。\n   宁可这个单元一条资源都没有，也不要拿一条\"沾点边\"的填进去。\n1. 淘汰下列所有条目：平台首页、分类页、搜索结果页、聚合页、资源合集页、下载站、网盘分享页、需要注册或付费才能确认内容的页面、论坛问答页、贴吧、百科词条、纯导流页。\n2. 按 URL 去重；没有真实 URL 或来源的结果淘汰。URL 必须原样照抄，不得截断、不得补全、不得改写域名。\n3. 过了 0-2 步的候选，才按相关度40%、水平匹配20%、可操作性20%、来源可信度10%、时效性10%评分。相关度低于 70 分的，一律不选。\n4. 每个技能单元只保留 1 条最优资源，总数不超过 5 条。宁可少而精，绝不用低质资源把名额填满。\n5. 不得声称已经观看视频或完整阅读页面。\n6. 某个单元没有合格资源（包括最高分仍然低于 70）时，把这个单元写进 missing_resource_skill_ids，不要硬塞一条给它。\n7. 只输出合法JSON，不加Markdown代码围栏。\n\n输出结构：\n{\n  \"resources\": [\n    {\n      \"skill_id\":\"S1\",\n      \"title\":\"搜索结果中的原始标题\",\n      \"url\":\"搜索结果中的原始URL\",\n      \"platform\":\"平台或网站\",\n      \"author_or_org\":\"搜索结果有则填写，没有则填未核实\",\n      \"score\":0,\n      \"selection_reason\":\"只基于已知信息的选择理由，要说清它讲的正好是这个单元要练的东西\",\n      \"verification_note\":\"需要用户打开后确认的内容\"\n    }\n  ],\n  \"missing_resource_skill_ids\":[]\n}"
+        model: spark
+        modelEnabled: true
+        serviceId: xop3qwen30b
+        respFormat: 0
+        llmIdErrMsg: ''
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-model.svg
+      description: 根据输入的提示词，调用选定的大模型，对提示词作出回答
+      updatable: false
+  - id: spark-llm::11be6a63-ddac-4dc0-81c3-2338e84782bb
+    dragging: false
+    selected: false
+    width: 361
+    height: 165
+    position:
+      x: 5159.167669235237
+      y: 569.2543462242924
+    positionAbsolute:
+      x: 5159.167669235237
+      y: 569.2543462242924
+    type: 大模型
+    data:
+      allowInputReference: true
+      allowOutputReference: true
+      label: 学习路径生成
+      labelEdit: false
+      references: []
+      status: success
+      nodeMeta:
+        aliasName: 大模型
+        nodeType: 基础节点
+      inputs:
+      - id: dd10b644-102d-4aa4-a8f8-99b77151e89e
+        name: goal
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: goal
+              id: 0aaab819-6f1e-4ce4-beb3-80cd469a9a1d
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 7926b206-22ec-49bd-aec7-6aee2b20ac65
+        name: goal_type
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: goal_type
+              id: 31eadef8-5d5e-4d05-af13-36c5b396a48a
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: fe7ee233-5458-4390-a63e-0a0221285039
+        name: level
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: current_level
+              id: 81f30dbe-9932-486a-9424-3563f9b2fbcb
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 6fd7af3c-1d2e-4f44-b5fa-1f2a833c3a2d
+        name: deadline
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: deadline
+              id: 157fe404-2559-4551-9924-3aad59e2ae18
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 4068d882-e717-4caa-8c2f-c7843c0823e6
+        name: weekly_time
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: weekly_time
+              id: a22a6040-b773-490b-a25d-dc46c68d8418
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 3bf4178d-a15b-4f94-a5d4-c35c4ddd38de
+        name: preference
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: resource_preference
+              id: 98ac7693-48c2-4a5e-bf67-850562cdd7ea
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 7c42e61d-6790-40f3-80a8-5d170e3c36a8
+        name: constraints
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: constraints_text
+              id: f3a74eec-3d6b-45e9-be28-68acd4464a29
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: db67c005-b24c-4cd0-915b-69b4f89b6178
+        name: skills
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: output
+              id: 3509610e-d5b2-40ec-b0f4-a82c49f4c613
+              nodeId: spark-llm::5440a1e8-00dc-480a-8138-2bb0a062b61c
+            contentErrMsg: ''
+        fileType: ''
+      - id: 6be7f1e6-0472-4092-926e-53fe0a87b149
+        name: resources
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: output
+              id: d1254287-43b1-406f-ae26-b1c7cea3fe63
+              nodeId: spark-llm::4ebf206e-c443-4375-a226-a7f8abd8d777
+            contentErrMsg: ''
+        fileType: ''
+      outputs:
+      - id: 7e12513c-0f5b-4737-9235-65cdf87c1c55
+        name: REASONING_CONTENT
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 模型思考过程
+        customParameterType: deepseekr1
+      - id: fc0f3c4e-b2db-443b-8930-53c056c97c0b
+        name: output
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: ''
+      nodeParam:
+        topK: 4
+        template: '目标：{{goal}}
+
+          类型：{{goal_type}}
+
+          当前基础：{{level}}
+
+          截止时间：{{deadline}}
+
+          每周时间：{{weekly_time}}
+
+          偏好：{{preference}}
+
+          限制：{{constraints}}
+
+          技能拆解：{{skills}}
+
+          可信资源：{{resources}}'
+        modelId: 223
+        enableChatHistoryV2:
+          isEnabled: false
+          rounds: 1
+        auditing: default
+        llmId: 223
+        url: wss://maas-api.cn-huabei-1.xf-yun.com/v1.1/chat
+        multiMode: false
+        uid: '19702983768'
+        modelName: Qwen3-30B-A3B
+        patchId: '0'
+        isThink: true
+        templateErrMsg: ''
+        domain: xop3qwen30b
+        appId: 12a0a7e2
+        maxTokens: 4096
+        temperature: 0.5
+        systemTemplate: "你是\"亿點點\"，一个实战派学习教练。你的原则：只为目标服务，不为体系而体系。用户要的是\"能开始、能完成、看得见进步\"。\n用户属于 J 型（理性规划型），需要一份负责任的完整路线。严格按下面五个部分输出。\n\n**目标评级**\n给出 D- 至 S++ 的目标距离评级 + 一句话理由（差在哪里）。评级表示距离，不评价用户本人。\n\n**最小技能拆解**\n沿用上游的最小最优单元，不要扩写。每个单元一行：单元名 + 为什么必要 + 过关标准。\n\n**学习路径（闯关式）**\n把单元组织成关卡，让用户\"有动力开始、有激励完成、有标准自评\"，且结果看得见。\n- 关卡数量：task 型 1-2 关；systematic 型 3-5 关；career 型 4-6 关。\n- 每一关必须包含以下要素，一个都不能少：\n  ① 关卡名，如\"第 1 关：和弦肌肉记忆\"\n  ② 本关要练的具体动作（可直接执行；禁止写\"了解\"\"熟悉\"\"认识\"这类虚词）\n  ③ 对应资源（1-2 条，只能引用可信资源里真实存在的标题和 URL）\n  ④ ⏱ 预计用时\n  ⑤ 验收标准：必须是外部可观察的行为，格式为\"能做到 X，连续 N 次 / 在 X 条件下达成\"\n  ⑥ 自评问题：用户完成后自己回答的客观问题。禁止\"我觉得学会了吗\"，要写成\"我能在不看谱的情况下弹完这 8 小节吗？\"\n  ⑦ 通关激励：一句具体、不说教的肯定，并给出解锁提示\n- 每关结束单独一行标注：\U0001F3AF 通过后解锁：[下一关名称]\n\n**本周立即行动**\n用户今天或本周就能做的 1-3 件事，精确到\"打开什么、练什么、练多久\"。\n\n**闯关进度表**\n| 关卡 | 状态 | 验收标准 | 自评结果 |\n用 ☐ / ✅ 标记状态，让用户一眼看见自己走到哪了。\n\n**风险与待核实项**\n提醒用户自行验证链接有效性；涉及付费资源请自行评估；标注暂未检索到可信资源的单元。\n\n最后单独一行收尾（不得省略、不得替换成其它话术）：\n如果情况有变化，请及时告知我，我来帮你优化路线。\n\n【铁律】\n1. 只能引用可信资源中真实存在的标题和 URL，不得新增或改写链接。\n2. 没有合格资源时写\"暂未检索到可信资源\"，并给出搜索关键词，绝不编造链接。\n3. 验收标准与自评问题必须可观察，禁止\"掌握/熟悉/了解/我觉得会了\"这类不可验证的表述。\n4. 时间安排不能超过用户可用时间；目标过大时先给一个能完成的缩小版本。\n5. 语气直接自然，不灌鸡汤，不反复使用口头禅。\n6. 不声称已观看视频、登录网站、替用户完成操作或持续监控。"
+        model: spark
+        modelEnabled: true
+        serviceId: xop3qwen30b
+        respFormat: 0
+        llmIdErrMsg: ''
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-model.svg
+      description: 根据输入的提示词，调用选定的大模型，对提示词作出回答
+      updatable: false
+  - id: spark-llm::196d89e7-06b6-468d-887c-89a5b19a9f20
+    dragging: false
+    selected: false
+    width: 361
+    height: 165
+    position:
+      x: 6037.9939939535425
+      y: 848.9189899546312
+    positionAbsolute:
+      x: 6037.9939939535425
+      y: 848.9189899546312
+    type: 大模型
+    data:
+      allowInputReference: true
+      allowOutputReference: true
+      label: 事实质检
+      labelEdit: false
+      references: []
+      status: success
+      nodeMeta:
+        aliasName: 大模型
+        nodeType: 基础节点
+      inputs:
+      - id: 3e11915e-ec24-47d4-84e1-ffed10042643
+        name: draft
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: output
+              id: 8bb77f95-18f6-4a54-91eb-745646314de5
+              nodeId: spark-llm::2199c90c-6104-415c-9578-0183de1605d9
+            contentErrMsg: ''
+        fileType: ''
+      - id: 0be94ec6-ab04-4d78-8d5f-6439f0db1b72
+        name: resources
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: output
+              id: d1254287-43b1-406f-ae26-b1c7cea3fe63
+              nodeId: spark-llm::4ebf206e-c443-4375-a226-a7f8abd8d777
+            contentErrMsg: ''
+        fileType: ''
+      - id: f33e8ce9-5479-444a-92c4-d2e22c0eac7b
+        name: skills
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: output
+              id: 3509610e-d5b2-40ec-b0f4-a82c49f4c613
+              nodeId: spark-llm::5440a1e8-00dc-480a-8138-2bb0a062b61c
+            contentErrMsg: ''
+        fileType: ''
+      - id: 99ec09bb-d6b8-47c9-9434-3acd0bc26e61
+        name: deadline
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: deadline
+              id: 157fe404-2559-4551-9924-3aad59e2ae18
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 72b98090-3da2-4ba5-a9bf-8f23a798df29
+        name: weekly_time
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: weekly_time
+              id: a22a6040-b773-490b-a25d-dc46c68d8418
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 99a6d622-e6f0-4a9a-956f-d015f9998577
+        name: mode
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: need_clarification
+              id: 4bb6d863-b3de-42f3-9b20-9b4fa0345552
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      outputs:
+      - id: ca3854bb-9213-4b5a-9973-989df4614447
+        name: REASONING_CONTENT
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 模型思考过程
+        customParameterType: deepseekr1
+      - id: bf2399de-a699-4ca6-a4bf-8a0cbc31bd81
+        name: output
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 质检并修正后的最终路线
+      nodeParam:
+        topK: 4
+        template: '模式：{{mode}}
+
+          路线草稿：{{draft}}
+
+          可信资源：{{resources}}
+
+          技能拆解：{{skills}}
+
+          截止时间：{{deadline}}
+
+          每周时间：{{weekly_time}}'
+        modelId: 223
+        enableChatHistoryV2:
+          isEnabled: false
+          rounds: 1
+        auditing: default
+        llmId: 223
+        url: wss://maas-api.cn-huabei-1.xf-yun.com/v1.1/chat
+        multiMode: false
+        uid: '19702983768'
+        modelName: Qwen3-30B-A3B
+        patchId: '0'
+        isThink: true
+        templateErrMsg: ''
+        domain: xop3qwen30b
+        appId: 12a0a7e2
+        maxTokens: 4096
+        temperature: 0.5
+        systemTemplate: "你是最终输出质检器。检查草稿并直接输出修正后的完整版本，不要输出任何检查过程。\n草稿第一行带有【模式：X】标记，先读它决定检查强度。\n\n【一、事实与链接】\n1. 每一个链接都必须同时过两道检查，缺一不可：\n   (a) 能在\"可信资源\"里逐字找到——标题和 URL 都对得上；\n   (b) 它挂靠的那一关、那个单元，练的正是这条资源讲的东西。\n   判定 (b) 以标题为准：标题里出现了该关核心对象的名字（歌名、专有名词、技能名、工具名、API 名），就算对上；只是同一大领域、同一个平台、同一个泛主题，都算对不上。\n   例：目标是《晴天》弹唱，候选标题是\"吉他入门全套教程\" → 对不上。\n   例：目标是\"Python 列表推导式\"，候选是\"Python 从入门到精通\" → 对不上。\n   (a) 或 (b) 有一项过不了，就删掉这条链接和它的标题，不要替换成别的链接。\n   删掉后，把该关、该单元的资源位置写成\"暂未检索到可信资源\"，并给出建议搜索关键词。\n2. 删除无依据的播放量、口碑、薪资、就业趋势，以及\"我看过/我验证过\"这类表述。\n3. 绝不允许新增任何链接、标题或作者。链接宁可少，也不许凑一条进去。\n\n【二、按模式适配】\n - \"J_READY\" → J\n   - \"P_READY\" → P\n   - \"ASK\" → ASK\n\n3. 模式为 P 时，先做一次闸门复核：\n   如果草稿里有\"任务难度\"这一行，但后面并没有给出任何能直接上手的内容（没有动作、没有谱子、没有参数、没有代码、没有步骤），只有一句追问——说明上游把模式判错了，这一稿实际上是 ASK。\n   处理：删掉【模式：X】标记行、删掉\"任务难度\"那一行、删掉结尾\"想要带资源链接、验收标准和进度的完整版，说一声。\"，只保留那句追问。\n   否则：只删除编造内容，保持简短直给的风格。不要改写成计划书，不要补写关卡，不要补写目标评级或任何 J 型小节。必须保留第一行的模式标记和\"任务难度\"那一行；草稿缺任务难度时，依据目标与用户基础补一行。保留结尾那句\"想要带资源链接、验收标准和进度的完整版，说一声。\"\n4. 模式为 ASK：确认草稿只有那几句追问，其余内容一律删除，包括\"任务难度\"那一行和任何评级、方案、资源。不要补写任何方案、评级或资源。\n5. 模式为 J：继续执行第三部分的结构校验。J 模式的结尾固定为\"如果情况有变化，请及时告知我，我来帮你优化路线。\"；若草稿结尾出现\"想要带资源链接、验收标准和进度的完整版，说一声。\"，一律删除——那句是 P 模式专属，不属于 J 模式。\n\n【三、J 模式结构校验】\n6. 基本原则：宁可少一节，绝不输出空标题。某一节确实没有实际内容时，删除整个节标题，禁止留下后面什么都没有的空壳标题。\n7. 在遵守第 6 条的前提下，J 型结构应包含五个部分：目标评级、最小技能拆解、学习路径（闯关式）、本周立即行动、风险与待核实项。\n8. 唯一允许补写的节是\"目标评级\"：草稿里缺评级时，依据给定目标与用户当前基础补一句 D- 至 S++ 的评级 + 一句话理由；若连目标和基础都无从判断，则同样删除该节，不得留空。\n9. 每一关必须同时具备七要素：关卡名、具体动作、资源、预计用时、验收标准、自评问题、通关激励；缺哪项补哪项。\n10. 验收标准与自评问题必须是外部可观察的行为。发现\"掌握/熟悉/了解/我觉得会了\"等不可验证的表述，改写为\"能连续做到 X 次 / 在 X 条件下完成\"。\n11. 删除用户已经掌握的冗余学习内容。\n12. 总时间不能超过用户期限或可投入时间。\n13. 不得新添加任何资源或链接。\n\n【四、禁止空壳】\n14. 输出中不得出现空标题、占位符、\"（待补）\"、\"TODO\"或未替换的模板变量。\n\n只输出可以直接展示给用户的最终内容。"
+        model: spark
+        modelEnabled: true
+        serviceId: xop3qwen30b
+        respFormat: 0
+        llmIdErrMsg: ''
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-model.svg
+      description: 根据输入的提示词，调用选定的大模型，对提示词作出回答
+      updatable: false
+  - id: spark-llm::5bcd7d91-9386-4150-9a61-4183a19d744b
+    dragging: false
+    selected: false
+    width: 361
+    height: 165
+    position:
+      x: 6474.483981396663
+      y: 868.1203651881335
+    positionAbsolute:
+      x: 6474.483981396663
+      y: 868.1203651881335
+    type: 大模型
+    data:
+      allowInputReference: true
+      allowOutputReference: true
+      label: 学习状态摘要
+      labelEdit: false
+      references: []
+      status: success
+      nodeMeta:
+        aliasName: 大模型
+        nodeType: 基础节点
+      inputs:
+      - id: 72f4fe37-f9d4-4739-ab45-f323d71bdc95
+        name: goal
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: goal
+              id: 0aaab819-6f1e-4ce4-beb3-80cd469a9a1d
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 358e1e48-1724-4340-b2df-ba5d8d54d42e
+        name: domain
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: domain
+              id: e15ccbe1-2bf0-4c8f-b503-a4c5c9e5106c
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 976ae21d-6860-499b-97e1-f01978672a50
+        name: level
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: current_level
+              id: 81f30dbe-9932-486a-9424-3563f9b2fbcb
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 7aec60d0-0caa-4851-a6ea-079bec08d417
+        name: preference
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: resource_preference
+              id: 98ac7693-48c2-4a5e-bf67-850562cdd7ea
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: d37e8009-e53d-43c9-8c52-cc0fff1d853a
+        name: constraints
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: constraints_text
+              id: f3a74eec-3d6b-45e9-be28-68acd4464a29
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 393fe6d9-63e2-4568-a823-7cee2aa78f5b
+        name: plan
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: output
+              id: bf2399de-a699-4ca6-a4bf-8a0cbc31bd81
+              nodeId: spark-llm::196d89e7-06b6-468d-887c-89a5b19a9f20
+            contentErrMsg: ''
+        fileType: ''
+      outputs:
+      - id: 65672e58-57fa-420a-a336-8da2a73e82a8
+        name: REASONING_CONTENT
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 模型思考过程
+        customParameterType: deepseekr1
+      - id: 2550af62-f17f-4719-910c-72d140087cba
+        name: output
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 写入长期记忆的简短学习状态
+      nodeParam:
+        topK: 4
+        template: '目标：{{goal}}
+
+          领域：{{domain}}
+
+          当前基础：{{level}}
+
+          偏好：{{preference}}
+
+          限制：{{constraints}}
+
+          最终路线：{{plan}}'
+        modelId: 223
+        enableChatHistoryV2:
+          isEnabled: false
+          rounds: 1
+        auditing: default
+        llmId: 223
+        url: wss://maas-api.cn-huabei-1.xf-yun.com/v1.1/chat
+        multiMode: false
+        uid: '19702983768'
+        modelName: Qwen3-30B-A3B
+        patchId: '0'
+        isThink: true
+        templateErrMsg: ''
+        domain: xop3qwen30b
+        appId: 12a0a7e2
+        maxTokens: 2048
+        temperature: 0.5
+        systemTemplate: '把本轮对后续学习有用的信息压缩成简短 JSON。不要保存姓名、手机号、学校、精确住址等个人敏感信息。
+
+          未知内容留空，不得推测。只输出 JSON，不加代码围栏。
+
+
+          字段：mode, goal, domain, current_level, resource_preference, constraints, current_stage, next_action, completed_items, self_check_result。
+
+          不要输出日期或时间字段——记忆库会自己记录写入时间，你写的日期只会是错的。
+
+          mode 从路线开头的【模式：X】标记中读取，读不到就留空。
+
+          current_stage 填用户当前所处的关卡；self_check_result 填最近一次自评结果，未知则留空。'
+        model: spark
+        modelEnabled: true
+        serviceId: xop3qwen30b
+        respFormat: 0
+        llmIdErrMsg: ''
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-model.svg
+      description: 根据输入的提示词，调用选定的大模型，对提示词作出回答
+      updatable: false
+  - id: memory-add::ed492c34-e81f-47ad-96de-f75f8b0a35a7
+    dragging: false
+    selected: false
+    width: 255
+    height: 141
+    position:
+      x: 6975.032326363206
+      y: 978.1523500773319
+    positionAbsolute:
+      x: 6975.032326363206
+      y: 978.1523500773319
+    type: 长期记忆写入
+    data:
+      label: 长期记忆写入_1
+      labelEdit: false
+      status: success
+      nodeMeta:
+        aliasName: 长期记忆写入
+        nodeType: 工具节点
+      inputs:
+      - id: 848ec2b9-263f-4c1a-a740-4b1b812cb66b
+        name: content
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: output
+              id: 2550af62-f17f-4719-910c-72d140087cba
+              nodeId: spark-llm::5bcd7d91-9386-4150-9a61-4183a19d744b
+            contentErrMsg: ''
+        fileType: ''
+        required: true
+      - id: d7df409c-6298-4f29-8c63-92510159707f
+        name: role
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: literal
+            content: assistant
+            contentErrMsg: ''
+        required: true
+      outputs:
+      - id: 9ea8b921-6bcb-41c6-8a15-ab95e3fd1b46
+        name: isSuccess
+        nameErrMsg: ''
+        schema:
+          type: boolean
+          description: 写入记忆库状态标识，成功true，失败false
+          default: ''
+      - id: c10cebaf-61d3-46ea-8c53-a921b89fb30a
+        name: message
+        nameErrMsg: ''
+        schema:
+          type: string
+          description: 失败原因
+          default: ''
+      nodeParam:
+        uid: '19702983768'
+        repo_id: repo_153oyKgpyFcQjt8Oa8rJNM
+        appId: 12a0a7e2
+        handlingEdge: normal_one_of::888bf7d0-c0b1-440d-9204-97645f210290
+        exceptionHandlingEdge: fail_one_of::2bcb2f5e-c37e-4307-82f1-158b8c6796f5
+        app_id: 12a0a7e2
+      retryConfig:
+        shouldRetry: false
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/memory-add.svg
+      description: 写入长期记忆，目前支持对用户输入的写入
+      updatable: false
+  - id: memory-search::d9b0aefb-7aae-4b8f-b092-42bf99b4ddd0
+    dragging: false
+    selected: false
+    width: 255
+    height: 141
+    position:
+      x: -298.761739893357
+      y: 278.247545987888
+    positionAbsolute:
+      x: -298.761739893357
+      y: 278.247545987888
+    type: 长期记忆检索
+    data:
+      label: 长期记忆检索_1
+      labelEdit: false
+      status: success
+      nodeMeta:
+        aliasName: 长期记忆检索
+        nodeType: 工具节点
+      inputs:
+      - id: 17b15678-9db1-4258-987a-323608533761
+        name: input
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: AGENT_USER_INPUT
+              id: b55a1099-be8c-4484-ad76-05e35357ae18
+              nodeId: node-start::a1eacf05-63ae-405c-a66c-1f41244bdd98
+            contentErrMsg: ''
+        required: true
+        deleteDisabled: true
+      outputs:
+      - id: c04c4d7d-8f03-4527-bcca-0909a6a50e4a
+        name: memory
+        nameErrMsg: ''
+        schema:
+          type: array-object
+          properties:
+          - id: feffea3c-4008-4df8-84a8-0130tee72276
+            name: value
+            required: false
+            type: string
+            default: ''
+          - id: 95faea3c-4008-4df8-84a8-013079e7gr76
+            name: date
+            required: false
+            type: string
+            default: ''
+        required: false
+      nodeParam:
+        uid: '19702983768'
+        repo_id: repo_153oyKgpyFcQjt8Oa8rJNM
+        appId: 12a0a7e2
+        limit: 5
+        app_id: 12a0a7e2
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-memory-search.svg
+      description: 检索长期记忆，目前支持对用户输入的检索
+      updatable: false
+  - id: memory-add::34e6c452-e395-4300-8f43-80485aae91ef
+    dragging: false
+    selected: false
+    width: 255
+    height: 99
+    position:
+      x: 1406.1939049227917
+      y: 1330.369604544832
+    positionAbsolute:
+      x: 1406.1939049227917
+      y: 1330.369604544832
+    type: 长期记忆写入
+    data:
+      label: 保存待补目标
+      labelEdit: false
+      status: ''
+      nodeMeta:
+        aliasName: 长期记忆写入
+        nodeType: 工具节点
+      inputs:
+      - id: 033b29aa-ff5f-4014-975e-37c1505815f6
+        name: content
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: AGENT_USER_INPUT
+              id: b55a1099-be8c-4484-ad76-05e35357ae18
+              nodeId: node-start::a1eacf05-63ae-405c-a66c-1f41244bdd98
+            contentErrMsg: ''
+        required: true
+      - id: 50e1f995-ce36-42bf-8934-897ccadafc46
+        name: role
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: literal
+            content: user
+            contentErrMsg: ''
+        required: true
+      outputs:
+      - id: 5a199015-ed7d-4fb4-b963-4b5843fd12d7
+        name: isSuccess
+        nameErrMsg: ''
+        schema:
+          type: boolean
+          description: 写入记忆库状态标识，成功true，失败false
+          default: ''
+      - id: 7160f53c-da4d-4712-b3f1-f46ea3d3a80c
+        name: message
+        nameErrMsg: ''
+        schema:
+          type: string
+          description: 失败原因
+          default: ''
+      nodeParam:
+        uid: '19702983768'
+        repo_id: repo_153oyKgpyFcQjt8Oa8rJNM
+        appId: 12a0a7e2
+        app_id: 12a0a7e2
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/memory-add.svg
+      description: 写入长期记忆，目前支持对用户输入的写入
+      updatable: false
+  - id: if-else::aa090472-7902-48cd-81a0-1a447e0ddb10
+    dragging: false
+    selected: false
+    width: 361
+    height: 125
+    position:
+      x: 457.9318894286539
+      y: 252.78254804680034
+    positionAbsolute:
+      x: 457.9318894286539
+      y: 252.78254804680034
+    type: 分支器
+    data:
+      allowInputReference: true
+      allowOutputReference: false
+      label: JP分类
+      labelEdit: false
+      references: []
+      status: success
+      nodeMeta:
+        aliasName: 分支器
+        nodeType: 分支器
+      inputs:
+      - id: b2e9fae4-adf3-4f69-a059-aab3219e7648
+        name: input
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: need_clarification
+              id: 4bb6d863-b3de-42f3-9b20-9b4fa0345552
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: a6f85112-7020-4ebb-aed3-00c1a3b10062
+        name: input1
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: literal
+            content: J_READY
+            contentErrMsg: ''
+        fileType: ''
+      outputs: []
+      nodeParam:
+        uid: '19702983768'
+        cases:
+        - level: 1
+          logicalOperator: and
+          id: branch_one_of::8b39520f-ec47-4ec0-8bb9-f49b0919a660
+          conditions:
+          - leftVarIndex: b2e9fae4-adf3-4f69-a059-aab3219e7648
+            rightVarIndex: a6f85112-7020-4ebb-aed3-00c1a3b10062
+            compareOperatorErrMsg: ''
+            id: ''
+            compareOperator: eq
+        - level: 999
+          logicalOperator: and
+          id: branch_one_of::bf39c09d-683a-4111-8a6d-778a6fe287b4
+          conditions: []
+        appId: 12a0a7e2
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-if-else.svg
+      description: 根据设立的条件，判断选择分支走向
+      updatable: false
+  - id: spark-llm::54302d42-5273-4d03-902d-ff14f8ebaf12
+    dragging: false
+    selected: false
+    width: 298
+    height: 123
+    position:
+      x: 1538.1358315983202
+      y: 650.6095561675954
+    positionAbsolute:
+      x: 1538.1358315983202
+      y: 650.6095561675954
+    type: 大模型
+    data:
+      allowInputReference: true
+      allowOutputReference: true
+      label: 即时方案生成
+      labelEdit: false
+      references: []
+      status: ''
+      nodeMeta:
+        aliasName: 大模型
+        nodeType: 基础节点
+      inputs:
+      - id: f3c91b26-b404-4439-8574-f75e9bce8f16
+        name: mode
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: need_clarification
+              id: 4bb6d863-b3de-42f3-9b20-9b4fa0345552
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 1ac84367-4d96-4c48-81b3-9d93018627b5
+        name: goal
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: goal
+              id: 0aaab819-6f1e-4ce4-beb3-80cd469a9a1d
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 3c1760e1-d5b6-4bb9-9bb0-8ea891422670
+        name: domain
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: domain
+              id: e15ccbe1-2bf0-4c8f-b503-a4c5c9e5106c
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: e60ad723-8a27-4780-ba78-9b072e80c4e8
+        name: level
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: current_level
+              id: 81f30dbe-9932-486a-9424-3563f9b2fbcb
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      outputs:
+      - id: b9d11d29-54ab-4722-8580-23561bb4136a
+        name: REASONING_CONTENT
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 模型思考过程
+        customParameterType: deepseekr1
+      - id: 4342a15e-c9ed-44b4-b582-f51972620385
+        name: output
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 结构化技能拆解 JSON 文本
+      nodeParam:
+        topK: 4
+        template: '模式：{{mode}}
+
+          目标：{{goal}}
+
+          领域：{{domain}}
+
+          用户基础：{{level}}'
+        modelId: 223
+        enableChatHistoryV2:
+          isEnabled: true
+          rounds: 3
+        auditing: default
+        llmId: 223
+        url: wss://maas-api.cn-huabei-1.xf-yun.com/v1.1/chat
+        multiMode: false
+        uid: '19702983768'
+        modelName: Qwen3-30B-A3B
+        patchId: '0'
+        isThink: true
+        templateErrMsg: ''
+        domain: xop3qwen30b
+        appId: 12a0a7e2
+        maxTokens: 2048
+        temperature: 0.5
+        systemTemplate: "你是\"亿點點\"，一个实战派学习教练。语气轻松、直接，像朋友随口给的建议。\n\n用户只是随口想学一个具体的东西——不要铺陈、不要写计划书。\n\n━━━━━━━━━━━━━━━━━━━━\n【第一道闸门：先自查关键前提，没定死就只问不答】\n━━━━━━━━━━━━━━━━━━━━\n\n写任何内容之前，先确认这个目标的\"关键前提\"是不是已经定死。\n\n关键前提 = 如果这个目标有多种练法（一首歌可以唱、可以用吉他弹、也可以用钢琴弹；一项运动可以单打也可以双打；一门乐器有不同学法），用户必须已经说清是哪一种。\n\n判断依据只有两处：本轮的\"目标\"字段，以及对话历史里用户亲口说过的话。两处都没说清 → 关键前提没定死。\n\n关键前提没定死时，你的输出只能是一句追问，并且必须满足：\n- 只输出这一句追问本身，不输出任何标题、任何评级、任何方案；\n- 禁止输出\"任务难度\"这一行（一个字都不要）；\n- 禁止输出结尾话术\"想要带资源链接、验收标准和进度的完整版，说一声。\"；\n- 禁止替用户默认一种练法，尤其不许默认成吉他。\n\n示例（关键前提没定死，照这样只输出一句）：\n  目标 = \"我想学首歌\"   → \"你想学的是哪一首？告诉我歌名，我直接给你和弦和第一个 5 分钟怎么练。\"\n  目标 = \"我想学一首歌\" → \"你想学的是哪一首？告诉我歌名，我直接给你和弦和第一个 5 分钟怎么练。\"\n  目标 = \"我想学《晴天》\" → \"《晴天》你是想唱，还是想用乐器弹？想弹的话是吉他、钢琴还是别的？\"\n  目标 = \"我想学一门乐器\" → \"你想学哪种乐器？另外是想先能弹唱，还是先练独奏？\"\n\n关键前提已经定死，才继续往下，按 mode 输出：\n\n- mode = \"P_READY\"：固定输出两段，全文控制在 450 字以内。\n  第一段（单独一行）：**任务难度**：[D- 至 S++ 之间的评级] + 一句话理由，说清这个目标离\"能自己上手用\"还差多远、差在哪里。\n  第二段：现在就能上手的最小可执行包——最关键的动作 + 数字谱/参数/代码骨架 + 第一个 5 分钟怎么练。\n  不确定的细节标注\"以正式资料为准\"，绝不编造链接、作者或来源。\n  结尾单独一行：\"想要带资源链接、验收标准和进度的完整版，说一声。\"\n- 其余任何取值：说明信息还不足以直接给方案，只输出一句最关键的追问，不要输出任务难度，也不要输出方案。\n\n━━━━━━━━━━━━━━━━━━━━\n【落笔前最后一遍】\n━━━━━━━━━━━━━━━━━━━━\n输出前问自己：我这一版里出现\"任务难度\"了吗？如果关键前提还没定死却出现了\"任务难度\"，立刻删掉那一行和后面所有内容，只留那一句追问。"
+        model: spark
+        modelEnabled: true
+        serviceId: xop3qwen30b
+        respFormat: 0
+        llmIdErrMsg: ''
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-model.svg
+      description: 根据输入的提示词，调用选定的大模型，对提示词作出回答
+      updatable: false
+  - id: spark-llm::b3b56803-f8b9-449a-879d-931f2f17fd25
+    dragging: false
+    selected: false
+    width: 287
+    height: 165
+    position:
+      x: 3551.350141270118
+      y: 357.7430378011977
+    positionAbsolute:
+      x: 3551.350141270118
+      y: 357.7430378011977
+    type: 大模型
+    data:
+      allowInputReference: true
+      allowOutputReference: true
+      label: 资源覆盖核验
+      labelEdit: false
+      references: []
+      status: success
+      nodeMeta:
+        aliasName: 大模型
+        nodeType: 基础节点
+      inputs:
+      - id: a3355a9a-ae9e-4483-9d33-8ac227086ff2
+        name: goal
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: goal
+              id: 0aaab819-6f1e-4ce4-beb3-80cd469a9a1d
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 96eec5ad-72a7-45c0-9377-6362ae3dee34
+        name: skills
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: output
+              id: 3509610e-d5b2-40ec-b0f4-a82c49f4c613
+              nodeId: spark-llm::5440a1e8-00dc-480a-8138-2bb0a062b61c
+            contentErrMsg: ''
+        fileType: ''
+      - id: 69153cf5-6e29-477b-9330-729a94613509
+        name: resources
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: output
+              id: b9cf609a-e9e5-4125-abff-88e1c9688212
+              nodeId: spark-llm::a68abab9-19b0-4ca6-b3c6-20bd482212d3
+            contentErrMsg: ''
+        fileType: ''
+      outputs:
+      - id: 56e0a5c8-dff2-4a42-bef1-30dcae71f3e4
+        name: REASONING_CONTENT
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 模型思考过程
+        customParameterType: deepseekr1
+      - id: 76a27fe7-7a39-459f-96bc-a00b9b459e67
+        name: output
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 结构化技能拆解 JSON 文本
+      nodeParam:
+        topK: 4
+        template: '目标：{{goal}}
+
+          技能拆解：{{skills}}
+
+          第一轮筛选结果：{{resources}}'
+        modelId: 223
+        enableChatHistoryV2:
+          isEnabled: false
+          rounds: 1
+        auditing: default
+        llmId: 223
+        url: wss://maas-api.cn-huabei-1.xf-yun.com/v1.1/chat
+        multiMode: false
+        uid: '19702983768'
+        modelName: Qwen3-30B-A3B
+        patchId: '0'
+        isThink: true
+        templateErrMsg: ''
+        domain: xop3qwen30b
+        appId: 12a0a7e2
+        maxTokens: 2048
+        temperature: 0.5
+        systemTemplate: "你是资源覆盖审核器。判断当前检索结果是否覆盖了所有最小技能单元。\n\n规则：\n1. 逐一核对每个最小单元是否有至少 1 条合格资源：既要有真实 URL，也要标题能看出它讲的正是这个单元。只是\"同一个大领域\"的资源不算覆盖。\n2. 若存在未被覆盖的单元，挑出最重要的一个缺口，生成 1 条新的补充搜索词：必须换角度——换关键词表达、加 step by step／慢速／分解／纠错、或换平台限定，不能把原查询重复一遍。\n   补充搜索词必须包含该单元的核心对象名；中文内容就用中文查询，不要写成英文长句。\n3. 若所有单元都已被覆盖，输出 NONE。\n4. 禁止编造资源、链接或标题。\n\n输出要求：\n- 不需要补搜时：只输出 NONE 这四个大写字母，前后不得有任何空格、标点、引号或换行。\n- 需要补搜时：只输出那一条搜索词，单行，不加引号、不加解释。"
+        model: spark
+        modelEnabled: true
+        serviceId: xop3qwen30b
+        respFormat: 0
+        llmIdErrMsg: ''
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-model.svg
+      description: 根据输入的提示词，调用选定的大模型，对提示词作出回答
+      updatable: false
+  - id: if-else::8b20d698-448f-4bf4-ac80-f029fcca6f06
+    dragging: false
+    selected: false
+    width: 301
+    height: 167
+    position:
+      x: 3965.0784799675666
+      y: 386.4355100672811
+    positionAbsolute:
+      x: 3965.0784799675666
+      y: 386.4355100672811
+    type: 分支器
+    data:
+      allowInputReference: true
+      allowOutputReference: false
+      label: 缺口补搜判定
+      labelEdit: false
+      references: []
+      status: success
+      nodeMeta:
+        aliasName: 分支器
+        nodeType: 分支器
+      inputs:
+      - id: 4c277b48-8642-4334-983c-aef1533c00fe
+        name: input
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: output
+              id: 76a27fe7-7a39-459f-96bc-a00b9b459e67
+              nodeId: spark-llm::b3b56803-f8b9-449a-879d-931f2f17fd25
+            contentErrMsg: ''
+        fileType: ''
+      - id: c10612be-2946-4a9b-9ae6-722bb4c844a3
+        name: input1
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: literal
+            content: NONE
+            contentErrMsg: ''
+        fileType: ''
+      outputs: []
+      nodeParam:
+        uid: '19702983768'
+        cases:
+        - level: 1
+          logicalOperator: and
+          id: branch_one_of::d6008438-09c0-45ee-8b73-47bfd5ad8856
+          conditions:
+          - leftVarIndex: 4c277b48-8642-4334-983c-aef1533c00fe
+            rightVarIndex: c10612be-2946-4a9b-9ae6-722bb4c844a3
+            compareOperatorErrMsg: ''
+            id: ''
+            compareOperator: eq
+        - level: 999
+          logicalOperator: and
+          id: branch_one_of::fffd34b1-45b5-49c9-85ba-cec609003d8e
+          conditions: []
+        appId: 12a0a7e2
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-if-else.svg
+      description: 根据设立的条件，判断选择分支走向
+      updatable: false
+  - id: mcp::b63643e3-70b7-4f83-a97d-ed87aea9f1d4
+    dragging: false
+    selected: false
+    width: 255
+    height: 141
+    position:
+      x: 4303.833753609945
+      y: 646.6489777836242
+    positionAbsolute:
+      x: 4303.833753609945
+      y: 646.6489777836242
+    type: MCP
+    data:
+      allowInputReference: true
+      allowOutputReference: true
+      label: 二次补充检索
+      labelEdit: false
+      references: []
+      status: success
+      nodeMeta:
+        aliasName: MCP
+        nodeType: 工具节点
+      inputs:
+      - id: 1c9cb9a3-7bf0-4f30-beff-2b0ef5cb5c82
+        name: name
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: output
+              id: 76a27fe7-7a39-459f-96bc-a00b9b459e67
+              nodeId: spark-llm::b3b56803-f8b9-449a-879d-931f2f17fd25
+            contentErrMsg: ''
+        fileType: ''
+        description: 需要搜索的问题
+        required: true
+      outputs:
+      - id: f6466a39-fb65-419f-b03d-2cbd7456daea
+        name: result
+        nameErrMsg: ''
+        schema:
+          type: object
+          properties:
+          - id: d6139baf-1e21-4138-9f69-30134a3b9ba8
+            name: isError
+            required: false
+            type: boolean
+            properties: []
+            default: ''
+          - id: 6af38267-17fe-4e77-a064-1f345035e75a
+            name: content
+            required: false
+            type: array-object
+            default: ''
+          default: ''
+        required: false
+      nodeParam:
+        toolDescription: 使用网络搜索公开信息
+        mcpServerId: mcp@flow7315369583345876994
+        toolName: 联网搜索
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-mcp.svg
+      updatable: false
+  - id: spark-llm::4ebf206e-c443-4375-a226-a7f8abd8d777
+    dragging: false
+    selected: false
+    width: 361
+    height: 165
+    position:
+      x: 4607.902664860358
+      y: 442.3754107243449
+    positionAbsolute:
+      x: 4607.902664860358
+      y: 442.3754107243449
+    type: 大模型
+    data:
+      allowInputReference: true
+      allowOutputReference: true
+      label: 资源归一化
+      labelEdit: false
+      references: []
+      status: success
+      nodeMeta:
+        aliasName: 大模型
+        nodeType: 基础节点
+      inputs:
+      - id: 83c8979c-34e3-43ae-b870-b2ec8f6b9322
+        name: goal
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: goal
+              id: 0aaab819-6f1e-4ce4-beb3-80cd469a9a1d
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 2f7eefac-faa4-4958-a4a5-15bd3671fd0d
+        name: skills
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: output
+              id: 3509610e-d5b2-40ec-b0f4-a82c49f4c613
+              nodeId: spark-llm::5440a1e8-00dc-480a-8138-2bb0a062b61c
+            contentErrMsg: ''
+        fileType: ''
+      - id: 18812e7f-5fbd-4c9c-928f-c525b2e3ead7
+        name: resources_round1
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: output
+              id: b9cf609a-e9e5-4125-abff-88e1c9688212
+              nodeId: spark-llm::a68abab9-19b0-4ca6-b3c6-20bd482212d3
+            contentErrMsg: ''
+        fileType: ''
+      - id: b856c694-68c3-47e0-a14a-3d09aa99d53f
+        name: new_result
+        nameErrMsg: ''
+        schema:
+          type: object
+          value:
+            type: ref
+            content:
+              name: result
+              id: f6466a39-fb65-419f-b03d-2cbd7456daea
+              nodeId: mcp::b63643e3-70b7-4f83-a97d-ed87aea9f1d4
+            contentErrMsg: ''
+        fileType: ''
+      outputs:
+      - id: 891a40ec-98e0-48e3-9895-547b77735e89
+        name: REASONING_CONTENT
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 模型思考过程
+        customParameterType: deepseekr1
+      - id: d1254287-43b1-406f-ae26-b1c7cea3fe63
+        name: output
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 结构化技能拆解 JSON 文本
+      nodeParam:
+        topK: 4
+        template: '目标：{{goal}}
+
+          技能拆解：{{skills}}
+
+          第一轮筛选结果：{{resources_round1}}
+
+          补搜搜索结果：{{new_result}}'
+        modelId: 223
+        enableChatHistoryV2:
+          isEnabled: false
+          rounds: 1
+        auditing: default
+        llmId: 223
+        url: wss://maas-api.cn-huabei-1.xf-yun.com/v1.1/chat
+        multiMode: false
+        uid: '19702983768'
+        modelName: Qwen3-30B-A3B
+        patchId: '0'
+        isThink: true
+        templateErrMsg: ''
+        domain: xop3qwen30b
+        appId: 12a0a7e2
+        maxTokens: 4096
+        temperature: 0.5
+        systemTemplate: "你是资源汇总与终检器。把第一轮筛选结果与补搜结果合并成一份最终可信资源清单。\n\n步骤：\n1. 汇总两批结果，按 URL 去重，同一资源只保留一条。URL 原样照抄，不得截断或补全。\n2. 补搜结果要用和第一轮完全相同的尺子重新审一遍：\n   - 只看标题判断它讲的是不是正好是它服务的那个技能单元，标题里没有该单元核心对象名的一律丢弃；\n   - 只是同一大领域、同一个泛主题的，一律丢弃；\n   - 没有真实 URL 的丢弃；\n   - 平台首页、分类页、聚合页、合集页、下载站、网盘、论坛问答、百科词条，一律丢弃；\n   - 标题、作者、平台一律照抄原文，不得补写，不得添加播放量或评分。\n3. 逐单元核对覆盖，保证每个最小单元至少 1 条资源；仍然没有合格资源的单元，标注\"暂未检索到可信资源\"并给出建议搜索关键词——绝不能编造链接。\n4. 最终资源总数不超过 6 条，按单元 ID 归组。宁缺毋滥，不要为了凑数放低标准。\n5. 只输出可直接交给下游使用的资源清单文本，不要输出解释。"
+        model: spark
+        modelEnabled: true
+        serviceId: xop3qwen30b
+        respFormat: 0
+        llmIdErrMsg: ''
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-model.svg
+      description: 根据输入的提示词，调用选定的大模型，对提示词作出回答
+      updatable: false
+  - id: spark-llm::2199c90c-6104-415c-9578-0183de1605d9
+    dragging: false
+    selected: false
+    width: 287
+    height: 165
+    position:
+      x: 5573.592371812945
+      y: 820.2901862146474
+    positionAbsolute:
+      x: 5573.592371812945
+      y: 820.2901862146474
+    type: 大模型
+    data:
+      allowInputReference: true
+      allowOutputReference: true
+      label: 产出稿汇编
+      labelEdit: false
+      references: []
+      status: success
+      nodeMeta:
+        aliasName: 大模型
+        nodeType: 基础节点
+      inputs:
+      - id: 0be5f403-b85d-414a-86d7-9b8e28e68ea7
+        name: mode
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: need_clarification
+              id: 4bb6d863-b3de-42f3-9b20-9b4fa0345552
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: be7d5503-2b63-4feb-91d7-65823d6db0e7
+        name: draft_j
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: output
+              id: fc0f3c4e-b2db-443b-8930-53c056c97c0b
+              nodeId: spark-llm::11be6a63-ddac-4dc0-81c3-2338e84782bb
+            contentErrMsg: ''
+        fileType: ''
+      - id: a047acef-f9ca-462a-a173-860d44a31739
+        name: draft_p
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: output
+              id: 4342a15e-c9ed-44b4-b582-f51972620385
+              nodeId: spark-llm::54302d42-5273-4d03-902d-ff14f8ebaf12
+            contentErrMsg: ''
+        fileType: ''
+      outputs:
+      - id: adb96d17-61f1-4d0d-9451-13c7326e5cc5
+        name: REASONING_CONTENT
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 模型思考过程
+        customParameterType: deepseekr1
+      - id: 8bb77f95-18f6-4a54-91eb-745646314de5
+        name: output
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 结构化技能拆解 JSON 文本
+      nodeParam:
+        topK: 4
+        template: '模式：{{mode}}
+
+
+          【J 路径草稿】
+
+          {{draft_j}}
+
+
+          【P 路径草稿】
+
+          {{draft_p}}'
+        modelId: 223
+        enableChatHistoryV2:
+          isEnabled: false
+          rounds: 1
+        auditing: default
+        llmId: 223
+        url: wss://maas-api.cn-huabei-1.xf-yun.com/v1.1/chat
+        multiMode: false
+        uid: '19702983768'
+        modelName: Qwen3-30B-A3B
+        patchId: '0'
+        isThink: true
+        templateErrMsg: ''
+        domain: xop3qwen30b
+        appId: 12a0a7e2
+        maxTokens: 4096
+        temperature: 0.5
+        systemTemplate: "你是产出稿汇编器。下面有两份草稿，其中一份必然为空。选出非空的那一份，原样输出。\n\n规则：\n1. J 路径草稿非空时输出 J 路径草稿；否则输出 P 路径草稿。\n2. 加标记前先做一次形态核对。草稿的实际形态和传入的 mode 对不上时，一律以草稿形态为准：\n   - 所选草稿通篇只是一句或几句追问，既没有\"目标评级\"，也没有\"闯关\"，也没有\"任务难度\"\n     → 标记写【模式：ASK】，不管传入的 mode 是 P_READY 还是 J_READY。\n   - 所选草稿里含\"目标评级\"或\"闯关\" → 标记写【模式：J】。\n   - 所选草稿里含\"任务难度\" → 标记写【模式：P】。\n   - 形态确实判断不出来时，才按传入的 mode 映射：J_READY→J，P_READY→P，ASK→ASK。\n3. 不要改写、不要润色、不要新增或删除任何内容，只做选择与加标记。（这句话不要说出来）\n4. 标记行下面紧接草稿正文，不要额外添加任何标题或空行。"
+        model: spark
+        modelEnabled: true
+        serviceId: xop3qwen30b
+        respFormat: 0
+        llmIdErrMsg: ''
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-model.svg
+      description: 根据输入的提示词，调用选定的大模型，对提示词作出回答
+      updatable: false
+  - id: ifly-code::32fb9d1a-ce60-43ac-b65a-ea880cce6b7f
+    dragging: false
+    selected: false
+    width: 295
+    height: 141
+    position:
+      x: 2750.7368816018384
+      y: 327.2949619862653
+    positionAbsolute:
+      x: 2750.7368816018384
+      y: 327.2949619862653
+    type: 代码
+    data:
+      allowInputReference: true
+      allowOutputReference: true
+      label: 代码_1
+      labelEdit: false
+      references: []
+      status: success
+      nodeMeta:
+        aliasName: 代码
+        nodeType: 工具
+      inputs:
+      - id: e38b0f5f-6ebd-47a5-bd3a-ed280ba7ba16
+        name: content_1
+        nameErrMsg: ''
+        schema:
+          type: array-object
+          value:
+            type: ref
+            content:
+              name: result.content
+              id: 6af38267-17fe-4e77-a064-1f345035e75a
+              nodeId: mcp::3737ea45-7118-4f0a-9eb5-ab60f686989c
+            contentErrMsg: ''
+        fileType: ''
+      - id: e8739d06-2a3f-49a6-b5b3-365e32a2a4a5
+        name: content_2
+        nameErrMsg: ''
+        schema:
+          type: array-object
+          value:
+            type: ref
+            content:
+              name: result.content
+              id: 6af38267-17fe-4e77-a064-1f345035e75a
+              nodeId: mcp::44655854-8848-4582-8192-83a879f60d10
+            contentErrMsg: ''
+        fileType: ''
+      - id: b18d0e14-54de-451f-b425-b10bd65af7da
+        name: content_3
+        nameErrMsg: ''
+        schema:
+          type: array-object
+          value:
+            type: ref
+            content:
+              name: result.content
+              id: 6af38267-17fe-4e77-a064-1f345035e75a
+              nodeId: mcp::e1e1cf91-700a-4f1b-84e4-f90f3cf61922
+            contentErrMsg: ''
+        fileType: ''
+      outputs:
+      - id: c0d92e6b-d031-4ac9-873d-71e00089ef61
+        name: compressed_results
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: ''
+      nodeParam:
+        uid: '19702983768'
+        code: "# -*- coding: utf-8 -*-\n\n\ndef clean_content(text, max_length=2500):\n    if not text:\n        return \"\"\n\n    text = \" \".join(str(text).split())\n\n    if len(text) > max_length:\n        text = text[:max_length] + \"……\"\n\n    return text\n\n\ndef main(content_1, content_2, content_3):\n    # 编号写死，不跟着过滤后的顺序走：某一路搜空时，【搜索器2】必须还是 query_2\n    raw = [(\"1\", content_1), (\"2\", content_2), (\"3\", content_3)]\n\n    parts = []\n    for tag, content in raw:\n        text = clean_content(content)\n        if text:\n            parts.append(\"【搜索器\" + tag + \"】\" + \"\\n\" + text)\n\n    return \"\\n\\n\".join(parts)"
+        appId: 12a0a7e2
+        codeErrMsg: ''
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-question.svg
+      description: 面向开发者提供代码开发能力，目前仅支持python语言，允许使用该节点已定义的变量作为参数传入，返回语句用于输出函数的结果
+      updatable: false
+  - id: spark-llm::85ad84fc-f18e-499c-9ab1-a40ca931922c
+    dragging: false
+    selected: false
+    width: 361
+    height: 165
+    position:
+      x: 2945.9619716450607
+      y: 323.5368791501277
+    positionAbsolute:
+      x: 2945.9619716450607
+      y: 323.5368791501277
+    type: 大模型
+    data:
+      allowInputReference: true
+      allowOutputReference: true
+      label: 资源初筛
+      labelEdit: false
+      references: []
+      status: ''
+      nodeMeta:
+        aliasName: 大模型
+        nodeType: 基础节点
+      inputs:
+      - id: 00e49db2-8646-48a2-8b9b-a2a49b884bbc
+        name: result
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: compressed_results
+              id: c0d92e6b-d031-4ac9-873d-71e00089ef61
+              nodeId: ifly-code::32fb9d1a-ce60-43ac-b65a-ea880cce6b7f
+            contentErrMsg: ''
+        fileType: ''
+      - id: 20f3b10d-d71e-4f75-bdad-87f10cc8ea29
+        name: goal
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: goal
+              id: 0aaab819-6f1e-4ce4-beb3-80cd469a9a1d
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      outputs:
+      - id: 8b61c472-897a-4d7f-9ef4-93d5c27087ce
+        name: REASONING_CONTENT
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 模型思考过程
+        customParameterType: deepseekr1
+      - id: 01ed9041-6cc2-4cb3-ab93-5bc205a7875f
+        name: output
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 初筛后的候选资源清单
+      nodeParam:
+        topK: 4
+        template: '搜索结果：{{result}}
+
+          学习目标：{{goal}}'
+        modelId: 223
+        enableChatHistoryV2:
+          isEnabled: false
+          rounds: 1
+        auditing: default
+        llmId: 223
+        url: wss://maas-api.cn-huabei-1.xf-yun.com/v1.1/chat
+        multiMode: false
+        uid: '19702983768'
+        modelName: Qwen3-30B-A3B
+        patchId: '0'
+        isThink: true
+        templateErrMsg: ''
+        domain: xop3qwen30b
+        appId: 12a0a7e2
+        maxTokens: 4096
+        temperature: 0.5
+        systemTemplate: "你是搜索结果初筛器。上游给了三路联网搜索的原始摘要（已按【搜索器1/2/3】分段），你要把它们砍成一份\"干净、可用的候选资源清单\"，交给下游做最终筛选。\n\n规则：\n1. 只保留带有真实 URL、或可辨认来源（平台 + 标题）的条目；没有 URL、没有来源、只有泛泛描述的一律丢弃。\n2. 按 URL 去重，同一资源出现多次只留一条。URL 必须原样照抄，不要截断、不要补全、不要改写域名。\n3. 丢弃下面这些条目，宁可少留也不要手软：\n   - 与学习目标明显无关的；\n   - 平台首页、分类页、搜索结果页、导航页、聚合页、资源合集页；\n   - 下载站、网盘分享页、需要注册或付费才能确认内容的页面；\n   - 纯广告或导流页、论坛问答页、贴吧、百科词条页；\n   - 标题里看不出讲的是不是这个学习目标的。\n   判断主题只看标题：标题对不上就丢，不要靠猜，也不要因为摘要里顺带提到了关键词就留下。\n4. 同一站点的多条近似结果，只保留信息最全的一条。\n5. 每条压成一行，只保留：标题 | URL | 平台或来源 | 一句话要点（不超过 30 字）。不要复制原文段落。\n6. 排序：标题里出现目标具体对象名（歌名、专有名词、工具名、API 名、技能名）的排最前；其次是来源权威的（官方文档、知名平台、完整教程）。同一个大领域但更泛的教程排在后面。\n7. 最多保留 15 条。宁可少留，也不要凑数；一条合格的都没有时，只输出：无合格资源。\n8. 只做删减、去重和归并，不得编造标题、URL 或来源，也不得改写扩写。\n9. 只输出这份清单，每条一行。不要输出 JSON，不要输出代码围栏，不要解释你的处理过程。"
+        model: spark
+        modelEnabled: true
+        serviceId: xop3qwen30b
+        respFormat: 0
+        llmIdErrMsg: ''
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-model.svg
+      description: 根据输入的提示词，调用选定的大模型，对提示词作出回答
+      updatable: false
+    status: null
+  edges:
+  - source: memory-search::1bcc4202-970d-4469-b0ba-64e21806c0f7
+    target: spark-llm::5440a1e8-00dc-480a-8138-2bb0a062b61c
+    type: customEdge
+    id: reactflow__edge-memory-search::1bcc4202-970d-4469-b0ba-64e21806c0f7-spark-llm::5440a1e8-00dc-480a-8138-2bb0a062b61c
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: spark-llm::5440a1e8-00dc-480a-8138-2bb0a062b61c
+    target: spark-llm::f93b84cd-7cc9-4c52-b6c9-bccafb4df2b0
+    type: customEdge
+    id: reactflow__edge-spark-llm::5440a1e8-00dc-480a-8138-2bb0a062b61c-spark-llm::f93b84cd-7cc9-4c52-b6c9-bccafb4df2b0
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: spark-llm::f93b84cd-7cc9-4c52-b6c9-bccafb4df2b0
+    target: mcp::3737ea45-7118-4f0a-9eb5-ab60f686989c
+    type: customEdge
+    id: reactflow__edge-spark-llm::f93b84cd-7cc9-4c52-b6c9-bccafb4df2b0-mcp::3737ea45-7118-4f0a-9eb5-ab60f686989c
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: spark-llm::f93b84cd-7cc9-4c52-b6c9-bccafb4df2b0
+    target: mcp::44655854-8848-4582-8192-83a879f60d10
+    type: customEdge
+    id: reactflow__edge-spark-llm::f93b84cd-7cc9-4c52-b6c9-bccafb4df2b0-mcp::44655854-8848-4582-8192-83a879f60d10
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: spark-llm::f93b84cd-7cc9-4c52-b6c9-bccafb4df2b0
+    target: mcp::e1e1cf91-700a-4f1b-84e4-f90f3cf61922
+    type: customEdge
+    id: reactflow__edge-spark-llm::f93b84cd-7cc9-4c52-b6c9-bccafb4df2b0-mcp::e1e1cf91-700a-4f1b-84e4-f90f3cf61922
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: spark-llm::196d89e7-06b6-468d-887c-89a5b19a9f20
+    target: spark-llm::5bcd7d91-9386-4150-9a61-4183a19d744b
+    type: customEdge
+    id: reactflow__edge-spark-llm::196d89e7-06b6-468d-887c-89a5b19a9f20-spark-llm::5bcd7d91-9386-4150-9a61-4183a19d744b
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: spark-llm::5bcd7d91-9386-4150-9a61-4183a19d744b
+    target: memory-add::ed492c34-e81f-47ad-96de-f75f8b0a35a7
+    type: customEdge
+    id: reactflow__edge-spark-llm::5bcd7d91-9386-4150-9a61-4183a19d744b-memory-add::ed492c34-e81f-47ad-96de-f75f8b0a35a7
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: memory-add::ed492c34-e81f-47ad-96de-f75f8b0a35a7
+    sourceHandle: normal_one_of::888bf7d0-c0b1-440d-9204-97645f210290
+    target: node-end::8e161702-d10f-4bcc-8617-4833213f116a
+    type: customEdge
+    id: reactflow__edge-memory-add::ed492c34-e81f-47ad-96de-f75f8b0a35a7normal_one_of::888bf7d0-c0b1-440d-9204-97645f210290-node-end::8e161702-d10f-4bcc-8617-4833213f116a
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: spark-llm::3304978f-ddd2-49fe-9f31-8a57b8fb8275
+    target: node-end::8e161702-d10f-4bcc-8617-4833213f116a
+    type: customEdge
+    id: reactflow__edge-spark-llm::3304978f-ddd2-49fe-9f31-8a57b8fb8275-node-end::8e161702-d10f-4bcc-8617-4833213f116a
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: node-start::a1eacf05-63ae-405c-a66c-1f41244bdd98
+    target: memory-search::d9b0aefb-7aae-4b8f-b092-42bf99b4ddd0
+    type: customEdge
+    id: reactflow__edge-node-start::a1eacf05-63ae-405c-a66c-1f41244bdd98-memory-search::d9b0aefb-7aae-4b8f-b092-42bf99b4ddd0
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: memory-search::d9b0aefb-7aae-4b8f-b092-42bf99b4ddd0
+    target: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+    type: customEdge
+    id: reactflow__edge-memory-search::d9b0aefb-7aae-4b8f-b092-42bf99b4ddd0-spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: memory-add::34e6c452-e395-4300-8f43-80485aae91ef
+    target: spark-llm::3304978f-ddd2-49fe-9f31-8a57b8fb8275
+    type: customEdge
+    id: reactflow__edge-memory-add::34e6c452-e395-4300-8f43-80485aae91ef-spark-llm::3304978f-ddd2-49fe-9f31-8a57b8fb8275
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: spark-llm::a68abab9-19b0-4ca6-b3c6-20bd482212d3
+    target: spark-llm::b3b56803-f8b9-449a-879d-931f2f17fd25
+    type: customEdge
+    id: reactflow__edge-spark-llm::a68abab9-19b0-4ca6-b3c6-20bd482212d3-spark-llm::b3b56803-f8b9-449a-879d-931f2f17fd25
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: spark-llm::b3b56803-f8b9-449a-879d-931f2f17fd25
+    target: if-else::8b20d698-448f-4bf4-ac80-f029fcca6f06
+    type: customEdge
+    id: reactflow__edge-spark-llm::b3b56803-f8b9-449a-879d-931f2f17fd25-if-else::8b20d698-448f-4bf4-ac80-f029fcca6f06
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: if-else::8b20d698-448f-4bf4-ac80-f029fcca6f06
+    sourceHandle: branch_one_of::d6008438-09c0-45ee-8b73-47bfd5ad8856
+    target: spark-llm::4ebf206e-c443-4375-a226-a7f8abd8d777
+    type: customEdge
+    id: reactflow__edge-if-else::8b20d698-448f-4bf4-ac80-f029fcca6f06branch_one_of::d6008438-09c0-45ee-8b73-47bfd5ad8856-spark-llm::4ebf206e-c443-4375-a226-a7f8abd8d777
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: if-else::8b20d698-448f-4bf4-ac80-f029fcca6f06
+    sourceHandle: branch_one_of::fffd34b1-45b5-49c9-85ba-cec609003d8e
+    target: mcp::b63643e3-70b7-4f83-a97d-ed87aea9f1d4
+    type: customEdge
+    id: reactflow__edge-if-else::8b20d698-448f-4bf4-ac80-f029fcca6f06branch_one_of::fffd34b1-45b5-49c9-85ba-cec609003d8e-mcp::b63643e3-70b7-4f83-a97d-ed87aea9f1d4
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: mcp::b63643e3-70b7-4f83-a97d-ed87aea9f1d4
+    target: spark-llm::4ebf206e-c443-4375-a226-a7f8abd8d777
+    type: customEdge
+    id: reactflow__edge-mcp::b63643e3-70b7-4f83-a97d-ed87aea9f1d4-spark-llm::4ebf206e-c443-4375-a226-a7f8abd8d777
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: spark-llm::4ebf206e-c443-4375-a226-a7f8abd8d777
+    target: spark-llm::11be6a63-ddac-4dc0-81c3-2338e84782bb
+    type: customEdge
+    id: reactflow__edge-spark-llm::4ebf206e-c443-4375-a226-a7f8abd8d777-spark-llm::11be6a63-ddac-4dc0-81c3-2338e84782bb
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: spark-llm::11be6a63-ddac-4dc0-81c3-2338e84782bb
+    target: spark-llm::2199c90c-6104-415c-9578-0183de1605d9
+    type: customEdge
+    id: reactflow__edge-spark-llm::11be6a63-ddac-4dc0-81c3-2338e84782bb-spark-llm::2199c90c-6104-415c-9578-0183de1605d9
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: spark-llm::54302d42-5273-4d03-902d-ff14f8ebaf12
+    target: spark-llm::2199c90c-6104-415c-9578-0183de1605d9
+    type: customEdge
+    id: reactflow__edge-spark-llm::54302d42-5273-4d03-902d-ff14f8ebaf12-spark-llm::2199c90c-6104-415c-9578-0183de1605d9
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: spark-llm::2199c90c-6104-415c-9578-0183de1605d9
+    target: spark-llm::196d89e7-06b6-468d-887c-89a5b19a9f20
+    type: customEdge
+    id: reactflow__edge-spark-llm::2199c90c-6104-415c-9578-0183de1605d9-spark-llm::196d89e7-06b6-468d-887c-89a5b19a9f20
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+    target: if-else::aa090472-7902-48cd-81a0-1a447e0ddb10
+    type: customEdge
+    id: reactflow__edge-spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5-if-else::aa090472-7902-48cd-81a0-1a447e0ddb10
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: if-else::aa090472-7902-48cd-81a0-1a447e0ddb10
+    sourceHandle: branch_one_of::8b39520f-ec47-4ec0-8bb9-f49b0919a660
+    target: memory-search::1bcc4202-970d-4469-b0ba-64e21806c0f7
+    type: customEdge
+    id: reactflow__edge-if-else::aa090472-7902-48cd-81a0-1a447e0ddb10branch_one_of::8b39520f-ec47-4ec0-8bb9-f49b0919a660-memory-search::1bcc4202-970d-4469-b0ba-64e21806c0f7
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: if-else::aa090472-7902-48cd-81a0-1a447e0ddb10
+    sourceHandle: branch_one_of::bf39c09d-683a-4111-8a6d-778a6fe287b4
+    target: if-else::4b878686-e218-424a-b33f-44758c20c167
+    type: customEdge
+    id: reactflow__edge-if-else::aa090472-7902-48cd-81a0-1a447e0ddb10branch_one_of::bf39c09d-683a-4111-8a6d-778a6fe287b4-if-else::4b878686-e218-424a-b33f-44758c20c167
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: if-else::4b878686-e218-424a-b33f-44758c20c167
+    sourceHandle: branch_one_of::06d248ef-812c-4485-b841-34ddbf0ee53f
+    target: spark-llm::54302d42-5273-4d03-902d-ff14f8ebaf12
+    type: customEdge
+    id: reactflow__edge-if-else::4b878686-e218-424a-b33f-44758c20c167branch_one_of::06d248ef-812c-4485-b841-34ddbf0ee53f-spark-llm::54302d42-5273-4d03-902d-ff14f8ebaf12
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: if-else::4b878686-e218-424a-b33f-44758c20c167
+    sourceHandle: branch_one_of::59333d55-10d0-4e56-992f-968b57fcc3ab
+    target: memory-add::34e6c452-e395-4300-8f43-80485aae91ef
+    type: customEdge
+    id: reactflow__edge-if-else::4b878686-e218-424a-b33f-44758c20c167branch_one_of::59333d55-10d0-4e56-992f-968b57fcc3ab-memory-add::34e6c452-e395-4300-8f43-80485aae91ef
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: mcp::3737ea45-7118-4f0a-9eb5-ab60f686989c
+    target: ifly-code::32fb9d1a-ce60-43ac-b65a-ea880cce6b7f
+    type: customEdge
+    id: reactflow__edge-mcp::3737ea45-7118-4f0a-9eb5-ab60f686989c-ifly-code::32fb9d1a-ce60-43ac-b65a-ea880cce6b7f
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: mcp::44655854-8848-4582-8192-83a879f60d10
+    target: ifly-code::32fb9d1a-ce60-43ac-b65a-ea880cce6b7f
+    type: customEdge
+    id: reactflow__edge-mcp::44655854-8848-4582-8192-83a879f60d10-ifly-code::32fb9d1a-ce60-43ac-b65a-ea880cce6b7f
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: mcp::e1e1cf91-700a-4f1b-84e4-f90f3cf61922
+    target: ifly-code::32fb9d1a-ce60-43ac-b65a-ea880cce6b7f
+    type: customEdge
+    id: reactflow__edge-mcp::e1e1cf91-700a-4f1b-84e4-f90f3cf61922-ifly-code::32fb9d1a-ce60-43ac-b65a-ea880cce6b7f
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: ifly-code::32fb9d1a-ce60-43ac-b65a-ea880cce6b7f
+    target: spark-llm::85ad84fc-f18e-499c-9ab1-a40ca931922c
+    type: customEdge
+    id: reactflow__edge-ifly-code::32fb9d1a-ce60-43ac-b65a-ea880cce6b7f-spark-llm::85ad84fc-f18e-499c-9ab1-a40ca931922c
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: spark-llm::85ad84fc-f18e-499c-9ab1-a40ca931922c
+    target: spark-llm::a68abab9-19b0-4ca6-b3c6-20bd482212d3
+    type: customEdge
+    id: reactflow__edge-spark-llm::85ad84fc-f18e-499c-9ab1-a40ca931922c-spark-llm::a68abab9-19b0-4ca6-b3c6-20bd482212d3
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve

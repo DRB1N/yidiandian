@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>亿點點</title>
+    <!--
+      这一页必须完全自包含：它出现的场合就是"连不上服务器"，
+      所以不能引用任何 CDN 字体或外部样式。
+    -->
+    <style>
+      :root {
+        --paper: #f6f1e7;
+        --paper-2: #efe8da;
+        --card: #fffdf7;
+        --ink: #1b1714;
+        --ink-2: #4a433a;
+        --ink-3: #857b6c;
+        --rule: #ddd3bf;
+        --rule-2: #cbbfa6;
+        --vermilion: #c4432b;
+        --highlighter: #f5db5c;
+        --kai: 'LXGW WenKai', 'Kaiti SC', 'KaiTi', 'STKaiti', 'Songti SC', serif;
+        --mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 32px 22px;
+        background-color: var(--paper);
+        background-image: radial-gradient(circle at center, rgba(27, 23, 20, 0.075) 1px, transparent 1.1px);
+        background-size: 22px 22px;
+        color: var(--ink);
+        font-family: var(--kai);
+        font-size: 16px;
+        line-height: 1.75;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 520px;
+        background: var(--card);
+        border: 1.5px solid var(--ink);
+        border-radius: 6px;
+        box-shadow: 5px 5px 0 var(--ink);
+        padding: 34px 34px 30px;
+        position: relative;
+      }
+
+      .card::before {
+        content: '';
+        position: absolute;
+        top: -11px;
+        left: 26px;
+        width: 92px;
+        height: 22px;
+        background: rgba(245, 219, 92, 0.72);
+        border-left: 1px dashed rgba(27, 23, 20, 0.22);
+        border-right: 1px dashed rgba(27, 23, 20, 0.22);
+        transform: rotate(-2.4deg);
+        mix-blend-mode: multiply;
+      }
+
+      .label {
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+      }
+
+      h1 {
+        margin: 12px 0 0;
+        font-size: 30px;
+        line-height: 1.2;
+        letter-spacing: 0.01em;
+      }
+
+      p { margin: 14px 0 0; color: var(--ink-2); }
+
+      .who {
+        font-family: var(--mono);
+        font-size: 12.5px;
+        color: var(--vermilion);
+        word-break: break-all;
+        margin-top: 6px;
+      }
+
+      .field { margin-top: 24px; }
+
+      .field label {
+        display: block;
+        font-size: 14.5px;
+        font-weight: 700;
+        color: var(--ink-2);
+        margin-bottom: 7px;
+      }
+
+      input {
+        width: 100%;
+        font-family: var(--mono);
+        font-size: 14px;
+        color: var(--ink);
+        background: var(--card);
+        border: 1.5px solid var(--ink);
+        border-radius: 6px;
+        padding: 11px 13px;
+        outline: none;
+      }
+
+      input:focus { box-shadow: 3px 3px 0 var(--rule-2); }
+
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      button {
+        font-family: var(--kai);
+        font-size: 15.5px;
+        font-weight: 700;
+        line-height: 1;
+        padding: 12px 20px;
+        border: 1.5px solid var(--ink);
+        border-radius: 6px;
+        background: var(--card);
+        color: var(--ink);
+        cursor: pointer;
+        box-shadow: 3px 3px 0 var(--rule);
+        transition: transform 0.12s ease, box-shadow 0.12s ease;
+      }
+
+      button:hover:not(:disabled) { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--rule-2); }
+      button:active:not(:disabled) { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--rule); }
+      button:disabled { opacity: 0.42; cursor: not-allowed; }
+
+      button.primary { background: var(--vermilion); color: #fff8f2; }
+      button.primary:hover:not(:disabled) { box-shadow: 4px 4px 0 #a63621; }
+
+      .msg {
+        margin-top: 14px;
+        font-size: 14px;
+        min-height: 1.4em;
+        color: var(--vermilion);
+      }
+
+      .msg[data-kind='ok'] { color: #5e7a5c; }
+
+      .hint {
+        margin-top: 22px;
+        padding-top: 15px;
+        border-top: 1.5px dashed var(--rule-2);
+        font-size: 13.5px;
+        color: var(--ink-3);
+      }
+
+      code {
+        font-family: var(--mono);
+        font-size: 12.5px;
+        background: var(--paper-2);
+        padding: 1px 5px;
+        border-radius: 3px;
+      }
+
+      .plain { display: none; }
+      body[data-nobridge='true'] .bridge { display: none; }
+      body[data-nobridge='true'] .plain { display: block; }
+    </style>
+  </head>
+
+  <body>
+    <div class="card">
+      <span class="label" id="label">连接失败</span>
+      <h1 id="title">连不上服务器</h1>
+
+      <p id="lede">
+        亿點點的所有内容都在服务器上 —— 路线、评论、你的规划记录。所以先把它接上。
+      </p>
+      <div class="who" id="url"></div>
+
+      <div class="field bridge">
+        <label for="server">服务器地址</label>
+        <input id="server" type="text" spellcheck="false" placeholder="http://localhost:3000" />
+      </div>
+
+      <div class="row bridge">
+        <button class="primary" id="save">保存并连接</button>
+        <button id="retry">再试一次</button>
+        <button id="devtools">打开开发者工具</button>
+      </div>
+
+      <div class="msg bridge" id="msg"></div>
+
+      <p class="plain">
+        请用浏览器打开下面的地址继续使用：
+        <br />
+        <code id="plain-url"></code>
+      </p>
+
+      <div class="hint">
+        默认连的是 <code>https://yidiandian.drb1n.top</code>。本地调试就把地址换成
+        <code>http://localhost:3000</code> 并先把 web 那边跑起来（<code>npm run dev</code>）；
+        也可以用 <code>YD_APP_URL</code> 环境变量临时覆盖。存下来之后下次启动会自动用它。
+      </div>
+    </div>
+
+    <script>
+      const params = new URLSearchParams(location.search);
+      const mode = params.get("mode") === "settings" ? "settings" : "offline";
+      const current = params.get("url") || "https://yidiandian.drb1n.top";
+      const code = params.get("code");
+      const desc = params.get("desc");
+
+      const $ = (id) => document.getElementById(id);
+      const bridge = window.ydDesktop;
+
+      document.body.dataset.nobridge = bridge ? "false" : "true";
+
+      $("server").value = current;
+      $("url").textContent = current;
+      $("plain-url").textContent = current + "/hall";
+
+      if (mode === "settings") {
+        $("label").textContent = "服务器设置";
+        $("title").textContent = "换个地址试试";
+        $("lede").textContent = "当前连的是下面这个地址。改完点「保存并连接」，下次启动会记住。";
+        if (desc || code) $("lede").textContent += `（上次的错误：${desc || ""} ${code || ""}）`;
+      } else if (code || desc) {
+        $("url").textContent = `${current}  ·  ${desc || ""} ${code || ""}`;
+      }
+
+      function say(text, kind) {
+        const el = $("msg");
+        el.textContent = text;
+        el.dataset.kind = kind || "";
+      }
+
+      const withBusy = (btn, text, fn) => async () => {
+        const original = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = text;
+        try {
+          await fn();
+        } finally {
+          btn.disabled = false;
+          btn.textContent = original;
+        }
+      };
+
+      $("save").onclick = withBusy($("save"), "连接中…", async () => {
+        const value = $("server").value.trim();
+        if (!/^https?:\/\//i.test(value)) {
+          say("地址要以 http:// 或 https:// 开头");
+          return;
+        }
+        const res = await bridge.setServer(value);
+        if (res && res.ok) say("已保存，正在连接…", "ok");
+        else say((res && res.error) || "保存失败");
+      });
+
+      $("retry").onclick = withBusy($("retry"), "重试中…", async () => {
+        if (!bridge) {
+          location.href = $("server").value.trim() + "/hall";
+          return;
+        }
+        await bridge.retry();
+      });
+
+      $("devtools").onclick = async () => {
+        if (!bridge) {
+          say("开发者工具只在桌面端里可用");
+          return;
+        }
+        await bridge.openDevTools();
+      };
+    </script>
+  </body>
+</html>

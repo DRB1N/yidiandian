@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: "Noto Sans SC", "Microsoft YaHei", "PingFang SC", sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 30px;
+      color: #333;
+      line-height: 1.8;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      padding: 30px 0;
+      border-bottom: 3px solid #4CAF50;
+      margin-bottom: 30px;
+    }
+    .header h1 {
+      font-size: 28px;
+      color: #2c3e50;
+    }
+    .header .subtitle {
+      color: #7f8c8d;
+      font-size: 14px;
+      margin-top: 8px;
+    }
+
+    /* Rating */
+    .rating-box {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px 30px;
+      border-radius: 12px;
+      margin: 20px 0;
+    }
+    .rating-box .label { font-size: 14px; opacity: 0.9; }
+    .rating-box .goal { font-size: 18px; font-weight: 600; flex: 1; }
+    .rating-box .grade {
+      font-size: 42px;
+      font-weight: bold;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    /* Skill Units */
+    .section { margin: 25px 0; }
+    .section h2 {
+      font-size: 20px;
+      color: #2c3e50;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #ecf0f1;
+      margin-bottom: 15px;
+    }
+    .skill-list {
+      list-style: none;
+      padding: 0;
+    }
+    .skill-list li {
+      background: #f8f9fa;
+      padding: 10px 15px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border-left: 4px solid #4CAF50;
+      font-size: 15px;
+    }
+
+    /* Learning Path */
+    .step {
+      margin: 20px 0;
+      padding: 15px 20px;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .step-number {
+      background: #2196F3;
+      color: white;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .step-title { font-size: 17px; font-weight: 600; color: #2c3e50; }
+    .step-desc { color: #555; font-size: 14px; margin: 8px 0; }
+    .step-method {
+      background: #e3f2fd;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      margin: 8px 0;
+    }
+    .step-criteria {
+      background: #fff3e0;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      margin: 8px 0;
+    }
+    .step-criteria strong { color: #e65100; }
+
+    /* Resources */
+    .resource {
+      background: #f5f5f5;
+      padding: 10px 15px;
+      margin: 8px 0;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+    .resource a { color: #1976D2; text-decoration: none; }
+    .resource .reason {
+      color: #666;
+      font-size: 13px;
+      margin-top: 4px;
+      font-style: italic;
+    }
+
+    /* Calendar */
+    .calendar {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+    }
+    .calendar th {
+      background: #2c3e50;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      font-size: 14px;
+    }
+    .calendar td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      font-size: 13px;
+      vertical-align: top;
+    }
+    .calendar td.day-label {
+      background: #f8f9fa;
+      font-weight: 600;
+      width: 80px;
+      text-align: center;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 20px 0;
+      margin-top: 30px;
+      border-top: 2px solid #ecf0f1;
+      color: #95a5a6;
+      font-size: 12px;
+    }
+
+    /* Path comparison */
+    .path-comparison {
+      display: flex;
+      gap: 15px;
+      margin: 15px 0;
+    }
+    .path-box {
+      flex: 1;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    .path-box.video { background: #e8f5e9; border: 1px solid #4CAF50; }
+    .path-box.text { background: #e3f2fd; border: 1px solid #2196F3; }
+    .path-box h4 { margin-bottom: 8px; font-size: 15px; }
+
+    @media print {
+      body { padding: 20px; }
+      .step { box-shadow: none; border: 1px solid #ccc; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>📚 亿點點学习规划报告</h1>
+    <p class="subtitle">实战派全领域学习教练 · 最短路径 · 越用越懂你</p>
+  </div>
+
+  <!-- 评级区域 -->
+  <div class="rating-box">
+    <div>
+      <div class="label">学习目标</div>
+      <div class="goal">{{ goal }}</div>
+    </div>
+    <div class="grade">{{ target_rating }}</div>
+  </div>
+
+  <!-- 最小技能拆解 -->
+  {% if skill_units %}
+  <div class="section">
+    <h2>✂️ 最小技能拆解</h2>
+    <ul class="skill-list">
+      {% for skill in skill_units %}
+      <li>{{ skill }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  <!-- 闯关路线 -->
+  {% if stages %}
+  <div class="section">
+    <h2>🎮 闯关路线</h2>
+    {% for stage in stages %}
+    <div class="step">
+      <div class="step-header">
+        <div class="step-number" style="background: #9C27B0;">{{ loop.index }}</div>
+        <div class="step-title">{{ stage.name }}</div>
+      </div>
+      {% if stage.acceptance %}
+      <div class="step-criteria">✅ <strong>验收标准：</strong>{{ stage.acceptance }}</div>
+      {% endif %}
+      {% if stage.self_evaluation %}
+      <div class="step-method">🔍 <strong>自评：</strong>{{ stage.self_evaluation }}</div>
+      {% endif %}
+      {% if stage.milestone_reward %}
+      <div class="step-method" style="background: #fff8e1;">🎁 <strong>激励：</strong>{{ stage.milestone_reward }}</div>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- 学习路径 -->
+  {% if learning_path %}
+  <div class="section">
+    <h2>🗺️ 学习路径（最短路径）</h2>
+    {% for step in learning_path %}
+    <div class="step">
+      <div class="step-header">
+        <div class="step-number">{{ loop.index }}</div>
+        <div class="step-title">{{ step.title }}</div>
+      </div>
+      {% if step.description %}
+      <div class="step-desc">{{ step.description }}</div>
+      {% endif %}
+      {% if step.practice_method %}
+      <div class="step-method">📝 <strong>练习方法：</strong>{{ step.practice_method }}</div>
+      {% endif %}
+      {% if step.check_criteria %}
+      <div class="step-criteria">✅ <strong>检测标准：</strong>{{ step.check_criteria }}</div>
+      {% endif %}
+      {% if step.resources %}
+      <div style="margin-top: 10px;">
+        <strong style="font-size: 14px;">推荐资源：</strong>
+        {% for res in step.resources %}
+        <div class="resource">
+          {% if res.url %}
+          <a href="{{ res.url }}">{{ res.title }}</a>
+          {% if res.creator %} | {{ res.creator }}{% endif %}
+          {% if res.platform %} | {{ res.platform }}{% endif %}
+          {% else %}
+          <strong>{{ res.title }}</strong>
+          {% if res.creator %} | {{ res.creator }}{% endif %}
+          {% if res.platform %} | {{ res.platform }}{% endif %}
+          {% endif %}
+          {% if res.reason %}
+          <div class="reason">💡 {{ res.reason }}</div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- 视频优先 vs 文字补充 -->
+  {% if video_path or text_path %}
+  <div class="section">
+    <h2>🎬 视频优先 vs 📖 文字补充</h2>
+    <div class="path-comparison">
+      {% if video_path %}
+      <div class="path-box video">
+        <h4>📺 视频为主</h4>
+        <p>{{ video_path }}</p>
+      </div>
+      {% endif %}
+      {% if text_path %}
+      <div class="path-box text">
+        <h4>📄 文字为辅</h4>
+        <p>{{ text_path }}</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- 练习日历 -->
+  {% if calendar %}
+  <div class="section">
+    <h2>📅 练习日历</h2>
+    <div>{{ calendar | safe }}</div>
+  </div>
+  {% endif %}
+
+  <!-- 风险提示 -->
+  <div class="section">
+    <h2>⚠️ 风险提示</h2>
+    <ul style="font-size: 14px; color: #666; padding-left: 20px;">
+      <li>所有链接请自行验证有效性。</li>
+      <li>练习注意劳逸结合，避免损伤。</li>
+      <li>涉及付费资源请自行评估。</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <p>由亿點點生成于 {{ generated_at }}</p>
+    <p style="margin-top: 5px;">亿點點 — 实战派全领域学习教练</p>
+  </div>
+
+</body>
+</html>

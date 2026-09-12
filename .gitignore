@@ -1,0 +1,34 @@
+# ─────────────────────────────────────────────
+# 比赛材料：是提交物，不是本仓库的代码，只留在本机
+# 这两个目录里有大体积的 pptx / docx / 42MB 的 PDF，入库只会把仓库撑大
+# ─────────────────────────────────────────────
+昇腾复赛/
+星火复赛/
+
+# ── 临时工作区：修工作流的脚本、调试输出、探测请求体 ──
+_tmp/
+
+# ── 本机配置 ──
+# 注意：.claude/settings.local.json 里有讯飞 API Key / Secret 的明文，绝不能入库
+.claude/settings.local.json
+
+# ── 依赖与构建产物（各子项目另有自己的 .gitignore，这里是兜底）──
+node_modules/
+.next/
+out/
+build/
+dist/
+
+# ── 环境变量与密钥 ──
+.env
+.env.local
+.env*.local
+
+# ── 数据库文件：含真实用户与密码哈希，绝不入库 ──
+*.db
+*.db-journal
+
+# ── 杂项 ──
+*.log
+.DS_Store
+Thumbs.db

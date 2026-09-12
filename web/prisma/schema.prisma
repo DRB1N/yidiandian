@@ -1,0 +1,124 @@
+// 亿點點 · 数据模型
+// 开发用 SQLite；上线换 PostgreSQL 只需把 provider 改成 "postgresql" 并换 DATABASE_URL。
+// 注意：SQLite 下不用 Json 字段，结构化数据一律以 JSON 字符串存 String，读写时自行序列化。
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  username     String   @unique
+  email        String   @unique
+  passwordHash String
+  avatarUrl    String?
+  bio          String?
+  createdAt    DateTime @default(now())
+
+  routes        Route[]
+  likes         Like[]
+  bookmarks     Bookmark[]
+  comments      Comment[]
+  sessions      Session[]
+  chatSessions  ChatSession[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+/// 一点路线：由工作流产出的一份可执行学习路线
+model Route {
+  id         String @id @default(cuid())
+  slug       String @unique
+  title      String
+  goal       String
+  goalType   String @default("task") // task / systematic / career
+  domain     String @default("")
+  level      String @default("")
+  deadline   String @default("")
+  weeklyTime String @default("")
+  difficulty String @default("") // D- ~ S++
+  mode       String @default("J") // J / P
+  summary    String @default("")
+  /// 路线的完整 Markdown 正文（工作流原始产出）
+  contentMd  String
+  /// 闯关关卡的结构化副本，JSON 字符串：[{ index, name, action, resource, hours, pass, selfCheck, reward }]
+  stagesJson String @default("[]")
+  visibility String @default("PUBLIC") // PUBLIC / PRIVATE
+  status     String @default("ACTIVE") // ACTIVE / DONE / ARCHIVED
+  progress   Int    @default(0) // 0-100
+
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  likes     Like[]
+  bookmarks Bookmark[]
+  comments  Comment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([authorId])
+  @@index([createdAt])
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  userId    String
+  routeId   String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  route     Route    @relation(fields: [routeId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, routeId])
+}
+
+model Bookmark {
+  id        String   @id @default(cuid())
+  userId    String
+  routeId   String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  route     Route    @relation(fields: [routeId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, routeId])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  body      String
+  userId    String
+  routeId   String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  route     Route    @relation(fields: [routeId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@index([routeId])
+}
+
+/// Plan 页的聊天会话；messagesJson 存：[{ role, content, ready, mode, at }]
+model ChatSession {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title        String   @default("新的规划")
+  messagesJson String   @default("[]")
+  readyAt      DateTime?
+  routeId      String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([userId])
+}

@@ -1,0 +1,53 @@
+appId: app.yidiandian.desktop
+productName: 亿點點
+copyright: 亿點點 · 一點路线
+
+directories:
+  output: dist
+  buildResources: assets
+
+# 只打包外壳本身；界面在服务器上，不进安装包
+files:
+  - main.js
+  - preload.js
+  - src/**/*
+  - assets/icon.png
+  - package.json
+
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+  icon: assets/icon.png
+  # 改 exe 的图标和版本信息要借 electron-builder 的 winCodeSign 工具包，而它里面
+  # 带着 macOS 的符号链接，Windows 非管理员账户解不开（"客户端没有所需的特权"），
+  # 整个打包就在这里断掉。关掉它换一次能跑完的构建：安装包、桌面快捷方式、
+  # 窗口图标都照常是亿點點，只是 exe 自身的属性里还写着 Electron。
+  # 想要 exe 也带上图标和名字，就打开「系统设置 → 开发者选项 → 开发人员模式」，
+  # 然后把这一行删掉重新打包。
+  signAndEditExecutable: false
+  artifactName: 亿點點-桌面端-${version}-安装包.${ext}
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: 亿點點
+
+mac:
+  target:
+    - target: dmg
+      arch: [arm64, x64]
+  icon: assets/icon.png
+  category: public.app-category.education
+  artifactName: 亿點點-桌面端-${version}-${arch}.${ext}
+
+linux:
+  target:
+    - target: AppImage
+      arch: [x64]
+  icon: assets/icon.png
+  category: Education
+  artifactName: 亿點點-桌面端-${version}.${ext}

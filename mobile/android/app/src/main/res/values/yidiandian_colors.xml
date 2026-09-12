@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 启动主题的底色，和网页的纸张底色一致，从启动图进界面不会有跳色 -->
+    <color name="paper">#f6f1e7</color>
+</resources>

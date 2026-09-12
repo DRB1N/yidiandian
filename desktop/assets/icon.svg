@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- 亿點點 · 应用图标：一张纸上的闯关路线 -->
+
+  <defs>
+    <pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="2.1" fill="#1b1714" opacity="0.085" />
+    </pattern>
+  </defs>
+
+  <rect width="512" height="512" fill="#f6f1e7" />
+  <rect width="512" height="512" fill="url(#dots)" />
+
+  <!-- 高亮笔：压在中段那一站底下 -->
+  <rect x="128" y="238" width="286" height="72" fill="#f5db5c" opacity="0.72" />
+
+  <!-- 路线：从左下走到右上的 S 形 -->
+  <path
+    d="M120 392 C 120 260, 392 300, 392 120"
+    fill="none"
+    stroke="#c4432b"
+    stroke-width="22"
+    stroke-linecap="round"
+  />
+
+  <!-- 三站：出发(苔绿) → 中途(纸白) → 终点(朱红) -->
+  <circle cx="120" cy="392" r="36" fill="#5e7a5c" stroke="#1b1714" stroke-width="13" />
+  <circle cx="256" cy="274" r="36" fill="#fffdf7" stroke="#1b1714" stroke-width="13" />
+  <circle cx="392" cy="120" r="36" fill="#c4432b" stroke="#1b1714" stroke-width="13" />
+</svg>

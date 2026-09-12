@@ -1,0 +1,2233 @@
+flowMeta:
+  name: 多学亿点助手-工作流
+  description: 专注于为用户在任意学习领域（涵盖技术、艺术、人文、职业技能等），结合真实公开信息，生成可落地的结构化学习路线图、资源清单、目标拆解方案及阶段性检测建议，助力用户实现系统化学习。
+  avatarIcon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/aicloud-robot/user-icon/b604bec00a67bceb6966535699fe3e6b.jpg
+  avatarColor: '#FFEAD5'
+  advancedConfig: '{"prologue":{"enabled":true,"inputExample":["","",""]},"textToSpeech":{"enabled":true,"vcn_cn":"x4_lingxiaoqi","vcn_en":"x4_EnUs_Luna"},"needGuide":false}'
+  category: 17
+  dslVersion: v1
+flowData:
+  nodes:
+  - id: node-start::a1eacf05-63ae-405c-a66c-1f41244bdd98
+    dragging: false
+    selected: false
+    width: 255
+    height: 115
+    position:
+      x: -313.2368027789587
+      y: 657.1183072413781
+    positionAbsolute:
+      x: -313.2368027789587
+      y: 657.1183072413781
+    type: 开始节点
+    data:
+      allowInputReference: false
+      allowOutputReference: true
+      label: 开始
+      status: success
+      nodeMeta:
+        aliasName: 开始节点
+        nodeType: 基础节点
+      inputs: [
+        ]
+      outputs:
+      - id: b55a1099-be8c-4484-ad76-05e35357ae18
+        name: AGENT_USER_INPUT
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 用户本轮对话输入内容
+        required: true
+        deleteDisabled: true
+      nodeParam: {
+        }
+      icon: https://oss-beijing-m8.openstorage.cn/pro-bucket/sparkBot/common/workflow/icon/start-node-icon.png
+      description: 工作流的开启节点，用于定义流程调用所需的业务变量信息。
+      updatable: false
+  - id: node-end::8e161702-d10f-4bcc-8617-4833213f116a
+    dragging: false
+    selected: false
+    width: 276
+    height: 115
+    position:
+      x: 4708.314366465084
+      y: 658.146263235787
+    positionAbsolute:
+      x: 4708.314366465084
+      y: 658.146263235787
+    type: 结束节点
+    data:
+      allowInputReference: true
+      allowOutputReference: false
+      label: 结束
+      references: [
+        ]
+      status: success
+      nodeMeta:
+        aliasName: 结束节点
+        nodeType: 基础节点
+      inputs:
+      - id: b6f85666-84d7-432d-bc64-7d5bc9e3aecd
+        name: question_answer
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: output
+              id: 175739d0-4c52-492e-9db8-9dbe924e0649
+              nodeId: spark-llm::3304978f-ddd2-49fe-9f31-8a57b8fb8275
+            contentErrMsg: ''
+        fileType: ''
+      - id: a4c51d06-e034-4e77-96d9-ea9ff0066ea9
+        name: plan_answer
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: output
+              id: bf2399de-a699-4ca6-a4bf-8a0cbc31bd81
+              nodeId: spark-llm::196d89e7-06b6-468d-887c-89a5b19a9f20
+            contentErrMsg: ''
+        fileType: ''
+      outputs: [
+        ]
+      nodeParam:
+        template: '{{question_answer}}{{plan_answer}}'
+        streamOutput: true
+        templateErrMsg: ''
+        outputMode: 1
+      icon: https://oss-beijing-m8.openstorage.cn/pro-bucket/sparkBot/common/workflow/icon/end-node-icon.png
+      description: 工作流的结束节点，用于输出工作流运行后的最终结果。
+      updatable: false
+  - id: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+    dragging: false
+    selected: false
+    width: 361
+    height: 165
+    position:
+      x: 319.03414609568006
+      y: 557.5075484471868
+    positionAbsolute:
+      x: 319.03414609568006
+      y: 557.5075484471868
+    type: 大模型
+    data:
+      allowInputReference: true
+      allowOutputReference: true
+      label: 用户需求解析
+      labelEdit: false
+      references: [
+        ]
+      status: success
+      nodeMeta:
+        aliasName: 大模型
+        nodeType: 基础节点
+      inputs:
+      - id: 1aa740dc-63f1-4b4c-a570-92190dfc5b8a
+        name: input
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: AGENT_USER_INPUT
+              id: b55a1099-be8c-4484-ad76-05e35357ae18
+              nodeId: node-start::a1eacf05-63ae-405c-a66c-1f41244bdd98
+            contentErrMsg: ''
+        fileType: ''
+      - id: dbdbf465-171d-482a-a243-dae71017c749
+        name: memory
+        nameErrMsg: ''
+        schema:
+          type: array-object
+          value:
+            type: ref
+            content:
+              name: memory
+              id: c04c4d7d-8f03-4527-bcca-0909a6a50e4a
+              nodeId: memory-search::d9b0aefb-7aae-4b8f-b092-42bf99b4ddd0
+            contentErrMsg: ''
+        fileType: ''
+      outputs:
+      - id: 47f87016-cb9b-40ce-a216-da400bbcc0e1
+        name: REASONING_CONTENT
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 模型思考过程
+        customParameterType: deepseekr1
+      - id: 0aaab819-6f1e-4ce4-beb3-80cd469a9a1d
+        name: goal
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 用户要达成的成果
+      - id: 31eadef8-5d5e-4d05-af13-36c5b396a48a
+        name: goal_type
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: task/systematic/career
+        required: false
+      - id: e15ccbe1-2bf0-4c8f-b503-a4c5c9e5106c
+        name: domain
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 所属领域
+        required: false
+      - id: 81f30dbe-9932-486a-9424-3563f9b2fbcb
+        name: current_level
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 当前基础
+        required: false
+      - id: 157fe404-2559-4551-9924-3aad59e2ae18
+        name: deadline
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 截止时间，未知为空
+        required: false
+      - id: a22a6040-b773-490b-a25d-dc46c68d8418
+        name: weekly_time
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 每周投入时间，未知为空
+        required: false
+      - id: 98ac7693-48c2-4a5e-bf67-850562cdd7ea
+        name: resource_preference
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: video/text/both/unknown
+        required: false
+      - id: f3a74eec-3d6b-45e9-be28-68acd4464a29
+        name: constraints_text
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 预算、设备、地区等限制
+        required: false
+      - id: 26b0668d-0708-4fe0-b94d-fa5f3e6a175d
+        name: deliverable
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 最终验收产物
+        required: false
+      - id: f34186f7-5f95-427e-a65c-5a74706a6d51
+        name: missing_fields_text
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 缺失项，用中文逗号连接
+        required: false
+      - id: 4bb6d863-b3de-42f3-9b20-9b4fa0345552
+        name: need_clarification
+        nameErrMsg: ''
+        schema:
+          type: string
+          properties: [
+            ]
+          default: 是否需要追问
+        required: false
+      nodeParam:
+        template: |
+          <user_input>
+          {{input}}
+          </user_input>
+
+          <relevant_memory>
+          {{memory}}
+          </relevant_memory>
+        modelId: 142
+        auditing: default
+        llmId: 142
+        uid: '19702983768'
+        patchId: '0'
+        isThink: true
+        templateErrMsg: ''
+        appId: 12a0a7e2
+        maxTokens: 8192
+        temperature: 0.5
+        model: spark
+        setAnswerContentErrMsg: ''
+        modelEnabled: true
+        serviceId: xdeepseekr1
+        llmIdErrMsg: ''
+        topK: 4
+        enableChatHistoryV2:
+          isEnabled: false
+          rounds: 1
+        url: wss://maas-api.cn-huabei-1.xf-yun.com/v1.1/chat
+        multiMode: false
+        modelName: DeepSeek-R1
+        searchDisable: true
+        domain: xdeepseekr1
+        systemTemplate: |-
+          你是学习需求解析器。你的唯一任务是把用户原话转换为一个合法 JSON 对象。
+
+          提取规则：
+          1. 只提取用户明确表达的信息，不得虚构经历、期限、时间、偏好或限制。
+          2. goal：用户希望达成的具体成果。
+          3. current_level：用户明确说明的当前基础。
+          4. goal_type 只能填写以下字符串之一：
+             - task：具体作品、短期任务或明确交付物；
+             - systematic：长期系统掌握一项能力；
+             - career：岗位、求职、升学或发展方向规划。
+          5. 只有 goal 或 current_level 缺失时，need_clarification 才填写字符串 "true"；两者都存在时填写字符串 "false"。
+          6. deadline 和 weekly_time 是可选字段，缺失时填写空字符串，不影响 need_clarification。
+          7. resource_preference 只能填写 video、text、both、unknown。实践技能未说明偏好时填 video，其他情况填 unknown。
+          8. missing_fields_text 只列出缺失的必填字段 goal、current_level，用英文逗号连接；都不缺失时填空字符串。
+          9. deliverable 可以从 goal 直接改写成可验收成果，但不得引入用户没有表达的新目标。
+          10. 所有字段的值都必须是字符串，包括 need_clarification。禁止输出 Boolean、null、数组或对象。
+          11. 必须输出且只输出下面这个 JSON 对象，不得增加或删除字段，不得输出解释、Markdown 或代码围栏：
+
+          {
+            "goal": "",
+            "goal_type": "",
+            "domain": "",
+            "current_level": "",
+            "deadline": "",
+            "weekly_time": "",
+            "resource_preference": "",
+            "constraints_text": "",
+            "deliverable": "",
+            "missing_fields_text": "",
+            "need_clarification": ""
+          }
+        respFormat: 2
+      retryConfig:
+        customOutput: |-
+          {
+            "REASONING_CONTENT": "",
+            "goal": "",
+            "goal_type": "",
+            "domain": "",
+            "current_level": "",
+            "deadline": "",
+            "weekly_time": "",
+            "resource_preference": "",
+            "constraints_text": "",
+            "deliverable": "",
+            "missing_fields_text": "",
+            "need_clarification": ""
+          }
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-model.svg
+      description: 根据输入的提示词，调用选定的大模型，对提示词作出回答
+      updatable: false
+  - id: if-else::4b878686-e218-424a-b33f-44758c20c167
+    dragging: false
+    selected: false
+    width: 347
+    height: 167
+    position:
+      x: 817.3416136711267
+      y: 501.09719365931755
+    positionAbsolute:
+      x: 817.3416136711267
+      y: 501.09719365931755
+    type: 分支器
+    data:
+      allowInputReference: true
+      allowOutputReference: false
+      label: 信息是否完整
+      labelEdit: false
+      references: [
+        ]
+      status: success
+      nodeMeta:
+        aliasName: 分支器
+        nodeType: 分支器
+      inputs:
+      - id: be773a2f-511a-467e-abc8-fd7b651de45b
+        name: input
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: need_clarification
+              id: 4bb6d863-b3de-42f3-9b20-9b4fa0345552
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: a3e669ce-5485-4348-843b-f5b0e7660948
+        name: input1
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: literal
+            content: 'true'
+            contentErrMsg: ''
+      outputs: [
+        ]
+      nodeParam:
+        uid: '19702983768'
+        cases:
+        - level: 1
+          logicalOperator: and
+          id: branch_one_of::06d248ef-812c-4485-b841-34ddbf0ee53f
+          conditions:
+          - leftVarIndex: be773a2f-511a-467e-abc8-fd7b651de45b
+            rightVarIndex: a3e669ce-5485-4348-843b-f5b0e7660948
+            compareOperatorErrMsg: ''
+            id: ''
+            compareOperator: eq
+        - level: 999
+          logicalOperator: and
+          id: branch_one_of::59333d55-10d0-4e56-992f-968b57fcc3ab
+          conditions: [
+            ]
+        appId: 12a0a7e2
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-if-else.svg
+      description: 根据设立的条件，判断选择分支走向
+      updatable: false
+  - id: spark-llm::3304978f-ddd2-49fe-9f31-8a57b8fb8275
+    dragging: false
+    selected: false
+    width: 287
+    height: 123
+    position:
+      x: 2826.0106277186374
+      y: 875.0807887836305
+    positionAbsolute:
+      x: 2826.0106277186374
+      y: 875.0807887836305
+    type: 大模型
+    data:
+      allowInputReference: true
+      allowOutputReference: true
+      label: 生成追问
+      labelEdit: false
+      references: [
+        ]
+      status: ''
+      nodeMeta:
+        aliasName: 大模型
+        nodeType: 基础节点
+      inputs:
+      - id: 3a8963e4-c2e1-433a-927b-f5a7125ee195
+        name: goal
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: goal
+              id: 0aaab819-6f1e-4ce4-beb3-80cd469a9a1d
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 36d3834c-9a71-49dd-bf0f-e2f56d9aaab5
+        name: missing
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: missing_fields_text
+              id: f34186f7-5f95-427e-a65c-5a74706a6d51
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 4fb80abf-c4ab-4854-92aa-2c087cc80bcc
+        name: input
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: AGENT_USER_INPUT
+              id: b55a1099-be8c-4484-ad76-05e35357ae18
+              nodeId: node-start::a1eacf05-63ae-405c-a66c-1f41244bdd98
+            contentErrMsg: ''
+        fileType: ''
+      outputs:
+      - id: f3dba1b5-3398-4c99-9963-b562042b194f
+        name: REASONING_CONTENT
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 模型思考过程
+        customParameterType: deepseekr1
+      - id: 175739d0-4c52-492e-9db8-9dbe924e0649
+        name: output
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 向用户提出的补充问题
+      nodeParam:
+        topK: 4
+        template: |-
+          用户原话：{{input}}
+          已识别目标：{{goal}}
+          缺失信息：{{missing}}
+        modelId: 142
+        enableChatHistoryV2:
+          isEnabled: false
+          rounds: 1
+        auditing: default
+        llmId: 142
+        url: wss://maas-api.cn-huabei-1.xf-yun.com/v1.1/chat
+        multiMode: false
+        uid: '19702983768'
+        modelName: DeepSeek-R1
+        patchId: '0'
+        isThink: true
+        templateErrMsg: ''
+        searchDisable: true
+        domain: xdeepseekr1
+        appId: 12a0a7e2
+        maxTokens: 8192
+        temperature: 0.5
+        systemTemplate: |-
+          你是“亿點點”，语气直接、自然、简短。用户提供的信息不足以制定可靠路线。
+          根据缺失项一次性提出最多3个问题，不要给学习路线，不要重复已经知道的信息。
+          优先询问具体成果、当前基础、截止时间、每周可投入时间和视频/文字偏好。
+          只输出要直接展示给用户的话。
+        model: spark
+        modelEnabled: true
+        serviceId: xdeepseekr1
+        respFormat: 0
+        llmIdErrMsg: ''
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-model.svg
+      description: 根据输入的提示词，调用选定的大模型，对提示词作出回答
+      updatable: false
+  - id: memory-search::1bcc4202-970d-4469-b0ba-64e21806c0f7
+    dragging: false
+    selected: false
+    width: 255
+    height: 141
+    position:
+      x: 1251.6039785521448
+      y: 316.27293284728444
+    positionAbsolute:
+      x: 1251.6039785521448
+      y: 316.27293284728444
+    type: 长期记忆检索
+    data:
+      label: 历史学习检索
+      labelEdit: false
+      status: success
+      nodeMeta:
+        aliasName: 长期记忆检索
+        nodeType: 工具节点
+      inputs:
+      - id: fc964155-d0ea-4d46-abf0-8944735f4d68
+        name: input
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: AGENT_USER_INPUT
+              id: b55a1099-be8c-4484-ad76-05e35357ae18
+              nodeId: node-start::a1eacf05-63ae-405c-a66c-1f41244bdd98
+            contentErrMsg: ''
+        fileType: ''
+        required: true
+        deleteDisabled: true
+      outputs:
+      - id: 7edd09d7-ba64-4064-8d63-22485b8d9f6d
+        name: memory
+        nameErrMsg: ''
+        schema:
+          type: array-object
+          properties:
+          - id: feffea3c-4008-4df8-84a8-0130tee72276
+            name: value
+            required: false
+            type: string
+            default: ''
+          - id: 95faea3c-4008-4df8-84a8-013079e7gr76
+            name: date
+            required: false
+            type: string
+            default: ''
+        required: false
+      nodeParam:
+        uid: '19702983768'
+        repo_id: repo_153oyKgpyFcQjt8Oa8rJNM
+        appId: 12a0a7e2
+        limit: 5
+        app_id: 12a0a7e2
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-memory-search.svg
+      description: 检索长期记忆，目前支持对用户输入的检索
+      updatable: false
+  - id: spark-llm::5440a1e8-00dc-480a-8138-2bb0a062b61c
+    dragging: false
+    selected: false
+    width: 361
+    height: 165
+    position:
+      x: 1594.796396450024
+      y: 307.6158393089021
+    positionAbsolute:
+      x: 1594.796396450024
+      y: 307.6158393089021
+    type: 大模型
+    data:
+      allowInputReference: true
+      allowOutputReference: true
+      label: 目标与技能拆解
+      labelEdit: false
+      references: [
+        ]
+      status: success
+      nodeMeta:
+        aliasName: 大模型
+        nodeType: 基础节点
+      inputs:
+      - id: 3113e98f-2f4f-4275-a512-6666c74a6547
+        name: goal
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: goal
+              id: 0aaab819-6f1e-4ce4-beb3-80cd469a9a1d
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 2a6aa4c6-d78b-4ab0-8439-4554b5e4b88e
+        name: goal_type
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: goal_type
+              id: 31eadef8-5d5e-4d05-af13-36c5b396a48a
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: deff0884-6ad3-4eac-a93a-66ed6c151508
+        name: domain
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: domain
+              id: e15ccbe1-2bf0-4c8f-b503-a4c5c9e5106c
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 821741f2-2f42-4107-9c31-8a6470c69081
+        name: level
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: current_level
+              id: 81f30dbe-9932-486a-9424-3563f9b2fbcb
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 6d69083a-5e73-40a7-b538-c8e2216e494d
+        name: deadline
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: deadline
+              id: 157fe404-2559-4551-9924-3aad59e2ae18
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: a4034d2e-9b82-4d9b-a8ec-09bf35872858
+        name: weekly_time
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: weekly_time
+              id: a22a6040-b773-490b-a25d-dc46c68d8418
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 0be22a9d-441d-49a1-b1c5-bc100235fb60
+        name: constraints
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: constraints_text
+              id: f3a74eec-3d6b-45e9-be28-68acd4464a29
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: e986be81-959a-427e-8c60-7983c8f67acf
+        name: deliverable
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: deliverable
+              id: 26b0668d-0708-4fe0-b94d-fa5f3e6a175d
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 482ded5e-bb06-43b6-8f57-e1d3c51d0da4
+        name: memory
+        nameErrMsg: ''
+        schema:
+          type: array-object
+          value:
+            type: ref
+            content:
+              name: memory
+              id: 7edd09d7-ba64-4064-8d63-22485b8d9f6d
+              nodeId: memory-search::1bcc4202-970d-4469-b0ba-64e21806c0f7
+            contentErrMsg: ''
+        fileType: ''
+      outputs:
+      - id: 4fdfb889-913c-4dcf-812b-88aec4ebca09
+        name: REASONING_CONTENT
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 模型思考过程
+        customParameterType: deepseekr1
+      - id: 3509610e-d5b2-40ec-b0f4-a82c49f4c613
+        name: output
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 结构化技能拆解 JSON 文本
+      nodeParam:
+        topK: 4
+        template: |-
+          目标：{{goal}}
+          目标类型：{{goal_type}}
+          领域：{{domain}}
+          当前基础：{{level}}
+          截止时间：{{deadline}}
+          每周投入：{{weekly_time}}
+          限制：{{constraints}}
+          交付物：{{deliverable}}
+          历史学习状态：{{memory}}
+        modelId: 142
+        enableChatHistoryV2:
+          isEnabled: false
+          rounds: 1
+        auditing: default
+        llmId: 142
+        url: wss://maas-api.cn-huabei-1.xf-yun.com/v1.1/chat
+        multiMode: false
+        uid: '19702983768'
+        modelName: DeepSeek-R1
+        patchId: '0'
+        isThink: true
+        templateErrMsg: ''
+        searchDisable: true
+        domain: xdeepseekr1
+        appId: 12a0a7e2
+        maxTokens: 8192
+        temperature: 0.5
+        systemTemplate: |-
+          你是实战型学习任务拆解器。根据 goal_type 选择拆解方式：
+
+          - task：只保留完成交付物必需的技能，最多6项，不扩展成完整课程。
+          - systematic：拆成3至5个有前置关系的阶段。
+          - career：拆成已有优势、关键差距、需要验证的假设和最小补强项目。
+
+          共同要求：
+          1. 结合用户已有基础，已经掌握的内容跳过或只安排快速自测。
+          2. 每项都说明为什么必要、练什么、做到什么算通过。
+          3. 时间不足时缩小目标，不承诺不现实的结果。
+          4. 历史记忆与本轮输入冲突时，以本轮输入为准。
+          5. 输出合法 JSON，不要添加 Markdown 代码围栏。
+
+          输出结构：
+          {
+            "goal_assessment": {"grade":"D-到S++", "reason":"一句话"},
+            "units": [
+              {"id":"S1", "name":"技能或阶段名", "why":"必要性", "action":"练习动作", "acceptance":"验收标准", "time_budget":"预计时间"}
+            ]
+          }
+        model: spark
+        modelEnabled: true
+        serviceId: xdeepseekr1
+        respFormat: 0
+        llmIdErrMsg: ''
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-model.svg
+      description: 根据输入的提示词，调用选定的大模型，对提示词作出回答
+      updatable: false
+  - id: spark-llm::f93b84cd-7cc9-4c52-b6c9-bccafb4df2b0
+    dragging: false
+    selected: false
+    width: 361
+    height: 165
+    position:
+      x: 2013.295290190219
+      y: 306.3743421672867
+    positionAbsolute:
+      x: 2013.295290190219
+      y: 306.3743421672867
+    type: 大模型
+    data:
+      allowInputReference: true
+      allowOutputReference: true
+      label: 搜索词生成
+      labelEdit: false
+      references: [
+        ]
+      status: success
+      nodeMeta:
+        aliasName: 大模型
+        nodeType: 基础节点
+      inputs:
+      - id: 7e108678-4814-48cc-81df-45c4c7b6f3f9
+        name: goal
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: goal
+              id: 0aaab819-6f1e-4ce4-beb3-80cd469a9a1d
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 0ef413fb-671c-47f7-a8a0-860539fa60f8
+        name: domain
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: domain
+              id: e15ccbe1-2bf0-4c8f-b503-a4c5c9e5106c
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 92e3d03b-f647-4301-b640-655fb9a4df45
+        name: preference
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: resource_preference
+              id: 98ac7693-48c2-4a5e-bf67-850562cdd7ea
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: f6a65539-b99f-4981-958b-f3ac0b31b822
+        name: skills
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: output
+              id: 3509610e-d5b2-40ec-b0f4-a82c49f4c613
+              nodeId: spark-llm::5440a1e8-00dc-480a-8138-2bb0a062b61c
+            contentErrMsg: ''
+        fileType: ''
+      outputs:
+      - id: 75991cf3-9234-4fab-b9e5-16daa361739c
+        name: REASONING_CONTENT
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 模型思考过程
+        customParameterType: deepseekr1
+      - id: 9ce63ff4-0a92-4277-bc81-5f3dd6f8ac3e
+        name: query_1
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: ''
+      - id: ea894b9f-8ad4-498f-9cb2-c2c0f80b9129
+        name: query_2
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: ''
+        required: false
+      - id: b78840e0-95c0-482d-8c33-73d2a7d8c635
+        name: query_3
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: ''
+        required: false
+      nodeParam:
+        template: |-
+          目标：{{goal}}
+          领域：{{domain}}
+          资源偏好：{{preference}}
+          技能拆解：{{skills}}
+        modelId: 142
+        auditing: default
+        llmId: 142
+        uid: '19702983768'
+        patchId: '0'
+        isThink: true
+        templateErrMsg: ''
+        appId: 12a0a7e2
+        maxTokens: 8192
+        temperature: 0.5
+        model: spark
+        setAnswerContentErrMsg: ''
+        modelEnabled: true
+        serviceId: xdeepseekr1
+        llmIdErrMsg: ''
+        topK: 4
+        enableChatHistoryV2:
+          isEnabled: false
+          rounds: 1
+        url: wss://maas-api.cn-huabei-1.xf-yun.com/v1.1/chat
+        multiMode: false
+        modelName: DeepSeek-R1
+        searchDisable: true
+        domain: xdeepseekr1
+        systemTemplate: |-
+          你是学习资源搜索词生成器。生成3条互补、可直接用于网页搜索的查询词。
+
+          规则：
+          1. query_1 搜最直接的完整教程或官方教程。
+          2. query_2 搜关键难点、实战案例或分步骤演示。
+          3. query_3 搜验收方法、常见错误或高质量替代资源。
+          4. 实践技能优先视频，查询中加入 site:bilibili.com；技术内容优先官方文档和可复现项目。
+          5. 需要时效性的岗位或技术内容加入当前年份2026。
+          6. 不要生成三条意思相同的搜索词。
+          7. 只输出已配置的 JSON 字段。
+        respFormat: 2
+      retryConfig:
+        customOutput: |-
+          {
+            "REASONING_CONTENT": "",
+            "query_1": "",
+            "query_2": "",
+            "query_3": ""
+          }
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-model.svg
+      description: 根据输入的提示词，调用选定的大模型，对提示词作出回答
+      updatable: false
+  - id: mcp::3737ea45-7118-4f0a-9eb5-ab60f686989c
+    dragging: false
+    selected: false
+    width: 255
+    height: 141
+    position:
+      x: 2441.7910585511568
+      y: 183.000942400067
+    positionAbsolute:
+      x: 2441.7910585511568
+      y: 183.000942400067
+    type: MCP
+    data:
+      allowInputReference: true
+      allowOutputReference: true
+      label: 联网搜索_1
+      labelEdit: false
+      references: [
+        ]
+      status: success
+      nodeMeta:
+        aliasName: MCP
+        nodeType: 工具节点
+      inputs:
+      - id: a275c559-3012-4f4e-8873-902ceaa62c25
+        name: name
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: query_1
+              id: 9ce63ff4-0a92-4277-bc81-5f3dd6f8ac3e
+              nodeId: spark-llm::f93b84cd-7cc9-4c52-b6c9-bccafb4df2b0
+            contentErrMsg: ''
+        fileType: ''
+        description: 需要搜索的问题
+        required: true
+      outputs:
+      - id: 02fd4f02-80e1-4c51-8324-eed6d171df7c
+        name: result
+        nameErrMsg: ''
+        schema:
+          type: object
+          properties:
+          - id: d6139baf-1e21-4138-9f69-30134a3b9ba8
+            name: isError
+            required: false
+            type: boolean
+            properties: [
+              ]
+            default: ''
+          - id: 6af38267-17fe-4e77-a064-1f345035e75a
+            name: content
+            required: false
+            type: array-object
+            default: ''
+          default: ''
+        required: false
+      nodeParam:
+        toolDescription: 使用网络搜索公开信息
+        mcpServerId: mcp@flow7315369583345876994
+        toolName: 联网搜索
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-mcp.svg
+      updatable: false
+  - id: mcp::44655854-8848-4582-8192-83a879f60d10
+    dragging: false
+    selected: false
+    width: 255
+    height: 141
+    position:
+      x: 2435.7273924656492
+      y: 332.7896402919122
+    positionAbsolute:
+      x: 2435.7273924656492
+      y: 332.7896402919122
+    type: MCP
+    data:
+      allowInputReference: true
+      allowOutputReference: true
+      label: 联网搜索_2
+      labelEdit: false
+      references: [
+        ]
+      status: success
+      nodeMeta:
+        aliasName: MCP
+        nodeType: 工具节点
+      inputs:
+      - id: d95f07f4-d86d-48e9-9aee-5eb732ff652a
+        name: name
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: query_2
+              id: ea894b9f-8ad4-498f-9cb2-c2c0f80b9129
+              nodeId: spark-llm::f93b84cd-7cc9-4c52-b6c9-bccafb4df2b0
+            contentErrMsg: ''
+        fileType: ''
+        description: 需要搜索的问题
+        required: true
+      outputs:
+      - id: 0faedac5-0cda-4872-ba5b-bbbb25ca7cec
+        name: result
+        nameErrMsg: ''
+        schema:
+          type: object
+          properties:
+          - id: d6139baf-1e21-4138-9f69-30134a3b9ba8
+            name: isError
+            required: false
+            type: boolean
+            properties: [
+              ]
+            default: ''
+          - id: 6af38267-17fe-4e77-a064-1f345035e75a
+            name: content
+            required: false
+            type: array-object
+            default: ''
+          default: ''
+        required: false
+      nodeParam:
+        toolDescription: 使用网络搜索公开信息
+        mcpServerId: mcp@flow7315369583345876994
+        toolName: 联网搜索
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-mcp.svg
+      updatable: false
+  - id: mcp::e1e1cf91-700a-4f1b-84e4-f90f3cf61922
+    dragging: false
+    selected: false
+    width: 255
+    height: 141
+    position:
+      x: 2434.02539905824
+      y: 483.15643677779826
+    positionAbsolute:
+      x: 2434.02539905824
+      y: 483.15643677779826
+    type: MCP
+    data:
+      allowInputReference: true
+      allowOutputReference: true
+      label: 联网搜索_3
+      labelEdit: false
+      references: [
+        ]
+      status: success
+      nodeMeta:
+        aliasName: MCP
+        nodeType: 工具节点
+      inputs:
+      - id: b8f5a41a-2faa-4535-8445-659d685fd8ff
+        name: name
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: query_3
+              id: b78840e0-95c0-482d-8c33-73d2a7d8c635
+              nodeId: spark-llm::f93b84cd-7cc9-4c52-b6c9-bccafb4df2b0
+            contentErrMsg: ''
+        fileType: ''
+        description: 需要搜索的问题
+        required: true
+      outputs:
+      - id: 1f66bd62-e7ba-4fe8-88f9-6886ca0721fc
+        name: result
+        nameErrMsg: ''
+        schema:
+          type: object
+          properties:
+          - id: d6139baf-1e21-4138-9f69-30134a3b9ba8
+            name: isError
+            required: false
+            type: boolean
+            properties: [
+              ]
+            default: ''
+          - id: 6af38267-17fe-4e77-a064-1f345035e75a
+            name: content
+            required: false
+            type: array-object
+            default: ''
+          default: ''
+        required: false
+      nodeParam:
+        toolDescription: 使用网络搜索公开信息
+        mcpServerId: mcp@flow7315369583345876994
+        toolName: 联网搜索
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-mcp.svg
+      updatable: false
+  - id: spark-llm::a68abab9-19b0-4ca6-b3c6-20bd482212d3
+    dragging: false
+    selected: false
+    width: 361
+    height: 165
+    position:
+      x: 2771.1870616882825
+      y: 336.02879631399014
+    positionAbsolute:
+      x: 2771.1870616882825
+      y: 336.02879631399014
+    type: 大模型
+    data:
+      allowInputReference: true
+      allowOutputReference: true
+      label: 资源筛选
+      labelEdit: false
+      references: [
+        ]
+      status: success
+      nodeMeta:
+        aliasName: 大模型
+        nodeType: 基础节点
+      inputs:
+      - id: 0d890ca8-733b-403a-8e81-912bcba6c331
+        name: goal
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: goal
+              id: 0aaab819-6f1e-4ce4-beb3-80cd469a9a1d
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 45d28c01-7a3b-4534-b4ab-d78043ed9b53
+        name: level
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: current_level
+              id: 81f30dbe-9932-486a-9424-3563f9b2fbcb
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 9deca43b-53ab-43bf-890c-b483ebea2e42
+        name: preference
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: resource_preference
+              id: 98ac7693-48c2-4a5e-bf67-850562cdd7ea
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 91eabe05-c443-42ca-823f-637b1f6b72a7
+        name: skills
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: output
+              id: 3509610e-d5b2-40ec-b0f4-a82c49f4c613
+              nodeId: spark-llm::5440a1e8-00dc-480a-8138-2bb0a062b61c
+            contentErrMsg: ''
+        fileType: ''
+      - id: 5af07c88-0ea9-41a8-af0f-6c49de403378
+        name: result_1
+        nameErrMsg: ''
+        schema:
+          type: object
+          value:
+            type: ref
+            content:
+              name: result
+              id: 02fd4f02-80e1-4c51-8324-eed6d171df7c
+              nodeId: mcp::3737ea45-7118-4f0a-9eb5-ab60f686989c
+            contentErrMsg: ''
+        fileType: ''
+      - id: 311f682e-cac4-4632-a6a2-d8a5f6b5b662
+        name: result_2
+        nameErrMsg: ''
+        schema:
+          type: object
+          value:
+            type: ref
+            content:
+              name: result
+              id: 0faedac5-0cda-4872-ba5b-bbbb25ca7cec
+              nodeId: mcp::44655854-8848-4582-8192-83a879f60d10
+            contentErrMsg: ''
+        fileType: ''
+      - id: bfc577f2-570b-4ab0-a126-e82e21eddf5c
+        name: result_3
+        nameErrMsg: ''
+        schema:
+          type: object
+          value:
+            type: ref
+            content:
+              name: result
+              id: 1f66bd62-e7ba-4fe8-88f9-6886ca0721fc
+              nodeId: mcp::e1e1cf91-700a-4f1b-84e4-f90f3cf61922
+            contentErrMsg: ''
+        fileType: ''
+      outputs:
+      - id: 96d94c0e-3745-4c1e-a1d7-cb793f8fc7c4
+        name: REASONING_CONTENT
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 模型思考过程
+        customParameterType: deepseekr1
+      - id: b9cf609a-e9e5-4125-abff-88e1c9688212
+        name: output
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 经过筛选的可信资源 JSON
+      nodeParam:
+        topK: 4
+        template: |-
+          用户目标：{{goal}}
+          当前基础：{{level}}
+          资源偏好：{{preference}}
+          技能拆解：{{skills}}
+
+          搜索结果一：{{result_1}}
+          搜索结果二：{{result_2}}
+          搜索结果三：{{result_3}}
+        modelId: 142
+        enableChatHistoryV2:
+          isEnabled: false
+          rounds: 1
+        auditing: default
+        llmId: 142
+        url: wss://maas-api.cn-huabei-1.xf-yun.com/v1.1/chat
+        multiMode: false
+        uid: '19702983768'
+        modelName: DeepSeek-R1
+        patchId: '0'
+        isThink: true
+        templateErrMsg: ''
+        searchDisable: true
+        domain: xdeepseekr1
+        appId: 12a0a7e2
+        maxTokens: 8192
+        temperature: 0.5
+        systemTemplate: |-
+          你是严格的学习资源审核器。只能从给定搜索结果中选择资源，禁止补写标题、作者、URL、
+          播放量、评分和课程内容。仅凭摘要不能确认的信息必须标记“未核实”。
+
+          处理步骤：
+          1. 按URL去重；没有真实URL或来源的结果淘汰。
+          2. 按相关度40%、水平匹配20%、可操作性20%、来源可信度10%、时效性10%评分。
+          3. 每个技能单元保留1至2条，总数不超过8条。
+          4. 不得声称已经观看视频或完整阅读页面。
+          5. 没有合格资源时保留该技能单元，并标注暂无可信资源。
+          6. 只输出合法JSON，不加Markdown代码围栏。
+
+          输出结构：
+          {
+            "resources": [
+              {
+                "skill_id":"S1",
+                "title":"搜索结果中的原始标题",
+                "url":"搜索结果中的原始URL",
+                "platform":"平台或网站",
+                "author_or_org":"搜索结果有则填写，没有则填未核实",
+                "score":0,
+                "selection_reason":"只基于已知信息的选择理由",
+                "verification_note":"需要用户打开后确认的内容"
+              }
+            ],
+            "missing_resource_skill_ids":[]
+          }
+        model: spark
+        modelEnabled: true
+        serviceId: xdeepseekr1
+        respFormat: 0
+        llmIdErrMsg: ''
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-model.svg
+      description: 根据输入的提示词，调用选定的大模型，对提示词作出回答
+      updatable: false
+  - id: spark-llm::11be6a63-ddac-4dc0-81c3-2338e84782bb
+    dragging: false
+    selected: false
+    width: 361
+    height: 165
+    position:
+      x: 3209.8493118968163
+      y: 346.2737686966615
+    positionAbsolute:
+      x: 3209.8493118968163
+      y: 346.2737686966615
+    type: 大模型
+    data:
+      allowInputReference: true
+      allowOutputReference: true
+      label: 学习路径生成
+      labelEdit: false
+      references: [
+        ]
+      status: success
+      nodeMeta:
+        aliasName: 大模型
+        nodeType: 基础节点
+      inputs:
+      - id: dd10b644-102d-4aa4-a8f8-99b77151e89e
+        name: goal
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: goal
+              id: 0aaab819-6f1e-4ce4-beb3-80cd469a9a1d
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 7926b206-22ec-49bd-aec7-6aee2b20ac65
+        name: goal_type
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: goal_type
+              id: 31eadef8-5d5e-4d05-af13-36c5b396a48a
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: fe7ee233-5458-4390-a63e-0a0221285039
+        name: level
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: current_level
+              id: 81f30dbe-9932-486a-9424-3563f9b2fbcb
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 6fd7af3c-1d2e-4f44-b5fa-1f2a833c3a2d
+        name: deadline
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: deadline
+              id: 157fe404-2559-4551-9924-3aad59e2ae18
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 4068d882-e717-4caa-8c2f-c7843c0823e6
+        name: weekly_time
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: weekly_time
+              id: a22a6040-b773-490b-a25d-dc46c68d8418
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 3bf4178d-a15b-4f94-a5d4-c35c4ddd38de
+        name: preference
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: resource_preference
+              id: 98ac7693-48c2-4a5e-bf67-850562cdd7ea
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 7c42e61d-6790-40f3-80a8-5d170e3c36a8
+        name: constraints
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: constraints_text
+              id: f3a74eec-3d6b-45e9-be28-68acd4464a29
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: db67c005-b24c-4cd0-915b-69b4f89b6178
+        name: skills
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: output
+              id: 3509610e-d5b2-40ec-b0f4-a82c49f4c613
+              nodeId: spark-llm::5440a1e8-00dc-480a-8138-2bb0a062b61c
+            contentErrMsg: ''
+        fileType: ''
+      - id: 6be7f1e6-0472-4092-926e-53fe0a87b149
+        name: resources
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: output
+              id: b9cf609a-e9e5-4125-abff-88e1c9688212
+              nodeId: spark-llm::a68abab9-19b0-4ca6-b3c6-20bd482212d3
+            contentErrMsg: ''
+        fileType: ''
+      outputs:
+      - id: 7e12513c-0f5b-4737-9235-65cdf87c1c55
+        name: REASONING_CONTENT
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 模型思考过程
+        customParameterType: deepseekr1
+      - id: fc0f3c4e-b2db-443b-8930-53c056c97c0b
+        name: output
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: ''
+      nodeParam:
+        topK: 4
+        template: |-
+          目标：{{goal}}
+          类型：{{goal_type}}
+          当前基础：{{level}}
+          截止时间：{{deadline}}
+          每周时间：{{weekly_time}}
+          偏好：{{preference}}
+          限制：{{constraints}}
+          技能拆解：{{skills}}
+          可信资源：{{resources}}
+        modelId: 142
+        enableChatHistoryV2:
+          isEnabled: false
+          rounds: 1
+        auditing: default
+        llmId: 142
+        url: wss://maas-api.cn-huabei-1.xf-yun.com/v1.1/chat
+        multiMode: false
+        uid: '19702983768'
+        modelName: DeepSeek-R1
+        patchId: '0'
+        isThink: true
+        templateErrMsg: ''
+        searchDisable: true
+        domain: xdeepseekr1
+        appId: 12a0a7e2
+        maxTokens: 8192
+        temperature: 0.5
+        systemTemplate: |-
+          你是“亿點點”，一个实战派学习教练。你的原则是只为目标服务，不为了体系而体系。
+
+          要求：
+          1. task 输出最短交付路径；systematic 输出阶段里程碑；career 输出差距验证和作品证明路径。
+          2. 给出D-至S++的目标距离评级。评级表示当前基础到目标的距离，不评价用户本人。
+          3. 每一步必须有：做什么、预计用时、练习方法、对应资源、验收标准。
+          4. 只能引用可信资源中真实存在的标题和URL，不得新增或改写链接。
+          5. 没有合格资源时写“暂未检索到可信资源”，并给出搜索关键词，不编链接。
+          6. 实践类技能优先视频；存在合格文字资源时再给文字补充路径。
+          7. 不声称已观看视频、登录网站、替用户完成操作或持续监控。
+          8. 时间安排不能超过用户可用时间；目标过大时先给可完成的缩小版本。
+          9. 语气直接自然，不灌鸡汤，不反复使用口头禅。
+
+          严格按以下结构输出：
+          **目标评级**
+          **最小技能拆解/阶段差距**
+          **学习路径**
+          **本周立即行动**
+          **风险与待核实项**
+        model: spark
+        modelEnabled: true
+        serviceId: xdeepseekr1
+        respFormat: 0
+        llmIdErrMsg: ''
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-model.svg
+      description: 根据输入的提示词，调用选定的大模型，对提示词作出回答
+      updatable: false
+  - id: spark-llm::196d89e7-06b6-468d-887c-89a5b19a9f20
+    dragging: false
+    selected: false
+    width: 361
+    height: 165
+    position:
+      x: 3600.5348756913218
+      y: 352.5226451986516
+    positionAbsolute:
+      x: 3600.5348756913218
+      y: 352.5226451986516
+    type: 大模型
+    data:
+      allowInputReference: true
+      allowOutputReference: true
+      label: 事实质检
+      labelEdit: false
+      references: [
+        ]
+      status: success
+      nodeMeta:
+        aliasName: 大模型
+        nodeType: 基础节点
+      inputs:
+      - id: 3e11915e-ec24-47d4-84e1-ffed10042643
+        name: draft
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: output
+              id: fc0f3c4e-b2db-443b-8930-53c056c97c0b
+              nodeId: spark-llm::11be6a63-ddac-4dc0-81c3-2338e84782bb
+            contentErrMsg: ''
+        fileType: ''
+      - id: 0be94ec6-ab04-4d78-8d5f-6439f0db1b72
+        name: resources
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: output
+              id: b9cf609a-e9e5-4125-abff-88e1c9688212
+              nodeId: spark-llm::a68abab9-19b0-4ca6-b3c6-20bd482212d3
+            contentErrMsg: ''
+        fileType: ''
+      - id: f33e8ce9-5479-444a-92c4-d2e22c0eac7b
+        name: skills
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: output
+              id: 3509610e-d5b2-40ec-b0f4-a82c49f4c613
+              nodeId: spark-llm::5440a1e8-00dc-480a-8138-2bb0a062b61c
+            contentErrMsg: ''
+        fileType: ''
+      - id: 99ec09bb-d6b8-47c9-9434-3acd0bc26e61
+        name: deadline
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: deadline
+              id: 157fe404-2559-4551-9924-3aad59e2ae18
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 72b98090-3da2-4ba5-a9bf-8f23a798df29
+        name: weekly_time
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: weekly_time
+              id: a22a6040-b773-490b-a25d-dc46c68d8418
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      outputs:
+      - id: ca3854bb-9213-4b5a-9973-989df4614447
+        name: REASONING_CONTENT
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 模型思考过程
+        customParameterType: deepseekr1
+      - id: bf2399de-a699-4ca6-a4bf-8a0cbc31bd81
+        name: output
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 质检并修正后的最终路线
+      nodeParam:
+        topK: 4
+        template: |-
+          路线草稿：{{draft}}
+          可信资源：{{resources}}
+          技能拆解：{{skills}}
+          截止时间：{{deadline}}
+          每周时间：{{weekly_time}}
+        modelId: 142
+        enableChatHistoryV2:
+          isEnabled: false
+          rounds: 1
+        auditing: default
+        llmId: 142
+        url: wss://maas-api.cn-huabei-1.xf-yun.com/v1.1/chat
+        multiMode: false
+        uid: '19702983768'
+        modelName: DeepSeek-R1
+        patchId: '0'
+        isThink: true
+        templateErrMsg: ''
+        searchDisable: true
+        domain: xdeepseekr1
+        appId: 12a0a7e2
+        maxTokens: 8192
+        temperature: 0.5
+        systemTemplate: |-
+          你是最终输出质检器。检查草稿并直接输出修正后的完整版本，不要输出检查过程。
+
+          必须检查：
+          1. 每个标题、作者和URL都能在可信资源中找到；找不到就删除。
+          2. 删除无依据的播放量、口碑、薪资、就业趋势和“我看过/我验证过”等表述。
+          3. 删除用户已经掌握的冗余学习内容。
+          4. 每一步必须有明确动作和可观察的验收标准。
+          5. 总时间不能超过用户期限或可投入时间。
+          6. 保留目标评级、技能拆解、学习路径、本周行动、风险与待核实项五部分。
+          7. 不得新添加任何资源或链接。
+
+          只输出可直接展示给用户的最终学习路线。
+        model: spark
+        modelEnabled: true
+        serviceId: xdeepseekr1
+        respFormat: 0
+        llmIdErrMsg: ''
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-model.svg
+      description: 根据输入的提示词，调用选定的大模型，对提示词作出回答
+      updatable: false
+  - id: spark-llm::5bcd7d91-9386-4150-9a61-4183a19d744b
+    dragging: false
+    selected: false
+    width: 361
+    height: 165
+    position:
+      x: 3994.767499312302
+      y: 341.84409887044967
+    positionAbsolute:
+      x: 3994.767499312302
+      y: 341.84409887044967
+    type: 大模型
+    data:
+      allowInputReference: true
+      allowOutputReference: true
+      label: 学习状态摘要
+      labelEdit: false
+      references: [
+        ]
+      status: success
+      nodeMeta:
+        aliasName: 大模型
+        nodeType: 基础节点
+      inputs:
+      - id: 72f4fe37-f9d4-4739-ab45-f323d71bdc95
+        name: goal
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: goal
+              id: 0aaab819-6f1e-4ce4-beb3-80cd469a9a1d
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 358e1e48-1724-4340-b2df-ba5d8d54d42e
+        name: domain
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: domain
+              id: e15ccbe1-2bf0-4c8f-b503-a4c5c9e5106c
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 976ae21d-6860-499b-97e1-f01978672a50
+        name: level
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: current_level
+              id: 81f30dbe-9932-486a-9424-3563f9b2fbcb
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 7aec60d0-0caa-4851-a6ea-079bec08d417
+        name: preference
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: resource_preference
+              id: 98ac7693-48c2-4a5e-bf67-850562cdd7ea
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: d37e8009-e53d-43c9-8c52-cc0fff1d853a
+        name: constraints
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: constraints_text
+              id: f3a74eec-3d6b-45e9-be28-68acd4464a29
+              nodeId: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+            contentErrMsg: ''
+        fileType: ''
+      - id: 393fe6d9-63e2-4568-a823-7cee2aa78f5b
+        name: plan
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: output
+              id: bf2399de-a699-4ca6-a4bf-8a0cbc31bd81
+              nodeId: spark-llm::196d89e7-06b6-468d-887c-89a5b19a9f20
+            contentErrMsg: ''
+        fileType: ''
+      outputs:
+      - id: 65672e58-57fa-420a-a336-8da2a73e82a8
+        name: REASONING_CONTENT
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 模型思考过程
+        customParameterType: deepseekr1
+      - id: 2550af62-f17f-4719-910c-72d140087cba
+        name: output
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 写入长期记忆的简短学习状态
+      nodeParam:
+        topK: 4
+        template: |-
+          目标：{{goal}}
+          领域：{{domain}}
+          当前基础：{{level}}
+          偏好：{{preference}}
+          限制：{{constraints}}
+          最终路线：{{plan}}
+        modelId: 142
+        enableChatHistoryV2:
+          isEnabled: false
+          rounds: 1
+        auditing: default
+        llmId: 142
+        url: wss://maas-api.cn-huabei-1.xf-yun.com/v1.1/chat
+        multiMode: false
+        uid: '19702983768'
+        modelName: DeepSeek-R1
+        patchId: '0'
+        isThink: true
+        templateErrMsg: ''
+        searchDisable: true
+        domain: xdeepseekr1
+        appId: 12a0a7e2
+        maxTokens: 8192
+        temperature: 0.5
+        systemTemplate: |-
+          把本轮对后续学习有用的信息压缩成简短JSON。不要保存姓名、手机号、学校、精确住址等个人敏感信息。
+          未知内容留空，不得推测。只输出JSON，不加代码围栏。
+
+          字段：goal, domain, current_level, resource_preference, constraints,
+          current_stage, next_action, completed_items, updated_at。
+          updated_at 填 2026-08-27。
+        model: spark
+        modelEnabled: true
+        serviceId: xdeepseekr1
+        respFormat: 0
+        llmIdErrMsg: ''
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-model.svg
+      description: 根据输入的提示词，调用选定的大模型，对提示词作出回答
+      updatable: false
+  - id: memory-add::ed492c34-e81f-47ad-96de-f75f8b0a35a7
+    dragging: false
+    selected: false
+    width: 255
+    height: 141
+    position:
+      x: 4392.062378452634
+      y: 349.3087863153754
+    positionAbsolute:
+      x: 4392.062378452634
+      y: 349.3087863153754
+    type: 长期记忆写入
+    data:
+      label: 长期记忆写入_1
+      labelEdit: false
+      status: success
+      nodeMeta:
+        aliasName: 长期记忆写入
+        nodeType: 工具节点
+      inputs:
+      - id: 848ec2b9-263f-4c1a-a740-4b1b812cb66b
+        name: content
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: output
+              id: 2550af62-f17f-4719-910c-72d140087cba
+              nodeId: spark-llm::5bcd7d91-9386-4150-9a61-4183a19d744b
+            contentErrMsg: ''
+        fileType: ''
+        required: true
+      - id: d7df409c-6298-4f29-8c63-92510159707f
+        name: role
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: literal
+            content: assistant
+            contentErrMsg: ''
+        required: true
+      outputs:
+      - id: 9ea8b921-6bcb-41c6-8a15-ab95e3fd1b46
+        name: isSuccess
+        nameErrMsg: ''
+        schema:
+          type: boolean
+          description: 写入记忆库状态标识，成功true，失败false
+          default: ''
+      - id: c10cebaf-61d3-46ea-8c53-a921b89fb30a
+        name: message
+        nameErrMsg: ''
+        schema:
+          type: string
+          description: 失败原因
+          default: ''
+      nodeParam:
+        uid: '19702983768'
+        repo_id: repo_153oyKgpyFcQjt8Oa8rJNM
+        appId: 12a0a7e2
+        handlingEdge: normal_one_of::888bf7d0-c0b1-440d-9204-97645f210290
+        exceptionHandlingEdge: fail_one_of::2bcb2f5e-c37e-4307-82f1-158b8c6796f5
+        app_id: 12a0a7e2
+      retryConfig:
+        shouldRetry: false
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/memory-add.svg
+      description: 写入长期记忆，目前支持对用户输入的写入
+      updatable: false
+  - id: memory-search::d9b0aefb-7aae-4b8f-b092-42bf99b4ddd0
+    dragging: false
+    selected: true
+    width: 255
+    height: 141
+    position:
+      x: 3.0025479815591325
+      y: 617.143167113117
+    positionAbsolute:
+      x: 3.0025479815591325
+      y: 617.143167113117
+    type: 长期记忆检索
+    data:
+      label: 长期记忆检索_1
+      labelEdit: false
+      status: success
+      nodeMeta:
+        aliasName: 长期记忆检索
+        nodeType: 工具节点
+      inputs:
+      - id: 17b15678-9db1-4258-987a-323608533761
+        name: input
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: AGENT_USER_INPUT
+              id: b55a1099-be8c-4484-ad76-05e35357ae18
+              nodeId: node-start::a1eacf05-63ae-405c-a66c-1f41244bdd98
+            contentErrMsg: ''
+        required: true
+        deleteDisabled: true
+      outputs:
+      - id: c04c4d7d-8f03-4527-bcca-0909a6a50e4a
+        name: memory
+        nameErrMsg: ''
+        schema:
+          type: array-object
+          properties:
+          - id: feffea3c-4008-4df8-84a8-0130tee72276
+            name: value
+            required: false
+            type: string
+            default: ''
+          - id: 95faea3c-4008-4df8-84a8-013079e7gr76
+            name: date
+            required: false
+            type: string
+            default: ''
+        required: false
+      nodeParam:
+        uid: '19702983768'
+        repo_id: repo_153oyKgpyFcQjt8Oa8rJNM
+        appId: 12a0a7e2
+        limit: 5
+        app_id: 12a0a7e2
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/icon-wrapper-memory-search.svg
+      description: 检索长期记忆，目前支持对用户输入的检索
+      updatable: false
+  - id: memory-add::34e6c452-e395-4300-8f43-80485aae91ef
+    selected: false
+    width: 255
+    height: 99
+    position:
+      x: 2171.927943732147
+      y: 754.3128047066012
+    type: 长期记忆写入
+    data:
+      label: 保存待补目标
+      labelEdit: false
+      status: ''
+      nodeMeta:
+        aliasName: 长期记忆写入
+        nodeType: 工具节点
+      inputs:
+      - id: 033b29aa-ff5f-4014-975e-37c1505815f6
+        name: content
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              name: AGENT_USER_INPUT
+              id: b55a1099-be8c-4484-ad76-05e35357ae18
+              nodeId: node-start::a1eacf05-63ae-405c-a66c-1f41244bdd98
+            contentErrMsg: ''
+        required: true
+      - id: 50e1f995-ce36-42bf-8934-897ccadafc46
+        name: role
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: literal
+            content: user
+            contentErrMsg: ''
+        required: true
+      outputs:
+      - id: 5a199015-ed7d-4fb4-b963-4b5843fd12d7
+        name: isSuccess
+        nameErrMsg: ''
+        schema:
+          type: boolean
+          description: 写入记忆库状态标识，成功true，失败false
+          default: ''
+      - id: 7160f53c-da4d-4712-b3f1-f46ea3d3a80c
+        name: message
+        nameErrMsg: ''
+        schema:
+          type: string
+          description: 失败原因
+          default: ''
+      nodeParam:
+        uid: '19702983768'
+        repo_id: repo_153oyKgpyFcQjt8Oa8rJNM
+        appId: 12a0a7e2
+        app_id: 12a0a7e2
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/memory-add.svg
+      description: 写入长期记忆，目前支持对用户输入的写入
+      updatable: false
+  edges:
+  - source: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+    target: if-else::4b878686-e218-424a-b33f-44758c20c167
+    type: customEdge
+    id: reactflow__edge-spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5-if-else::4b878686-e218-424a-b33f-44758c20c167
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: memory-search::1bcc4202-970d-4469-b0ba-64e21806c0f7
+    target: spark-llm::5440a1e8-00dc-480a-8138-2bb0a062b61c
+    type: customEdge
+    id: reactflow__edge-memory-search::1bcc4202-970d-4469-b0ba-64e21806c0f7-spark-llm::5440a1e8-00dc-480a-8138-2bb0a062b61c
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: spark-llm::5440a1e8-00dc-480a-8138-2bb0a062b61c
+    target: spark-llm::f93b84cd-7cc9-4c52-b6c9-bccafb4df2b0
+    type: customEdge
+    id: reactflow__edge-spark-llm::5440a1e8-00dc-480a-8138-2bb0a062b61c-spark-llm::f93b84cd-7cc9-4c52-b6c9-bccafb4df2b0
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: spark-llm::f93b84cd-7cc9-4c52-b6c9-bccafb4df2b0
+    target: mcp::3737ea45-7118-4f0a-9eb5-ab60f686989c
+    type: customEdge
+    id: reactflow__edge-spark-llm::f93b84cd-7cc9-4c52-b6c9-bccafb4df2b0-mcp::3737ea45-7118-4f0a-9eb5-ab60f686989c
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: spark-llm::f93b84cd-7cc9-4c52-b6c9-bccafb4df2b0
+    target: mcp::44655854-8848-4582-8192-83a879f60d10
+    type: customEdge
+    id: reactflow__edge-spark-llm::f93b84cd-7cc9-4c52-b6c9-bccafb4df2b0-mcp::44655854-8848-4582-8192-83a879f60d10
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: spark-llm::f93b84cd-7cc9-4c52-b6c9-bccafb4df2b0
+    target: mcp::e1e1cf91-700a-4f1b-84e4-f90f3cf61922
+    type: customEdge
+    id: reactflow__edge-spark-llm::f93b84cd-7cc9-4c52-b6c9-bccafb4df2b0-mcp::e1e1cf91-700a-4f1b-84e4-f90f3cf61922
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: mcp::3737ea45-7118-4f0a-9eb5-ab60f686989c
+    target: spark-llm::a68abab9-19b0-4ca6-b3c6-20bd482212d3
+    type: customEdge
+    id: reactflow__edge-mcp::3737ea45-7118-4f0a-9eb5-ab60f686989c-spark-llm::a68abab9-19b0-4ca6-b3c6-20bd482212d3
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: mcp::44655854-8848-4582-8192-83a879f60d10
+    target: spark-llm::a68abab9-19b0-4ca6-b3c6-20bd482212d3
+    type: customEdge
+    id: reactflow__edge-mcp::44655854-8848-4582-8192-83a879f60d10-spark-llm::a68abab9-19b0-4ca6-b3c6-20bd482212d3
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: mcp::e1e1cf91-700a-4f1b-84e4-f90f3cf61922
+    target: spark-llm::a68abab9-19b0-4ca6-b3c6-20bd482212d3
+    type: customEdge
+    id: reactflow__edge-mcp::e1e1cf91-700a-4f1b-84e4-f90f3cf61922-spark-llm::a68abab9-19b0-4ca6-b3c6-20bd482212d3
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: spark-llm::a68abab9-19b0-4ca6-b3c6-20bd482212d3
+    target: spark-llm::11be6a63-ddac-4dc0-81c3-2338e84782bb
+    type: customEdge
+    id: reactflow__edge-spark-llm::a68abab9-19b0-4ca6-b3c6-20bd482212d3-spark-llm::11be6a63-ddac-4dc0-81c3-2338e84782bb
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: spark-llm::11be6a63-ddac-4dc0-81c3-2338e84782bb
+    target: spark-llm::196d89e7-06b6-468d-887c-89a5b19a9f20
+    type: customEdge
+    id: reactflow__edge-spark-llm::11be6a63-ddac-4dc0-81c3-2338e84782bb-spark-llm::196d89e7-06b6-468d-887c-89a5b19a9f20
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: spark-llm::196d89e7-06b6-468d-887c-89a5b19a9f20
+    target: spark-llm::5bcd7d91-9386-4150-9a61-4183a19d744b
+    type: customEdge
+    id: reactflow__edge-spark-llm::196d89e7-06b6-468d-887c-89a5b19a9f20-spark-llm::5bcd7d91-9386-4150-9a61-4183a19d744b
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: spark-llm::5bcd7d91-9386-4150-9a61-4183a19d744b
+    target: memory-add::ed492c34-e81f-47ad-96de-f75f8b0a35a7
+    type: customEdge
+    id: reactflow__edge-spark-llm::5bcd7d91-9386-4150-9a61-4183a19d744b-memory-add::ed492c34-e81f-47ad-96de-f75f8b0a35a7
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: memory-add::ed492c34-e81f-47ad-96de-f75f8b0a35a7
+    sourceHandle: normal_one_of::888bf7d0-c0b1-440d-9204-97645f210290
+    target: node-end::8e161702-d10f-4bcc-8617-4833213f116a
+    type: customEdge
+    id: reactflow__edge-memory-add::ed492c34-e81f-47ad-96de-f75f8b0a35a7normal_one_of::888bf7d0-c0b1-440d-9204-97645f210290-node-end::8e161702-d10f-4bcc-8617-4833213f116a
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: spark-llm::3304978f-ddd2-49fe-9f31-8a57b8fb8275
+    target: node-end::8e161702-d10f-4bcc-8617-4833213f116a
+    type: customEdge
+    id: reactflow__edge-spark-llm::3304978f-ddd2-49fe-9f31-8a57b8fb8275-node-end::8e161702-d10f-4bcc-8617-4833213f116a
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: if-else::4b878686-e218-424a-b33f-44758c20c167
+    sourceHandle: branch_one_of::06d248ef-812c-4485-b841-34ddbf0ee53f
+    target: memory-search::1bcc4202-970d-4469-b0ba-64e21806c0f7
+    type: customEdge
+    id: reactflow__edge-if-else::4b878686-e218-424a-b33f-44758c20c167branch_one_of::06d248ef-812c-4485-b841-34ddbf0ee53f-memory-search::1bcc4202-970d-4469-b0ba-64e21806c0f7
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: node-start::a1eacf05-63ae-405c-a66c-1f41244bdd98
+    target: memory-search::d9b0aefb-7aae-4b8f-b092-42bf99b4ddd0
+    type: customEdge
+    id: reactflow__edge-node-start::a1eacf05-63ae-405c-a66c-1f41244bdd98-memory-search::d9b0aefb-7aae-4b8f-b092-42bf99b4ddd0
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: memory-search::d9b0aefb-7aae-4b8f-b092-42bf99b4ddd0
+    target: spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+    type: customEdge
+    id: reactflow__edge-memory-search::d9b0aefb-7aae-4b8f-b092-42bf99b4ddd0-spark-llm::b9aad94a-7f8e-4406-8231-3aba8ade8cc5
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: if-else::4b878686-e218-424a-b33f-44758c20c167
+    sourceHandle: branch_one_of::59333d55-10d0-4e56-992f-968b57fcc3ab
+    target: memory-add::34e6c452-e395-4300-8f43-80485aae91ef
+    type: customEdge
+    id: reactflow__edge-if-else::4b878686-e218-424a-b33f-44758c20c167branch_one_of::59333d55-10d0-4e56-992f-968b57fcc3ab-memory-add::34e6c452-e395-4300-8f43-80485aae91ef
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve
+  - source: memory-add::34e6c452-e395-4300-8f43-80485aae91ef
+    target: spark-llm::3304978f-ddd2-49fe-9f31-8a57b8fb8275
+    type: customEdge
+    id: reactflow__edge-memory-add::34e6c452-e395-4300-8f43-80485aae91ef-spark-llm::3304978f-ddd2-49fe-9f31-8a57b8fb8275
+    markerEnd:
+      color: '#6356EA'
+      type: arrow
+    data:
+      edgeType: curve

@@ -1,0 +1,32 @@
+{
+  "appId": "app.yidiandian.hall",
+  "appName": "亿點點",
+  "webDir": "www",
+  "server": {
+    "url": "https://yidiandian.drb1n.top/hall",
+    "cleartext": false,
+    "errorPath": "index.html"
+  },
+  "android": {
+    "allowMixedContent": true,
+    "backgroundColor": "#f6f1e7"
+  },
+  "ios": {
+    "backgroundColor": "#f6f1e7",
+    "contentInset": "never"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 900,
+      "launchAutoHide": true,
+      "backgroundColor": "#f6f1e7",
+      "showSpinner": false,
+      "androidScaleType": "CENTER_CROP"
+    },
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#f6f1e7",
+      "overlaysWebView": false
+    }
+  }
+}

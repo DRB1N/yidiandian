@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  只有 debug 包允许明文 HTTP —— 本地调试时 server.url 是 http://10.0.2.2:3000。
+  正式包走 https，这条不会合并进去，所以别把它挪到 main/ 里。
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application android:usesCleartextTraffic="true" />
+</manifest>
