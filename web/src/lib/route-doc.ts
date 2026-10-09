@@ -212,7 +212,11 @@ function labelValue(md: string, labels: string[]): string {
   for (const label of labels) {
     const re = new RegExp(`\\*{0,2}${label}\\*{0,2}\\s*[:：]\\s*(.+)`);
     const m = md.match(re);
-    if (m) return stripMd(m[1]).slice(0, 80);
+    // 工作流的「路线档案」在信息缺失时会写「未说明」，那是占位不是值，
+    // 收下来会让页面多出一个「起点 · 未说明」这样的 chip
+    if (m && !/^(未说明|未知|暂无|未提供|无)$/.test(stripMd(m[1]))) {
+      return stripMd(m[1]).slice(0, 80);
+    }
   }
   return "";
 }

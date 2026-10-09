@@ -9,5 +9,10 @@ build
 prisma/dev.db
 prisma/dev.db-journal
 public/uploads
+# 安装包是构建产物，跟 mobile/dist、desktop/dist 一样只留在本机 / 部署机。
+# 部署前要把它们从 mobile/dist、desktop/dist 拷进 public/downloads，否则大厅页
+# 会把下载按钮换成「安装包未同步到本站点」的说明，不会给出 404 死链。
+public/downloads/*
+!public/downloads/.gitkeep
 next-env.d.ts
 .DS_Store

@@ -39,7 +39,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <div id="shell">
           <TopNav user={user ? { username: user.username, avatarUrl: user.avatarUrl } : null} />
           {children}
-          <footer className="shell" style={{ paddingBottom: 40 }}>
+          {/* 底部留白交给 globals.css：窄屏要含 env(safe-area-inset-bottom)，
+              写在内联 style 上会把媒体查询盖掉 */}
+          <footer className="shell">
             <hr className="rule-h" />
             <div
               className="meta-row"

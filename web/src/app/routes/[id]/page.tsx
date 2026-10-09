@@ -58,11 +58,9 @@ export default async function RoutePage({ params }: { params: Promise<{ id: stri
       </div>
 
       <header className="rise">
-        <div style={{ display: "flex", gap: 22, alignItems: "flex-start", flexWrap: "wrap" }}>
-          <div style={{ flex: 1, minWidth: 280 }}>
-            <h1 className="display" style={{ fontSize: "clamp(30px, 4.4vw, 46px)" }}>
-              {route.title}
-            </h1>
+        <div className="route-head">
+          <div className="route-head-main">
+            <h1 className="display route-title">{route.title}</h1>
             {route.goal && (
               <p className="page-sub" style={{ marginTop: 12 }}>
                 <b>目标 · </b>
@@ -70,11 +68,7 @@ export default async function RoutePage({ params }: { params: Promise<{ id: stri
               </p>
             )}
           </div>
-          {route.difficulty && (
-            <span className="stamp" style={{ fontSize: 27, minWidth: 78 }}>
-              {route.difficulty}
-            </span>
-          )}
+          {route.difficulty && <span className="stamp route-stamp">{route.difficulty}</span>}
         </div>
 
         <div className="meta-row" style={{ marginTop: 20 }}>

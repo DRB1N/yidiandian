@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { statSync } from "node:fs";
+import { join } from "node:path";
 import RouteCard from "@/components/RouteCard";
-import { IconArrow, IconSpark } from "@/components/Icon";
+import { IconArrow, IconDownload, IconSpark } from "@/components/Icon";
 import { listPublicRoutes } from "@/lib/routes";
 import { getCurrentUser } from "@/lib/auth";
 
@@ -12,6 +14,29 @@ const FILTERS = [
   { key: "systematic", label: "系统入门" },
   { key: "career", label: "职业转向" },
 ];
+
+/** 两端都是加载线上站点的外壳，所以版本号只用来区分装包的新旧。 */
+const DOWNLOADS = [
+  {
+    name: "移动端 · Android",
+    file: "亿點點-移动端-0.2.0-调试包.apk",
+    meta: "APK · Android 8.0 及以上",
+  },
+  {
+    name: "电脑端 · Windows",
+    file: "亿點點-桌面端-0.2.0-安装包.exe",
+    meta: "EXE · Windows 10 / 11（x64）",
+  },
+];
+
+function fileSize(file: string): string | null {
+  try {
+    const { size } = statSync(join(process.cwd(), "public", "downloads", file));
+    return `${(size / 1024 / 1024).toFixed(1)} MB`;
+  } catch {
+    return null;
+  }
+}
 
 export default async function HallPage({
   searchParams,
@@ -51,6 +76,48 @@ export default async function HallPage({
               ? `当前登录：${user.username}`
               : "规划要登录 —— 路线会存进你的账号里，别人也能看到（如果设为公开）。"}
           </span>
+        </div>
+      </section>
+
+      <section className="dl-band rise" style={{ animationDelay: "60ms" }}>
+        <div>
+          <span className="mono-label">装到自己的设备上</span>
+          <h2 className="display" style={{ fontSize: 25, marginTop: 10, lineHeight: 1.3 }}>
+            网页直接用，
+            <br />
+            手机电脑也能装。
+          </h2>
+          <p className="hint" style={{ marginTop: 10, maxWidth: "34ch" }}>
+            同一份界面，四个出口。装好后从桌面图标进，不用每次开浏览器。
+          </p>
+        </div>
+
+        <div className="dl-list">
+          {DOWNLOADS.map((d) => {
+            const size = fileSize(d.file);
+            return size ? (
+              <div className="dl-item" key={d.file}>
+                <div className="dl-item-main">
+                  <div className="dl-item-name">{d.name}</div>
+                  <div className="dl-item-meta">
+                    {d.meta} · {size}
+                  </div>
+                </div>
+                <a
+                  className="btn btn-primary btn-sm"
+                  href={`/downloads/${encodeURIComponent(d.file)}`}
+                  download={d.file}
+                >
+                  <IconDownload size={14} />
+                  下载
+                </a>
+              </div>
+            ) : (
+              <div className="dl-missing" key={d.file}>
+                {d.name} · 安装包未同步到本站点，暂时无法下载
+              </div>
+            );
+          })}
         </div>
       </section>
 

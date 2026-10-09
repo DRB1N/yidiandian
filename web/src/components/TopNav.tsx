@@ -22,7 +22,7 @@ export default function TopNav({
     <nav className="nav">
       <div className="nav-inner">
         <Link href="/hall" className="brand">
-          亿點點
+          <span className="brand-name">亿點點</span>
           <small>YIDIANDIAN</small>
         </Link>
 
@@ -42,16 +42,15 @@ export default function TopNav({
             <>
               <Link
                 href={`/u/${encodeURIComponent(user.username)}`}
-                className="nav-link"
+                className="nav-link nav-link-user"
                 data-active={path.startsWith("/u/")}
-                style={{ display: "flex", alignItems: "center", gap: 8, marginLeft: 6 }}
               >
                 <Avatar username={user.username} avatarUrl={user.avatarUrl} size="sm" />
                 {/* 窄屏放不下「名字 + 三个导航项」，globals.css 会把这个名字收起来 */}
                 <span className="nav-user-name">{user.username}</span>
               </Link>
-              <form action={logoutAction}>
-                <button type="submit" className="btn btn-ghost btn-sm" style={{ marginLeft: 4 }}>
+              <form action={logoutAction} className="nav-form">
+                <button type="submit" className="btn btn-ghost btn-sm">
                   退出
                 </button>
               </form>
@@ -61,7 +60,7 @@ export default function TopNav({
               <Link href="/login" className="nav-link" data-active={path === "/login"}>
                 登录
               </Link>
-              <Link href="/register" className="btn btn-primary btn-sm" style={{ marginLeft: 6 }}>
+              <Link href="/register" className="btn btn-primary btn-sm nav-cta">
                 注册
               </Link>
             </>
